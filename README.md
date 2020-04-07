@@ -1,2 +1,2 @@
-# ThresholdMaps
-A collection of web maps saved as html documents for upload to www.ltinfo.org 
+# Threshold Evaluation Web Docs
+A collection of web maps and plots saved as html documents for upload to www.ltinfo.org 
