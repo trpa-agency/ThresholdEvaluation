@@ -97,7 +97,7 @@
               map: map,  // The WebMap instance created above
               container: "viewDiv",
               center: [-120.01,39.05],
-              zoom: 10
+              zoom: 10.5
             });
           
         // move zoom buttons to top left
@@ -135,7 +135,16 @@
         });
           
         map.add(scenicLayer);
+        
+        // well feature layer
+        var trpaLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/0",
+          title: "TRPA Boundary"
+        });
           
+        map.add(trpaLayer);
+          
+        // create legend card
         var legend = new Legend({
         view: view,
         layerInfos: [
