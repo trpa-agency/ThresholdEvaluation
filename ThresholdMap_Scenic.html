@@ -81,24 +81,24 @@
         Fullscreen
       ) {
           {
-        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
+        esriConfig.portalUrl = "https://trpa.maps.arcgis.com/";
             };
         
-        // create the map instance
-        var map = new Map({
-            basemap: "topo-vector",
-            });
-                
-//        var webmap = new WebMap({
-//              portalItem: { // autocasts as new PortalItem()
-//                id: "050cb95e85f941b8891eb538fe23328a"
-//              }
+//        // create the map instance
+//        var map = new Map({
+//            basemap: "topo-vector",
 //            });
+                
+        var map = new WebMap({
+              portalItem: { // autocasts as new PortalItem()
+                id: "01dfe5bc77ce45078043c885496a2792"
+              }
+            });
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
               container: "viewDiv",
-              center: [-120.01,39.05],
+              center: [-120.01,39.01],
               zoom: 10.5
             });
           
