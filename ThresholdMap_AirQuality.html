@@ -125,14 +125,14 @@
         };
 
         // well feature layer
-        var noiseLayer = new FeatureLayer({
+        var airLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/16",
           title: "Air Quality Station",
           renderer: pointRenderer,
           popupTemplate: template
         });
           
-        map.add(noiseLayer);
+        map.add(airLayer);
         
         // well feature layer
         var trpaLayer = new FeatureLayer({
@@ -147,8 +147,8 @@
         view: view,
         layerInfos: [
           {
-            layer: noiseLayer,
-            title: "Plan Area Noise Monitoring Location"
+            layer: airLayer,
+            title: "Air Quality Monitoring Location"
           }
         ]
         });
