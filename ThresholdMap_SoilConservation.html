@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>Threshold Template ArcGIS JS</title>
+    <title>2019 Threshold Evaluation - Air Quality</title>
 
     <style>
       html,
@@ -54,6 +54,7 @@
         "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
+        "esri/layers/MapImageLayer",
         "esri/layers/FeatureLayer",
         "esri/layers/TileLayer",
         "esri/widgets/Expand",
@@ -62,12 +63,14 @@
         "esri/widgets/BasemapToggle",
         "esri/widgets/Search",
         "esri/widgets/LayerList",
-        "esri/widgets/Legend"
+        "esri/widgets/Legend",
+        "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
         Map,
         MapView,
         WebMap,
+        MapImageLayer,
         FeatureLayer,
         TileLayer,
         Expand,
@@ -76,66 +79,71 @@
         BasemapToggle,
         Search,
         LayerList,
-        Legend
+        Legend,
+        Fullscreen
       ) {
           {
-        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
+        esriConfig.portalUrl = "https://trpa.maps.arcgis.com/";
             };
         
-        // create the map instance
-        var map = new Map({
-            basemap: "topo-vector",
+        var map = new WebMap({
+              portalItem: { // autocasts as new PortalItem()
+                id: "01dfe5bc77ce45078043c885496a2792"
+              }
             });
-                
-//        var webmap = new WebMap({
-//              portalItem: { // autocasts as new PortalItem()
-//                id: "050cb95e85f941b8891eb538fe23328a"
-//              }
-//            });
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
               container: "viewDiv",
-              center: [-120.01,39.05],
+              center: [-120.01,39.01],
               zoom: 10.5
             });
           
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
+        fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left");
+          
         // Create a popupTemplate
         const template = {
-          title: "Scenic Unit: {ROAD_UNIT_NAME}",
-          content:[
-              {
-          type: "fields",
-          fieldInfos: [
-                {
-                  fieldName: "ROAD_UNIT",
-                  label: "Unit #"
-                },
-                {
-                  fieldName: "Status",
-                  label: "Status 2019"
-                },
-                {
-                  fieldName: "STATUS_2001",
-                  label: "Status 2001"
-                }
-                ]
-              }
-              ]            
+          title: "Air Quality Station: {id}",           
         };
           
-        // well feature layer
-        var scenicLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/0",
-          title: "Scenic Roadway Unit",
+        // Set a basic symbol on a layer to visualize all features the same way
+        var pointRenderer = {
+          type: "simple",  // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+            size: 6,
+            color: "#279bdc",
+            outline: {  // autocasts as new SimpleLineSymbol()
+              width: 0.5,
+              color: "white"
+            }
+          }
+        };
+
+          
+        // threshold feature layer
+        var nrcsLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Soils_and_Land_Capability/MapServer/6",
+          title: "Land Capability",
           popupTemplate: template
         });
           
-        map.add(scenicLayer);
-        
+        map.add(nrcsLayer);
+        // threshold feature layer
+        var imp2010Layer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Impervious_Surface_Cached/MapServer/0",
+          title: "Land Capability",
+          popupTemplate: template
+        });
+                    
+        map.add(imp2010Layer);
+          
         // well feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
@@ -148,132 +156,58 @@
         var legend = new Legend({
         view: view,
         layerInfos: [
+                      {
+            layer: imp2010Layer,
+            title: "Impervious Surface - 2010"
+          },
           {
-            layer: scenicLayer,
-            title: "Scenic Roadway Unit"
+            layer: nrcsLayer,
+            title: "NRCS Land Capability"
           }
         ]
         });
 
-        // Add widget to the bottom right corner of the view
+        // Add widget to the top right corner of the view
         view.ui.add(legend, "top-right");
-          
-//        // ListItem in a LayerList instance
-//        const layerList = new LayerList({
-//              view: view,
-//              listItemCreatedFunction: function(event) {
-//                const item = event.item;
-//                if (item.layer.type != "group") {
-//                  // don't show legend twice
-//                  item.panel = {
-//                    content: "legend",
-//                    open: false
-//                  };
-//                }
-//              }
-//        });
-//
-//        view.ui.add(layerList, "top-right");
-//          
-//        // Create collapasable button for Table of Contents
-//        var layerListExpand = new Expand({
-//            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
-//            expandTooltip: "Layer List",
-//            view: view,
-//            autoCollapse: true,
-//            content: layerList.domNode
-//            });
-//
-//        // add layer list button to the top right corner of the view
-//        view.ui.add(layerListExpand, "top-right");
+        
+        // Create collapasable button for legend
+        var legendExpand = new Expand({
+            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            expandTooltip: "Legend",
+            view: view,
+            autoCollapse: true,
+            content: legend.domNode,
+            group: "top-right"
+            });
 
+        // add layer list button to the top right corner of the view
+        view.ui.add(legendExpand, "top-right");
 
-//        var parcels = new FeatureLayer({
-//            url: "https://maps.trpa.org/server/rest/services/Parcels/MapServer/0",
-//                popupTemplate: {
-//                // autocasts as new PopupTemplate()
-//                    title: "Parcel: {APN}",
-//                    overwriteActions: false
-//                }
-//        });
-//        
-//        webmap.add(parcels);
-//          
-//        // Create Search Widget with parcel layer as the source data
-//        var searchWidget = new Search({
-//          view: view,
-//          allPlaceholder: "Address or APN",
-//          locationEnabled: false,
-//          includeDefaultSources: false,
-//          popupEnabled: false,
-//          sources: [
-//            {
-//              layer: parcels,
-//              searchFields: ["APO_ADDRESS"],
-//              displayField: "APO_ADDRESS",
-//              exactMatch: false,
-//              outFields: ["APO_ADDRESS"],
-//              name: "Address",
-//              zoomScale: 24000,
-//            },
-//            {
-//              layer: parcels,
-//              searchFields: ["APN"],
-//              displayField: "APN",
-//              exactMatch: false,
-//              outFields: ["APN"],
-//              name: "APN",
-//              zoomScale: 24000,
-//            }
-//          ]
-//        });
-//
-//        // Add the search widget to the top left corner of the view
-//        view.ui.add(searchWidget, {
-//            position: "top-right"
-//        });
+        // Createa Home Button
+        var homeWidget = new Home({
+            view: view
+        });
 
-//        // Createa Home Button
-//        var homeWidget = new Home({
-//            view: view
-//        });
-//
-//        // adds the home widget to the top left corner of the MapView
-//        view.ui.add(homeWidget, "top-left");            
-//
-//        var basemapToggle = new BasemapToggle({
-//            container: document.createElement("div"),
-//            view: view,
-//            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-//        });
-//
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left"); 
+        // adds the home widget to the top left corner of the MapView
+        view.ui.add(homeWidget, "top-left");            
 
-//        // add a legend widget instance to the view
-//        // and set the style to 'card'. This is a
-//        // responsive style, which is good for mobile devices
-//        // or 'classic' for PC users
-//        const legend = new Expand({
-//            expandIconClass: "esri-icon-layer-list",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Legend",
-//            content: new Legend({
-//                view: view,
-//                style: "classic" // other styles include 'card'
-//                }),
-//            view: view,
-//            expanded: false
-//        });
-//        view.ui.add(legend, "bottom-left");       
+        var basemapToggle = new BasemapToggle({
+            container: document.createElement("div"),
+            view: view,
+            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+        });
+
+        // Create an Expand instance and set the content
+        // property to the DOM node of the basemap gallery widget
+        var bgExpand = new Expand({
+            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+            expandTooltip: "Toggle Basemap",
+            view: view,
+            content: basemapToggle.domNode
+        });
+
+        // Add the basemap gallery button
+        view.ui.add(bgExpand, "bottom-left");       
     });   
 	</script>
   </head>
