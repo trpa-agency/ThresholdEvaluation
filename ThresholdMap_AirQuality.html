@@ -81,12 +81,12 @@
         Fullscreen
       ) {
           {
-        esriConfig.portalUrl = "https://trpa.maps.arcgis.com/";
+        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
             };
         
         var map = new WebMap({
               portalItem: { // autocasts as new PortalItem()
-                id: "01dfe5bc77ce45078043c885496a2792"
+                id: "733fa4512166430e8cc7b73dd62f44e1"
               }
             });
 
@@ -134,7 +134,7 @@
           
         map.add(airLayer);
         
-        // well feature layer
+        // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
