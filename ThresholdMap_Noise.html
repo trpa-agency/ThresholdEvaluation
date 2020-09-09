@@ -81,12 +81,12 @@
         Fullscreen
       ) {
           {
-        esriConfig.portalUrl = "https://trpa.maps.arcgis.com/";
+        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
             };
         
         var map = new WebMap({
               portalItem: { // autocasts as new PortalItem()
-                id: "01dfe5bc77ce45078043c885496a2792"
+                id: "733fa4512166430e8cc7b73dd62f44e1"
               }
             });
 
@@ -107,15 +107,23 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Noise Monitor: {site_name}",
+          title: "Noise Monitoring Location",
           content:[
               {
           type: "fields",
           fieldInfos: [
                 {
+                  fieldName: "site_name",
+                  label: "Location"
+                },
+                {
                   fieldName: "count_value",
                   label: "Max Decibels Measured"
-                }
+                },
+                {
+                  fieldName: "LTINFO",
+                  label: "More Info"
+                }              
                 ]
               }
               ]            
@@ -194,17 +202,17 @@
             nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
         });
 
-        // Create an Expand instance and set the content
-        // property to the DOM node of the basemap gallery widget
-        var bgExpand = new Expand({
-            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-            expandTooltip: "Toggle Basemap",
-            view: view,
-            content: basemapToggle.domNode
-        });
-
-        // Add the basemap gallery button
-        view.ui.add(bgExpand, "bottom-left");       
+//        // Create an Expand instance and set the content
+//        // property to the DOM node of the basemap gallery widget
+//        var bgExpand = new Expand({
+//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+//            expandTooltip: "Toggle Basemap",
+//            view: view,
+//            content: basemapToggle.domNode
+//        });
+//
+//        // Add the basemap gallery button
+//        view.ui.add(bgExpand, "bottom-left");       
     });   
 	</script>
   </head>

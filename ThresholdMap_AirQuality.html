@@ -102,8 +102,24 @@
         
       
         // Create a popupTemplate
-        const template = {
-          title: "Air Quality Station: {id}",           
+        var template = {
+          // autocasts as new PopupTemplate()
+          title: "Air Quality Station",
+          content: [
+            {
+              type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "name",
+                  label: "Site Name"
+                },
+                {
+                  fieldName: "LTINFO_HYPERLINK",
+                  label: "More Info"
+                }
+              ]
+            }
+          ]
         };
           
         // Set a basic symbol on a layer to visualize all features the same way
@@ -185,17 +201,17 @@
             nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
         });
 
-        // Create an Expand instance and set the content
-        // property to the DOM node of the basemap gallery widget
-        var bgExpand = new Expand({
-            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-            expandTooltip: "Toggle Basemap",
-            view: view,
-            content: basemapToggle.domNode
-        });
-
-        // Add the basemap gallery button
-        view.ui.add(bgExpand, "bottom-left");       
+//        // Create an Expand instance and set the content
+//        // property to the DOM node of the basemap gallery widget
+//        var bgExpand = new Expand({
+//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+//            expandTooltip: "Toggle Basemap",
+//            view: view,
+//            content: basemapToggle.domNode
+//        });
+//
+//        // Add the basemap gallery button
+//        view.ui.add(bgExpand, "bottom-left");       
     });   
 	</script>
   </head>
