@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Noise</title>
+    <title>2019 Threshold Evaluation - Shoreline Noise</title>
 
     <style>
       html,
@@ -113,20 +113,20 @@
           type: "fields",
           fieldInfos: [
                 {
-                  fieldName: "site_name",
-                  label: "Plan Area"
+                  fieldName: "SITE_NAME",
+                  label: "Location"
                 },
                {
-                  fieldName: "CNEL_LAND_USE",
-                  label: "Land Use"
+                  fieldName: "YEAR_OF_COUNT",
+                  label: "Category"
+                },
+               {
+                  fieldName: "CATEGORY",
+                  label: "Year of Count"
                 },
                 {
-                  fieldName: "Category",
-                  label: "Noise Category"
-                },
-                {
-                  fieldName: "count_value",
-                  label: "Max Decibels Measured"
+                  fieldName: "COUNT_VALUE",
+                  label: "Count"
                 },
                 {
                   fieldName: "LTINFO",
@@ -153,11 +153,11 @@
 
         // well feature layer
         var noiseLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/6",
-          title: "Plan Area Noise",
+          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/7",
+          title: "Shoreline Area Noise",
           renderer: pointRenderer,
-          popupTemplate: template,
-          definitionExpression: "CNEL_LAND_USE = 'INDUSTRIAL'"
+          popupTemplate: template
+//          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
           
         map.add(noiseLayer);
@@ -176,7 +176,7 @@
         layerInfos: [
           {
             layer: noiseLayer,
-            title: "Plan Area Noise Monitoring Location"
+            title: "Shoreline Noise Monitoring Location"
           }
         ]
         });
