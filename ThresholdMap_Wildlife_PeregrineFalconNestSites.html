@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Shoreline Noise</title>
+    <title>2019 Threshold Evaluation - Peregrine Falcon Nest Sites</title>
 
     <style>
       html,
@@ -107,7 +107,7 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Noise Monitoring Location",
+          title: "Nest Area",
           content:[
               {
           type: "fields",
@@ -153,9 +153,9 @@
 
         // well feature layer
         var noiseLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/7",
-          title: "Shoreline Area Noise",
-          renderer: pointRenderer,
+          url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/2",
+          title: "Peregrine Nest Buffer",
+//          renderer: pointRenderer,
           popupTemplate: template
 //          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
