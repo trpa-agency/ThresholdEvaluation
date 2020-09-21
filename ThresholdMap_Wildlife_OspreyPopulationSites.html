@@ -80,6 +80,7 @@
         Legend,
         Fullscreen
       ) {
+        // set portal url
           {
         esriConfig.portalUrl = "https://maps.trpa.org/portal/";
             };
@@ -100,19 +101,19 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Nest Area",
-          content:[
-              {
-          type: "fields",
-          fieldInfos: [
-                {
-                  fieldName: "NEST_STATUS",
-                  label: "Nest Status"
-                }
-                ]
-              }
-              ]            
-        };
+              title: "Osprey Nest",
+              content:[
+                  {
+              type: "fields",
+              fieldInfos: [
+                    {
+                      fieldName: "NEST_STATUS",
+                      label: "Nest Status"
+                    }
+                    ]
+                  }
+                  ]            
+            };
           
         // Set a basic symbol on a layer to visualize all features the same way
         var pointRenderer = {
@@ -128,7 +129,7 @@
           }
         };
 
-        // well feature layer
+        // Nest feature layer
         var nestLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/3",
           title: "Osprey Population Site",
@@ -138,7 +139,7 @@
           
         map.add(nestLayer);
         
-        // well feature layer
+        // TRPA Boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
@@ -146,7 +147,7 @@
           
         map.add(trpaLayer);
           
-        // create legend card
+        // Create legend card
         var legend = new Legend({
         view: view,
         layerInfos: [
@@ -169,27 +170,28 @@
             content: legend.domNode,
             group: "top-right"
             });
-
-        // add layer list button to the top right corner of the view
+          
         view.ui.add(legendExpand, "top-right");
         
-        // move zoom buttons to top left
+        // Move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
+        // Create fullscreen toggle
         var fullscreen = new Fullscreen({
           view: view
         });
+          
         view.ui.add(fullscreen, "top-left");
-        // Createa Home Button
+          
+        // Create Home Button
         var homeWidget = new Home({
             view: view
         });
 
-        // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
 
         });     
-    });   
+  
 	</script>
   </head>
   <body>
