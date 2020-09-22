@@ -126,7 +126,7 @@
         };
           
         // Set a basic symbol on a layer to visualize all features the same way
-        var pointRenderer = {
+        var polyRenderer = {
           type: "simple",  // autocasts as new SimpleRenderer()
           symbol: {
             type: "simple-fill",  // autocasts as new SimpleMarkerSymbol()
@@ -143,7 +143,7 @@
         var nestLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/5",
           title: "Northern Goshawk Protected Activity Center",
-          renderer: pointRenderer,
+          renderer: polyRenderer,
           popupTemplate: template
 //          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
