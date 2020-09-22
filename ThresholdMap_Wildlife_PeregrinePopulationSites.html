@@ -107,7 +107,7 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Nest Area",
+          title: "Peregrine Nest",
           content:[
               {
           type: "fields",
@@ -117,21 +117,9 @@
                   label: "Location"
                 },
                {
-                  fieldName: "YEAR_OF_COUNT",
-                  label: "Year"
-                },
-               {
-                  fieldName: "CATEGORY",
-                  label: "Category"
-                },
-                {
-                  fieldName: "COUNT_VALUE",
-                  label: "Count"
-                },
-                {
-                  fieldName: "LTINFO",
-                  label: "More Info"
-                }              
+                  fieldName: "Years_Used",
+                  label: "Years Used"
+                }            
                 ]
               }
               ]            
@@ -156,7 +144,7 @@
           url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/2",
           title: "Peregrine Nest Buffer",
           renderer: pointRenderer,
-//          popupTemplate: template
+          popupTemplate: template
 //          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
           
