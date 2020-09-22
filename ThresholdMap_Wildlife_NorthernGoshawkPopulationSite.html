@@ -133,7 +133,7 @@
         var pointRenderer = {
           type: "simple",  // autocasts as new SimpleRenderer()
           symbol: {
-            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+            type: "simple-fill",  // autocasts as new SimpleMarkerSymbol()
             size: 6,
             color: "#279bdc",
             outline: {  // autocasts as new SimpleLineSymbol()
@@ -146,7 +146,7 @@
         // well feature layer
         var nestLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/5",
-          title: "Peregrine Nest Buffer",
+          title: "Northern Goshawk Protected Activity Center",
           renderer: pointRenderer,
           popupTemplate: template
 //          definitionExpression: "YEAR_OF_COUNT = '2019'"
