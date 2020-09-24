@@ -51,31 +51,21 @@
     <script>
       require([
         "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
-        "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
         "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
-        Map,
         MapView,
         WebMap,
         FeatureLayer,
-        TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
         LayerList,
         Legend,
         Fullscreen
@@ -115,10 +105,6 @@
                 {
                   fieldName: "Nest_Name",
                   label: "Location"
-                },
-                { 
-                  fieldName: "Years_Active",
-                  label: "Years Active"
                 }
                 ]
               }
@@ -139,7 +125,7 @@
           }
         };
 
-        // well feature layer
+        // Bald Eagle feature layer
         var nestLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/0",
           title: "Northern Goshawk Protected Activity Center",
@@ -150,7 +136,7 @@
           
         map.add(nestLayer);
         
-        // well feature layer
+        // TRPA Boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
@@ -164,7 +150,7 @@
         layerInfos: [
           {
             layer: nestLayer,
-            title: "Northern Goshawk Protected Activity Center"
+            title: "Bald Eagle Nest Site"
           }
         ]
         });
@@ -191,25 +177,7 @@
         });
 
         // adds the home widget to the top left corner of the MapView
-        view.ui.add(homeWidget, "top-left");            
-
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });
-
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
+        view.ui.add(homeWidget, "top-left");                   
     });   
 	</script>
   </head>

@@ -51,7 +51,6 @@
     <script>
       require([
         "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
@@ -62,7 +61,6 @@
         "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
-        Map,
         MapView,
         WebMap,
         FeatureLayer,
@@ -179,7 +177,6 @@
 
         // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
- 
     });   
 	</script>
   </head>
