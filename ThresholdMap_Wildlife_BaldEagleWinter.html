@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Northern Goshawk Population Sites</title>
+    <title>2019 Threshold Evaluation - Bald Eagle Protected Winter Habitat</title>
 
     <style>
       html,
@@ -139,16 +139,15 @@
           }
         };
 
-        // well feature layer
-        var nestLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/5",
-          title: "Northern Goshawk Protected Activity Center",
+        // habitat feature layer
+        var habLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Wildlife_Habitat/MapServer/1",
+          title: "Bald Eagle Wintering Habitat",
           renderer: polyRenderer,
           popupTemplate: template
-//          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
           
-        map.add(nestLayer);
+        map.add(habLayer);
         
         // well feature layer
         var trpaLayer = new FeatureLayer({
@@ -163,8 +162,8 @@
         view: view,
         layerInfos: [
           {
-            layer: nestLayer,
-            title: "Northern Goshawk Protected Activity Center"
+            layer: habLayer,
+            title: "Bald Eagle - Winter Habitat"
           }
         ]
         });
@@ -197,19 +196,7 @@
             container: document.createElement("div"),
             view: view,
             nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });
-
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
+        });   
     });   
 	</script>
   </head>
