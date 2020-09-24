@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Northern Goshawk Population Sites</title>
+    <title>2019 Threshold Evaluation - Nesting Bald Eagle Population Sites</title>
 
     <style>
       html,
@@ -107,18 +107,18 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Northern Goshawk Protected Activity Center",
+          title: "Active Bald Eagle Nest",
           content:[
               {
           type: "fields",
           fieldInfos: [
                 {
-                  fieldName: "SITE_NAME",
+                  fieldName: "Nest_Name",
                   label: "Location"
                 },
                 { 
-                  fieldName: "SITE_STATU",
-                  label: "Site Status"
+                  fieldName: "Years_Active",
+                  label: "Years Active"
                 }
                 ]
               }
@@ -141,7 +141,7 @@
 
         // well feature layer
         var nestLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/5",
+          url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/0",
           title: "Northern Goshawk Protected Activity Center",
           renderer: polyRenderer,
           popupTemplate: template
