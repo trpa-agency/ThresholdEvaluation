@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Tahoe Yellow Cress Population Sites</title>
+    <title>2019 Threshold Evaluation - Yellow Pine Abundance</title>
 
     <style>
       html,
@@ -54,6 +54,7 @@
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
+        "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
         "esri/widgets/LayerList",
@@ -64,6 +65,7 @@
         MapView,
         WebMap,
         FeatureLayer,
+        TileLayer,
         Expand,
         Home,
         LayerList,
@@ -97,58 +99,75 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Tahoe Yellow Cress Population Site",
+          title: "Vegetation - 2010 Ecobject",
           content:[
               {
           type: "fields",
           fieldInfos: [
                 {
-                  fieldName: "SITE_NAME",
-                  label: "Location"
+                  fieldName: "TRPA_VegType",
+                  label: "Vegetation Type"
                 },
                 { 
-                  fieldName: "OWNER",
+                  fieldName: "WHRTYPE",
+                  label: "Wildlife Habitat Relationship Type"
+                },
+                { 
+                  fieldName: "SeralStage",
+                  label: "Seral Stage"
+                },
+                { 
+                  fieldName: "pTree_Count",
+                  label: "Tree Count"
+                }, 
+                { 
+                  fieldName: "QMD",
+                  label: "Quadratic Mean Diameter"
+                }, 
+                { 
+                  fieldName: "CanCov",
+                  label: "Canopy Cover"
+                }, 
+                { 
+                  fieldName: "SpatialVar",
+                  label: "Horizontal Heterogeniety"
+                },  
+              { 
+                  fieldName: "Ownership",
                   label: "Ownership Type"
                 },
-                              { 
-                  fieldName: "COUNT_VALUE",
-                  label: "Count"
+                { 
+                  fieldName: "Avg_Slope",
+                  label: "Average Slope"
                 },
-                              { 
-                  fieldName: "YEAR_OF_COUNT",
-                  label: "Year"
-                }
+
                 ]
               }
               ]            
         };
-          
-        // Set a basic symbol on a layer to visualize all features the same way
-        var pointRenderer = {
-          type: "simple",  // autocasts as new SimpleRenderer()
-          symbol: {
-            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-            size: 4,
-            color: "#ffffbf",
-            outline: {  // autocasts as new SimpleLineSymbol()
-              width: 0.5,
-              color: "#8a7121"
-            }
-          }
-        };
-
-        // well feature layer
-        var cressLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/9",
-          title: "Tahoe Yellow Cress Population Site",
-          renderer: pointRenderer,
-          popupTemplate: template
-//          definitionExpression: "YEAR_OF_COUNT = '2019'"
+         // canopy layer
+        var canopyLayer = new TileLayer({
+          url: "https://maps.trpa.org/server/rest/services/Tahoe_Canopy_Hillshade_Cached/MapServer",
+          title: "Canopy Hillshade",
+          blendMode: "color",
+          opacity: 0.35
         });
           
-        map.add(cressLayer);
+        map.add(canopyLayer);         
+
+        // veg feature layer
+        var vegLayer = new TileLayer({
+          url: "https://maps.trpa.org/server/rest/services/Vegetation_Type/MapServer",
+          title: "TRPA Vegetation Type",
+          blendMode: "color-burn",
+          opacity: 0.75
+        });
+          
+        map.add(vegLayer);
+          
+
         
-        // well feature layer
+        // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
@@ -161,8 +180,8 @@
         view: view,
         layerInfos: [
           {
-            layer: cressLayer,
-            title: "Tahoe Yellow Cress Population Site"
+            layer: vegLayer,
+            title: "Vegetation Type"
 
           }
         ]
