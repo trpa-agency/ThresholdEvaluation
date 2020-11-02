@@ -149,7 +149,6 @@
         var canopyLayer = new TileLayer({
           url: "https://maps.trpa.org/server/rest/services/Tahoe_Canopy_Hillshade_Cached/MapServer",
           title: "Canopy Hillshade",
-          blendMode: "color",
           opacity: 0.35
         });
           
@@ -159,8 +158,7 @@
         var vegLayer = new TileLayer({
           url: "https://maps.trpa.org/server/rest/services/Vegetation_Type/MapServer",
           title: "TRPA Vegetation Type",
-          blendMode: "color-burn",
-          opacity: 0.75
+//          blendMode: "multiply"
         });
           
         map.add(vegLayer);
