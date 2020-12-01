@@ -141,16 +141,27 @@
 //          }
 //        };
 
-        // well feature layer
+        // habitat feature layer
         var habLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/1",
-          title: "Stream Habitat",
+          title: "Stream Condition",
 //          renderer: polyRenderer,
           popupTemplate: template
 //          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
           
         map.add(habLayer);
+          
+        // stream feature layer
+        var streamLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Streams_and_Flood_Zone/MapServer/1",
+          title: "Stream",
+//          renderer: polyRenderer,
+          popupTemplate: template
+//          definitionExpression: "YEAR_OF_COUNT = '2019'"
+        });
+          
+        map.add(streamLayer);
         
         // well feature layer
         var trpaLayer = new FeatureLayer({
@@ -166,7 +177,7 @@
         layerInfos: [
           {
             layer: habLayer,
-            title: "Stream Habitat"
+            title: "Stream Condition"
           }
         ]
         });
