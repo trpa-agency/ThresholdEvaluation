@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, maximum-scale=1,user-scalable=no"
+    />
+    <title>Existing Development</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.18/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.18/"></script>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <script>
+      require([
+        "esri/layers/FeatureLayer",
+        "esri/widgets/FeatureTable"
+      ], function (FeatureLayer, FeatureTable) {
+        var featureLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/25",
+          title: "Existing Development Rights"
+        });
+
+        // create the FeatureTable from the provided FeatureLayer
+        const table = new FeatureTable({
+          layer: featureLayer,
+          visibleElements: { selectionColumn: false },
+          // autocastable to FieldColumnConfig
+          // The fieldColumnConfig are used to determine which attributes are shown in the table
+          // If the fieldColumnConfig are not set, all attributes will be shown
+          fieldConfigs: [
+            {
+              name: "OBJECTID",
+              label: "Object ID",
+              // This field will not be shown in the table intially
+              visible: false
+            },
+            {
+              name: "ID",
+              label: "ID",
+              // This field will not be shown in the table intially
+              visible: false
+            },
+            {
+              name: "APN",
+              label: "APN",
+              // The table will be sorted by this column
+              // in ascending order
+              direction: "asc"
+            },
+            {
+              name: "JURISDICTION",
+              label: "Jurisdiction"
+            },
+            {
+              name: "PLAN_NAME",
+              label: "Local Plan",
+              visible: false
+            },
+            {
+              name: "LOCATION_TO_TOWNCENTER",
+              label: "Location Relative to Town Center",
+              visible: false
+            },
+            {
+              name: "RES_2018",
+              label: "Residential Units - 2018",
+              visible: false
+            },
+            {
+              name: "CFA_2018",
+              label: "Commercial Floor Area - 2018",
+              visible: false
+            },
+            {
+              name: "TAU_2018",
+              label: "Tourist Units - 2018",
+              visible: false
+            },
+            {
+              name: "RES_2019",
+              label: "Residential Units - 2019"
+            },
+            {
+              name: "CFA_2019",
+              label: "Commercial Floor Area - 2019",
+              format: {
+                  template: "${value} sqft"
+                }
+            },
+            {
+              name: "TAU_2019",
+              label: "Tourist Units - 2019"
+            }
+
+          ],
+          container: document.getElementById("tableDiv")
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="tableDiv"></div>
+    </div>
+  </body>
+</html>
