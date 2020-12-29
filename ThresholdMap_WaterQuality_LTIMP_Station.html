@@ -104,22 +104,14 @@
         // Create a popupTemplate
         var template = {
           // autocasts as new PopupTemplate()
-          title: "Water Quality Station",
+          title: "LTIMP Monitoring Site",
           content: [
             {
               type: "fields",
               fieldInfos: [
                 {
-                  fieldName: "year_of_count",
-                  label: "Year"
-                },
-                {
-                  fieldName: "season",
-                  label: "Season"
-                },
-                {
-                  fieldName: "count_value",
-                  label: "Value"
+                  fieldName: "station_nm",
+                  label: "Station"
                 }
               ]
             }
@@ -142,7 +134,7 @@
 
         // station feature layer
         var stationLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/35",
+          url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/33",
           title: "Water Quality Station",
           renderer: pointRenderer,
           popupTemplate: template
