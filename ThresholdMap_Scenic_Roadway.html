@@ -56,6 +56,7 @@
         "esri/WebMap",
         "esri/layers/FeatureLayer",
         "esri/layers/TileLayer",
+        "esri/popup/content/AttachmentsContent",
         "esri/widgets/Expand",
         "esri/widgets/Home",
         "esri/widgets/BasemapGallery",
@@ -71,6 +72,7 @@
         WebMap,
         FeatureLayer,
         TileLayer,
+        AttachmentsContent,
         Expand,
         Home,
         BasemapGallery,
@@ -100,10 +102,24 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-        fullscreen = new Fullscreen({
+        var fullscreen = new Fullscreen({
           view: view
         });
         view.ui.add(fullscreen, "top-left");
+        
+        // Set a basic symbol on a layer to visualize all features the same way
+        var simpleRenderer = {
+          type: "simple",  // autocasts as new SimpleRenderer()
+          symbol: {
+            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+            size: 6,
+            color: "#337ab7",
+            outline: {  // autocasts as new SimpleLineSymbol()
+              width: 0.5,
+              color: "white"
+            }
+          }
+        };
           
         // Create a popupTemplate
         const template = {
@@ -124,8 +140,18 @@
               }
               ]            
         };
+        
+        let attachmentsElement = new AttachmentsContent({
+            displayType: "list"
+        }); 
           
-        // well feature layer
+        // Create a popupTemplate
+        const viewtemplate = {
+          title: "Scenic View Point: {ID}",
+          content:[attachmentsElement]            
+        };    
+          
+        // scenic feature layer
         var scenicLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/2",
           title: "Scenic Roadway Unit",
@@ -133,7 +159,17 @@
         });
           
         map.add(scenicLayer);
-        
+          
+        var viewlayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/0",
+          title: "Scenic Roadway Viewpoint",
+          popupTemplate: viewtemplate,
+          renderer: simpleRenderer,
+          minScale: 48000
+        })
+          
+        map.add(viewlayer);
+          
         // well feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
@@ -148,14 +184,22 @@
         layerInfos: [
           {
             layer: scenicLayer,
-            title: "Scenic Roadway Unit"
-          }
+            title: "Scenic Shoreline Unit"
+          },
+         {
+            layer: viewlayer,
+            title: "Scenic Photo Point"
+          },
         ]
         });
 
         // Add widget to the top right corner of the view
         view.ui.add(legend, "top-right");
-        
+          
+        // Displays legend elements for the map's layers
+        // based on their minScale, maxScale, and legendEnabled properties
+        legend.respectLayerVisibility = true;
+          
         // Create collapasable button for legend
         var legendExpand = new Expand({
             expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
