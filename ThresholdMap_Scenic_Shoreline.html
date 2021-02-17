@@ -107,22 +107,18 @@
           
         // Create a popupTemplate
         const template = {
-          title: "Scenic Unit: {ROAD_UNIT_NAME}",
+          title: "Scenic Unit: {CORRIDOR_NAME}",
           content:[
               {
           type: "fields",
           fieldInfos: [
                 {
-                  fieldName: "ROAD_UNIT",
+                  fieldName: "UNIT",
                   label: "Unit #"
                 },
                 {
-                  fieldName: "Status",
+                  fieldName: "CURRENT_STATUS",
                   label: "Status 2019"
-                },
-                {
-                  fieldName: "STATUS_2001",
-                  label: "Status 2001"
                 }
                 ]
               }
@@ -131,7 +127,7 @@
           
         // well feature layer
         var scenicLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/0",
+          url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/3",
           title: "Scenic Roadway Unit",
           popupTemplate: template
         });
@@ -152,7 +148,7 @@
         layerInfos: [
           {
             layer: scenicLayer,
-            title: "Scenic Roadway Unit"
+            title: "Scenic Shoreline Unit"
           }
         ]
         });
