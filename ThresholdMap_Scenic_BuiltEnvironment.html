@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Forest Health Treatments</title>
+    <title>2019 Threshold Evaluation - Built Environment</title>
 
     <style>
       html,
@@ -120,15 +120,32 @@
                   fieldName: "OWN_FULL",
                   label: "Owner"
                 },
-//                { 
-//                  fieldName: "CATEGORY",
-//                  label: "Category"
-//                },
+                { 
+                  fieldName: "CATEGORY",
+                  label: "Category"
+                },
 
                 { 
                   fieldName: "PROJ",
                   label: "Project"
-                }
+                }, 
+ 
+                { 
+                  fieldName: "INCWPP",
+                  label: "INCWPP"
+                },  
+                { 
+                  fieldName: "BIOMASS",
+                  label: "Biomass"
+                },
+                { 
+                  fieldName: "TIMBER",
+                  label: "Timber"
+                },
+                { 
+                  fieldName: "Comments",
+                  label: "Comments"
+                },
                 ]
               }
               ]            
@@ -144,15 +161,22 @@
 
         // veg feature layer
         var txLayer = new FeatureLayer({
-          url: "https://services6.arcgis.com/1KtlSd2mklZMBKaz/ArcGIS/rest/services/Tahoe_Forest_Fuels_Tx_OFFICIAL_Public_View/FeatureServer/0",
-          title: "Fuels Treatment",
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer",
+          title: "Planning Boundaries",
           popupTemplate: template
 //          blendMode: "multiply"
         });
           
         map.add(txLayer);
           
-
+          
+        // impervious feature layer
+        var impLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Impervious_Surface_2019/MapServer/0",
+          title: "Impervious Surface",
+        });
+          
+        map.add(impLayer);
         
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
@@ -165,13 +189,13 @@
         // create legend card
         var legend = new Legend({
         view: view,
-        layerInfos: [
-          {
-            layer: txLayer,
-            title: "Forest Health Treatments 2010-2019"
-
-          }
-        ]
+//        layerInfos: [
+//          {
+//            layer: txLayer,
+//            title: "Forest Health Treatments 2014-2019"
+//
+//          }
+//        ]
         });
 
         // Add widget to the top right corner of the view
