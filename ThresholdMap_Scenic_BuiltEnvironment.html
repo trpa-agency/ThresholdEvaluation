@@ -92,24 +92,71 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
+        // setup full screen button
         fullscreen = new Fullscreen({
           view: view
         });
         view.ui.add(fullscreen, "top-left");
           
+        // setup local plan renderer
+        var renderer = {
+          type: "unique-value",  // autocasts as new UniqueValueRenderer()
+          field: "PLAN_TYPE",
+//          defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
+          uniqueValueInfos: [{
+            // All features with value of "Area Plan" will be blue
+            value: "AREA PLAN",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 51,51, 204, 0.5 ],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.4,
+                  color: "grey"
+                }
+            }
+          }, {
+            // All features with value of "Community Plan" will be green
+            value: "COMMUNITY PLAN",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 217,95, 14, 0.5 ],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.4,
+                  color: "grey"
+                }
+            }
+          }, {
+            // All features with value of "Plan Area Statement" will be transparent
+            value: "PLAN AREA STATEMENT",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 0,0,0, 0 ],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.1,
+                  color: "grey"
+                }
+            }
+          }]
+        };
+
+
         // Create a popupTemplate
         const template = {
-          title: "Treatment Type: {ACT}",
+          title: "Plan Type: {PLAN_TYPE}",
           content:[
               {
           type: "fields",
           fieldInfos: [
                 { 
-                  fieldName: "YEAR",
-                  label: "Year"
+                  fieldName: "PLAN_NAME",
+                  label: "Plan Name"
                 }, 
                 { 
-                  fieldName: "ACRES",
+                  fieldName: "JURISDICTION",
+                  label: "Jurisdiction"
+                },
+                { 
+                  fieldName: "GIS_ACRES",
                   label: "Acres",
                 format: {
                         digitSeparator: true, // Uses a comma separator in numbers >999
@@ -117,67 +164,27 @@
                       }
                 },
                 {
-                  fieldName: "OWN_FULL",
-                  label: "Owner"
-                },
-                { 
-                  fieldName: "CATEGORY",
-                  label: "Category"
-                },
-
-                { 
-                  fieldName: "PROJ",
-                  label: "Project"
-                }, 
- 
-                { 
-                  fieldName: "INCWPP",
-                  label: "INCWPP"
-                },  
-                { 
-                  fieldName: "BIOMASS",
-                  label: "Biomass"
-                },
-                { 
-                  fieldName: "TIMBER",
-                  label: "Timber"
-                },
-                { 
-                  fieldName: "Comments",
-                  label: "Comments"
-                },
+                  fieldName: "File_URL",
+                  label: "Plan Document"
+                }
                 ]
               }
               ]            
         };
-//         // canopy layer
-//        var canopyLayer = new TileLayer({
-//          url: "https://maps.trpa.org/server/rest/services/Tahoe_Canopy_Hillshade_Cached/MapServer",
-//          title: "Canopy Hillshade",
-//          opacity: 0.35
-//        });
-//          
-//        map.add(canopyLayer);         
+   
 
-        // veg feature layer
-        var txLayer = new FeatureLayer({
+        // local plan feature layer
+        var planLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer",
           title: "Planning Boundaries",
-          popupTemplate: template
-//          blendMode: "multiply"
+          popupTemplate: template,
+          renderer: renderer,
+          minScale: 1000000,
         });
           
-        map.add(txLayer);
+        map.add(planLayer);
           
-          
-        // impervious feature layer
-        var impLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Impervious_Surface_2019/MapServer/0",
-          title: "Impervious Surface",
-        });
-          
-        map.add(impLayer);
-        
+//        
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
@@ -191,8 +198,8 @@
         view: view,
 //        layerInfos: [
 //          {
-//            layer: txLayer,
-//            title: "Forest Health Treatments 2014-2019"
+//            layer: planLayer,
+//            title: "Local Plan"
 //
 //          }
 //        ]
