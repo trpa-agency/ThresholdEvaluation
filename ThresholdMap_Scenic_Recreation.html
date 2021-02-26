@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>2019 Threshold Evaluation - Recreation</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+
+      #infoDiv {
+        position: absolute;
+        top: 15px;
+        left: 60px;
+      }
+      #infoDiv input {
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
+      }
+
+      .esri-widget--button.active,
+      .esri-widget--button.active:hover,
+      .esri-widget--button.active:focus {
+        cursor: default;
+        background-color: #999696;
+      }
+      .esri-widget--button.active path,
+      .esri-widget--button.active:hover path,
+      .esri-widget--button.active:focus path {
+        fill: #e4e4e4;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.15/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/views/MapView",
+        "esri/WebMap",
+        "esri/layers/FeatureLayer",
+        "esri/layers/TileLayer",
+        "esri/widgets/Expand",
+        "esri/widgets/Home",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend",
+        "esri/widgets/Fullscreen"
+      ], function(
+        esriConfig,
+        MapView,
+        WebMap,
+        FeatureLayer,
+        TileLayer,
+        Expand,
+        Home,
+        LayerList,
+        Legend,
+        Fullscreen
+      ) {
+          {
+        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
+            };
+        
+        var map = new WebMap({
+              portalItem: { // autocasts as new PortalItem()
+                id: "733fa4512166430e8cc7b73dd62f44e1"
+              }
+            });
+
+        var view = new MapView({
+              map: map,  // The WebMap instance created above
+              container: "viewDiv",
+              center: [-120.01,39.01],
+              zoom: 10.5
+            });
+          
+        // move zoom buttons to top left
+        view.ui.move("zoom", "top-left");
+        
+        // setup full screen button
+        fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left");
+          
+        // Symbol for trails
+        const trlSym = {
+          type: "simple-line", // autocasts as new SimpleLineSymbol()
+          color: "#897044",
+          width: 0.5,
+          style: "short-dash-dot"
+        };
+            
+        var trlRenderer = {
+          type: "simple",  // autocasts as new SimpleRenderer()
+          symbol: trlSym
+        };
+
+        // Create a popupTemplate
+        const template = {
+          title: "Recreation Facility: {RECREATION_TYPE}",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
+                { 
+                  fieldName: "RECREATION_NAME",
+                  label: "Name"
+                }
+                ]
+              }
+              ]            
+        };
+   
+        // boundary feature layer
+        var trpaLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
+          title: "TRPA Boundary"
+        });
+          
+        map.add(trpaLayer);
+          
+        // trail feature layer
+        var trailLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Recreation/MapServer/0",
+          title: "Recreation Trail",
+          renderer: trlRenderer,
+          minScale: 1000000,
+        });
+          
+        map.add(trailLayer);
+          
+        // recreation feature layer
+        var recLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Recreation/MapServer/1",
+          title: "Recreation Site",
+          popupTemplate: template,
+          minScale: 1000000,
+        });
+          
+        map.add(recLayer);
+          
+        // create legend card
+        var legend = new Legend({
+        view: view,
+        });
+
+        // Add widget to the top right corner of the view
+        view.ui.add(legend, "top-right");
+        
+        // Create collapasable button for legend
+        var legendExpand = new Expand({
+            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            expandTooltip: "Legend",
+            view: view,
+//            expanded: true,
+            autoCollapse: true,
+            content: legend.domNode,
+            group: "top-right"
+            });
+
+        // add layer list button to the top right corner of the view
+        view.ui.add(legendExpand, "top-right");
+
+        // Createa Home Button
+        var homeWidget = new Home({
+            view: view
+        });
+
+        // adds the home widget to the top left corner of the MapView
+        view.ui.add(homeWidget, "top-left");            
+     
+    });   
+	</script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
