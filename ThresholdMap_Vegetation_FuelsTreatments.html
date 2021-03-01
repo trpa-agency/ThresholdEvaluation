@@ -97,6 +97,36 @@
         });
         view.ui.add(fullscreen, "top-left");
           
+        // setup local plan renderer
+        var renderer = {
+          type: "unique-value",  // autocasts as new UniqueValueRenderer()
+          field: "NAME",
+//          defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
+          uniqueValueInfos: [{
+            // All features with value of "Area Plan" will be blue
+            value: "Threat",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 51,51, 204,0.3],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.4,
+                  color: "grey"
+                }
+            }
+          }, {
+            // All features with value of "Community Plan" will be green
+            value: "Defense",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 232,190, 255, 0.4 ],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.3,
+                  color: "grey"
+                }
+            }
+          }
+        ]};
+          
         // Create a popupTemplate
         const template = {
           title: "Treatment Type: {ACT}",
@@ -143,6 +173,16 @@
 //        map.add(canopyLayer);         
 
         // veg feature layer
+        var wuiLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/LTW_Base_Data/MapServer/33",
+          title: "Wild Land Urban Interface",
+          popupTemplate: template,
+          renderer: renderer
+        });
+          
+        map.add(wuiLayer);
+          
+        // veg feature layer
         var txLayer = new FeatureLayer({
           url: "https://services6.arcgis.com/1KtlSd2mklZMBKaz/ArcGIS/rest/services/Tahoe_Forest_Fuels_Tx_OFFICIAL_Public_View/FeatureServer/0",
           title: "Fuels Treatment",
@@ -152,8 +192,6 @@
           
         map.add(txLayer);
           
-
-        
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
@@ -168,7 +206,12 @@
         layerInfos: [
           {
             layer: txLayer,
-            title: "Forest Health Treatments 2010-2019"
+            title: "Forest Health Treatments"
+
+          },
+          {
+            layer: wuiLayer,
+            title: "Wildland Urban Interface"
 
           }
         ]
