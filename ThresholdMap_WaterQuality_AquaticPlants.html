@@ -147,12 +147,21 @@
         // land capability feature layer
         var plantLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/34",
-          title: "Subsurface Aqautic Plant",
+          title: "Subsurface Aqautic Plant (Invaisve & Native)",
 //          popupTemplate: template,
           renderer: simpleRenderer
         });
           
         map.add(plantLayer);
+          
+        // land capability feature layer
+        var zoneLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/42",
+          title: "Survey Zone Aqautic Invasive Plant",
+        });
+          
+        map.add(zoneLayer);
+          
           
         // create legend card
         var legend = new Legend({
