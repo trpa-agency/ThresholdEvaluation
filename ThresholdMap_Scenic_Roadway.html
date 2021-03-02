@@ -96,7 +96,16 @@
               map: map,  // The WebMap instance created above
               container: "viewDiv",
               center: [-120.01,39.01],
-              zoom: 10.5
+              zoom: 10.5,
+             popup: {
+              dockEnabled: true,
+              dockOptions: {
+                position: "top-left",
+                // Disables the dock button from the popup
+                buttonEnabled: false,
+                // Ignore the default sizes that trigger responsive docking
+                breakpoint: false,
+              }}
             });
           
         // move zoom buttons to top left
@@ -144,13 +153,13 @@
         let attachmentsElement = new AttachmentsContent({
             displayType: "list"
         }); 
-          
+
         // Create a popupTemplate
         const viewtemplate = {
           title: "Scenic View Point: {ID}",
           content:[attachmentsElement]            
         };    
-          
+
         // scenic feature layer
         var scenicLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/2",
