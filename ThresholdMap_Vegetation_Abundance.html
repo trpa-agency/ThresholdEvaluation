@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Built Environment</title>
+    <title>2019 Threshold Evaluation - Vegetation Abundance</title>
 
     <style>
       html,
@@ -92,99 +92,79 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-        // setup full screen button
-        var fullscreen = new Fullscreen({
+        fullscreen = new Fullscreen({
           view: view
         });
         view.ui.add(fullscreen, "top-left");
           
-        // setup local plan renderer
-        var renderer = {
-          type: "unique-value",  // autocasts as new UniqueValueRenderer()
-          field: "PLAN_TYPE",
-//          defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
-          uniqueValueInfos: [{
-            // All features with value of "Area Plan" will be blue
-            value: "AREA PLAN",
-            symbol: {
-              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-              color:[ 51,51, 204, 0.5 ],
-            outline: {  // autocasts as new SimpleLineSymbol()
-                  width: 0.4,
-                  color: "grey"
-                }
-            }
-          }, {
-            // All features with value of "Community Plan" will be green
-            value: "COMMUNITY PLAN",
-            symbol: {
-              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-              color:[ 217,95, 14, 0.5 ],
-            outline: {  // autocasts as new SimpleLineSymbol()
-                  width: 0.4,
-                  color: "grey"
-                }
-            }
-          }, {
-            // All features with value of "Plan Area Statement" will be transparent
-            value: "PLAN AREA STATEMENT",
-            symbol: {
-              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-              color:[ 0,0,0, 0 ],
-            outline: {  // autocasts as new SimpleLineSymbol()
-                  width: 0.1,
-                  color: "grey"
-                }
-            }
-          }]
-        };
-
-
         // Create a popupTemplate
         const template = {
-          title: "Plan Type: {PLAN_TYPE}",
+          title: "Vegetation - 2010 Ecobject",
           content:[
               {
           type: "fields",
           fieldInfos: [
+                {
+                  fieldName: "TRPA_VegType",
+                  label: "Vegetation Type"
+                },
                 { 
-                  fieldName: "PLAN_NAME",
-                  label: "Plan Name"
+                  fieldName: "WHRTYPE",
+                  label: "Wildlife Habitat Relationship Type"
+                },
+                { 
+                  fieldName: "SeralStage",
+                  label: "Seral Stage"
+                },
+                { 
+                  fieldName: "pTree_Count",
+                  label: "Tree Count"
                 }, 
                 { 
-                  fieldName: "JURISDICTION",
-                  label: "Jurisdiction"
+                  fieldName: "QMD",
+                  label: "Quadratic Mean Diameter"
+                }, 
+                { 
+                  fieldName: "CanCov",
+                  label: "Canopy Cover"
+                }, 
+                { 
+                  fieldName: "SpatialVar",
+                  label: "Horizontal Heterogeniety"
+                },  
+              { 
+                  fieldName: "Ownership",
+                  label: "Ownership Type"
                 },
                 { 
-                  fieldName: "GIS_ACRES",
-                  label: "Acres",
-                format: {
-                        digitSeparator: true, // Uses a comma separator in numbers >999
-                        places: 2 // Sets the number of decimal places to 0 and rounds up
-                      }
+                  fieldName: "Avg_Slope",
+                  label: "Average Slope"
                 },
-                {
-                  fieldName: "File_URL",
-                  label: "Plan Document"
-                }
+
                 ]
               }
               ]            
         };
-   
-
-        // local plan feature layer
-        var planLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer",
-          title: "Planning Boundaries",
-          popupTemplate: template,
-          renderer: renderer,
-          minScale: 1000000,
+         // canopy layer
+        var canopyLayer = new TileLayer({
+          url: "https://maps.trpa.org/server/rest/services/Tahoe_Canopy_Hillshade_Cached/MapServer",
+          title: "Canopy Hillshade",
+          opacity: 0.35
         });
           
-        map.add(planLayer);
+        map.add(canopyLayer);         
+
+        // veg feature layer
+        var vegLayer = new TileLayer({
+          url: "https://maps.trpa.org/server/rest/services/Vegetation_Type/MapServer",
+          title: "TRPA Vegetation Type",
+          popupTemplate: template
+        });
           
-//        
+        map.add(vegLayer);
+          
+
+        
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
@@ -196,13 +176,13 @@
         // create legend card
         var legend = new Legend({
         view: view,
-//        layerInfos: [
-//          {
-//            layer: planLayer,
-//            title: "Local Plan"
-//
-//          }
-//        ]
+        layerInfos: [
+          {
+            layer: vegLayer,
+            title: "Vegetation Type"
+
+          }
+        ]
         });
 
         // Add widget to the top right corner of the view
