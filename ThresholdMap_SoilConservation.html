@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Air Quality</title>
+    <title>2019 Threshold Evaluation - Soil Conservation</title>
 
     <style>
       html,
@@ -54,7 +54,6 @@
         "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
-        "esri/layers/MapImageLayer",
         "esri/layers/FeatureLayer",
         "esri/layers/TileLayer",
         "esri/widgets/Expand",
@@ -70,7 +69,6 @@
         Map,
         MapView,
         WebMap,
-        MapImageLayer,
         FeatureLayer,
         TileLayer,
         Expand,
@@ -83,12 +81,12 @@
         Fullscreen
       ) {
           {
-        esriConfig.portalUrl = "https://trpa.maps.arcgis.com/";
+        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
             };
         
         var map = new WebMap({
               portalItem: { // autocasts as new PortalItem()
-                id: "01dfe5bc77ce45078043c885496a2792"
+                id: "733fa4512166430e8cc7b73dd62f44e1"
               }
             });
 
@@ -102,67 +100,73 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-        fullscreen = new Fullscreen({
-          view: view
-        });
-        view.ui.add(fullscreen, "top-left");
-          
+      
         // Create a popupTemplate
-        const template = {
-          title: "Air Quality Station: {id}",           
-        };
-          
-        // Set a basic symbol on a layer to visualize all features the same way
-        var pointRenderer = {
-          type: "simple",  // autocasts as new SimpleRenderer()
-          symbol: {
-            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-            size: 6,
-            color: "#279bdc",
-            outline: {  // autocasts as new SimpleLineSymbol()
-              width: 0.5,
-              color: "white"
+        var template = {
+          // autocasts as new PopupTemplate()
+          title: "Land Capability",
+          content: [
+            {
+              type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "Land_Capab",
+                  label: "Type"
+                }
+              ]
             }
-          }
+          ]
         };
 
-          
-        // threshold feature layer
-        var nrcsLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Soils_and_Land_Capability/MapServer/6",
-          title: "Land Capability",
-          popupTemplate: template
-        });
-          
-        map.add(nrcsLayer);
-        // threshold feature layer
-        var imp2010Layer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Impervious_Surface_Cached/MapServer/0",
-          title: "Land Capability",
-          popupTemplate: template
-        });
-                    
-        map.add(imp2010Layer);
-          
-        // well feature layer
+//          // Set a basic symbol on a layer to visualize all features the same way
+//        var simpleRenderer = {
+//          type: "simple",  // autocasts as new SimpleRenderer()
+//          symbol: {
+//            type: "simple-fill",  // autocasts as new SimpleMarkerSymbol()
+//            size: 6,
+//            color: "#D1FF73",
+//            outline: {  // autocasts as new SimpleLineSymbol()
+//              width: 0.5,
+//              color: "white"
+//            }
+//          }
+//        };
+
+
+        // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
         });
           
-        map.add(trpaLayer);
+        map.add(trpaLayer);      
+          
+        // impervious feature layer
+        var impLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Impervious_Surface_2019/MapServer/0",
+          title: "Impervious Surface",
+        });
+          
+        map.add(impLayer);
+          
+        // land capability feature layer
+        var landcapLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Soils_and_Land_Capability/MapServer/6",
+          title: "Land Capability",
+          popupTemplate: template,
+//          definitionExpression: "Land_Capab = '1A'",
+//          renderer: simpleRenderer
+        });
+          
+        map.add(landcapLayer);
           
         // create legend card
         var legend = new Legend({
         view: view,
-        layerInfos: [
-                      {
-            layer: imp2010Layer,
-            title: "Impervious Surface - 2010"
-          },
+        activeLayerInfos: [
           {
-            layer: nrcsLayer,
-            title: "NRCS Land Capability"
+            layer: landcapLayer,
+            title: "Land Capability"
           }
         ]
         });
@@ -190,24 +194,30 @@
 
         // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
-
+        
+        // add full screen button
+        fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left"); 
+          
         var basemapToggle = new BasemapToggle({
             container: document.createElement("div"),
             view: view,
             nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
         });
 
-        // Create an Expand instance and set the content
-        // property to the DOM node of the basemap gallery widget
-        var bgExpand = new Expand({
-            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-            expandTooltip: "Toggle Basemap",
-            view: view,
-            content: basemapToggle.domNode
-        });
-
-        // Add the basemap gallery button
-        view.ui.add(bgExpand, "bottom-left");       
+//        // Create an Expand instance and set the content
+//        // property to the DOM node of the basemap gallery widget
+//        var bgExpand = new Expand({
+//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+//            expandTooltip: "Toggle Basemap",
+//            view: view,
+//            content: basemapToggle.domNode
+//        });
+//
+//        // Add the basemap gallery button
+//        view.ui.add(bgExpand, "bottom-left");       
     });   
 	</script>
   </head>
