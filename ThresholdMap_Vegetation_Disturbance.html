@@ -135,42 +135,42 @@
               ]            
         };
           
-        // Create a popupTemplate
-        const templateTX = {
-          title: "Treatment Type: {ACT}",
-          content:[
-              {
-          type: "fields",
-          fieldInfos: [
-                { 
-                  fieldName: "YEAR",
-                  label: "Year"
-                }, 
-                { 
-                  fieldName: "ACRES",
-                  label: "Acres",
-                format: {
-                        digitSeparator: true, // Uses a comma separator in numbers >999
-                        places: 2 // Sets the number of decimal places to 0 and rounds up
-                      }
-                },
-                {
-                  fieldName: "OWN_FULL",
-                  label: "Owner"
-                },
+//        // Create a popupTemplate
+//        const templateTX = {
+//          title: "Treatment Type: {ACT}",
+//          content:[
+//              {
+//          type: "fields",
+//          fieldInfos: [
 //                { 
-//                  fieldName: "CATEGORY",
-//                  label: "Category"
+//                  fieldName: "YEAR",
+//                  label: "Year"
+//                }, 
+//                { 
+//                  fieldName: "ACRES",
+//                  label: "Acres",
+//                format: {
+//                        digitSeparator: true, // Uses a comma separator in numbers >999
+//                        places: 2 // Sets the number of decimal places to 0 and rounds up
+//                      }
 //                },
-
-                { 
-                  fieldName: "PROJ",
-                  label: "Project"
-                }
-                ]
-              }
-              ]            
-        };
+//                {
+//                  fieldName: "OWN_FULL",
+//                  label: "Owner"
+//                },
+////                { 
+////                  fieldName: "CATEGORY",
+////                  label: "Category"
+////                },
+//
+//                { 
+//                  fieldName: "PROJ",
+//                  label: "Project"
+//                }
+//                ]
+//              }
+//              ]            
+//        };
           
         // fire history feature layer
         var fireLayer = new FeatureLayer({
@@ -184,17 +184,17 @@
         
         map.add(fireLayer);
           
-        // treatment feature layer
-        var txLayer = new FeatureLayer({
-          url: "https://services6.arcgis.com/1KtlSd2mklZMBKaz/ArcGIS/rest/services/Tahoe_Forest_Fuels_Tx_OFFICIAL_Public_View/FeatureServer/0",
-          title: "Fuels Treatment",
-          popupTemplate: templateTX
-        });
-        
-        txLayer.definitionExpression = "YEAR > 2015";
-        
-        map.add(txLayer);   
-          
+//        // treatment feature layer
+//        var txLayer = new FeatureLayer({
+//          url: "https://services6.arcgis.com/1KtlSd2mklZMBKaz/ArcGIS/rest/services/Tahoe_Forest_Fuels_Tx_OFFICIAL_Public_View/FeatureServer/0",
+//          title: "Fuels Treatment",
+//          popupTemplate: templateTX
+//        });
+//        
+//        txLayer.definitionExpression = "YEAR > 2015";
+//        
+//        map.add(txLayer);   
+//          
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
