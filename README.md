@@ -1,2 +1,2 @@
-# Threshold Evaluation Web Docs
-A collection of web maps and plots published to www.ltinfo.org 
+# Threshold Evaluation Web Apps
+A collection of web maps and plots embeded in the <a href="https://thresholds.laketahoeinfo.org/">Lake Tahoe Info Theshold Dashboard</a>
