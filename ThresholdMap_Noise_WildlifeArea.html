@@ -149,12 +149,12 @@
 
         // local plan feature layer
         var planLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/0",
+          url: "https://maps.trpa.org/server/rest/services/Zoning/MapServer/0",
           title: "Plan Area",
           popupTemplate: template,
           renderer: renderer,
           minScale: 1000000,
-          definitionExpression: "PLAN_ID IN ('128','127','162','055','146','121','060','056','019','100')"
+          definitionExpression: "PLAN_ID IN ('128','127','162','055','146','121','060','056','019','100') OR ZONING_ID = 'PCAP_CONS_BLACKWOOD'"
         });
           
         map.add(planLayer);
