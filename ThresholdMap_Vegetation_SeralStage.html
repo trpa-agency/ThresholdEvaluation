@@ -98,13 +98,23 @@
         view.ui.add(fullscreen, "top-left");
           
         // treatment feature layer
-        var seralLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Vegetation_Seral_Stage/MapServer/0",
+        var seralLayer = new TileLayer({
+          url: "https://maps.trpa.org/server/rest/services/Vegetation_Seral_Stage/MapServer",
           title: "Seral Stage"
         });
         
         map.add(seralLayer);   
+        
+        // canopy layer
+        var canopyLayer = new TileLayer({
+          url: "https://maps.trpa.org/server/rest/services/Tahoe_Canopy_Hillshade_Cached/MapServer",
+          title: "Canopy Hillshade",
+          opacity: 0.35,
+          minScale:36000
+        });
           
+        map.add(canopyLayer);         
+ 
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
@@ -119,7 +129,7 @@
         layerInfos: [
           {
             layer: seralLayer,
-            title: "Late Seral"
+            title: "Seral Stage"
 
           }
         ]
