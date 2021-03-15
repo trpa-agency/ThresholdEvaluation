@@ -92,7 +92,7 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-        var fullscreen = new Fullscreen({
+        fullscreen = new Fullscreen({
           view: view
         });
         view.ui.add(fullscreen, "top-left");
@@ -155,14 +155,16 @@
         map.add(canopyLayer);         
 
         // veg feature layer
-        var vegLayer = new FeatureLayer({
+        var vegLayer = new TileLayer({
           url: "https://maps.trpa.org/server/rest/services/Vegetation_Type/MapServer",
           title: "TRPA Vegetation Type",
-          popupTemplate: template
+//          blendMode: "multiply"
         });
           
         map.add(vegLayer);
           
+
+        
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
