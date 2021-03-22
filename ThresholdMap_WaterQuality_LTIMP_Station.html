@@ -140,6 +140,8 @@
           popupTemplate: template
         });
           
+        stationLayer.definitionExpression = "site_no IN ('10336700', '10336698','10336610', '10336790', '10336676', '10336660','10336645')";
+          
         map.add(stationLayer);
         
         // boundary feature layer
@@ -186,7 +188,7 @@
         view.ui.add(homeWidget, "top-left");            
         
         // add full screen button
-        fullscreen = new Fullscreen({
+        var fullscreen = new Fullscreen({
           view: view
         });
         view.ui.add(fullscreen, "top-left"); 
