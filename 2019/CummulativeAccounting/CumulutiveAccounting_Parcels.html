@@ -6,13 +6,13 @@
       name="viewport"
       content="initial-scale=1, maximum-scale=1,user-scalable=no"
     />
-    <title>Existing Development</title>
+    <title>Cumulative Accounting</title>
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.18/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.17/esri/themes/light/main.css"
     />
-    <script src="https://js.arcgis.com/4.18/"></script>
+    <script src="https://js.arcgis.com/4.17/"></script>
 
     <style>
       html,
@@ -33,24 +33,18 @@
         "esri/widgets/FeatureTable"
       ], function (FeatureLayer, FeatureTable) {
         var featureLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/25",
-          title: "Existing Development Rights"
+          url:
+            "https://maps.trpa.org/server/rest/services/Existing_Development/MapServer/4",
+          title: "Existing Development"
         });
 
         // create the FeatureTable from the provided FeatureLayer
         const table = new FeatureTable({
           layer: featureLayer,
-          visibleElements: { selectionColumn: false },
           // autocastable to FieldColumnConfig
           // The fieldColumnConfig are used to determine which attributes are shown in the table
           // If the fieldColumnConfig are not set, all attributes will be shown
           fieldConfigs: [
-            {
-              name: "OBJECTID",
-              label: "Object ID",
-              // This field will not be shown in the table intially
-              visible: false
-            },
             {
               name: "ID",
               label: "ID",
@@ -66,11 +60,12 @@
             },
             {
               name: "JURISDICTION",
-              label: "Jurisdiction"
+              label: "Jurisdiction",
+              visible: false
             },
             {
               name: "PLAN_NAME",
-              label: "Local Plan",
+              label: "Plan Name",
               visible: false
             },
             {
@@ -80,35 +75,28 @@
             },
             {
               name: "RES_2018",
-              label: "Residential Units - 2018",
-              visible: false
-            },
-            {
-              name: "CFA_2018",
-              label: "Commercial Floor Area - 2018",
-              visible: false
+              label: "Residential Units 2018"
             },
             {
               name: "TAU_2018",
-              label: "Tourist Units - 2018",
-              visible: false
+              label: "Tourist Accommodation 2018"
+            },
+            {
+              name: "CFA_2018",
+              label: "Commercial Floor Area 2018"
             },
             {
               name: "RES_2019",
-              label: "Residential Units - 2019"
-            },
-            {
-              name: "CFA_2019",
-              label: "Commercial Floor Area - 2019",
-              format: {
-                  template: "${value} sqft"
-                }
+              label: "Residential Units 2019"
             },
             {
               name: "TAU_2019",
-              label: "Tourist Units - 2019"
-            }
-
+              label: "Tourist Accommodation 2019"
+            },
+            {
+              name: "CFA_2019",
+              label: "Commercial Floor Area 2019"
+            },
           ],
           container: document.getElementById("tableDiv")
         });
