@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>2019 Threshold Evaluation - New Forest Openinings</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+
+      #infoDiv {
+        position: absolute;
+        top: 15px;
+        left: 60px;
+      }
+      #infoDiv input {
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
+      }
+
+      .esri-widget--button.active,
+      .esri-widget--button.active:hover,
+      .esri-widget--button.active:focus {
+        cursor: default;
+        background-color: #999696;
+      }
+      .esri-widget--button.active path,
+      .esri-widget--button.active:hover path,
+      .esri-widget--button.active:focus path {
+        fill: #e4e4e4;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.15/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/views/MapView",
+        "esri/WebMap",
+        "esri/layers/FeatureLayer",
+        "esri/layers/TileLayer",
+        "esri/widgets/Expand",
+        "esri/widgets/Home",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend",
+        "esri/widgets/Fullscreen"
+      ], function(
+        esriConfig,
+        MapView,
+        WebMap,
+        FeatureLayer,
+        TileLayer,
+        Expand,
+        Home,
+        LayerList,
+        Legend,
+        Fullscreen
+      ) {
+          {
+        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
+            };
+        
+        var map = new WebMap({
+              portalItem: { // autocasts as new PortalItem()
+                id: "733fa4512166430e8cc7b73dd62f44e1"
+              }
+            });
+
+        var view = new MapView({
+              map: map,  // The WebMap instance created above
+              container: "viewDiv",
+              center: [-120.08,38.94],
+              zoom: 14
+            });
+          
+        // move zoom buttons to top left
+        view.ui.move("zoom", "top-left");
+        
+        var fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left");
+          
+        var symbol = {
+          type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+          color: [ 230,76,0, 0.2 ],
+          style: "solid",
+          outline: {  // autocasts as new SimpleLineSymbol()
+            color: "red",
+            width: 1
+          }
+        };
+        var simpleRenderer = {
+          type: "simple",  // autocasts as new SimpleRenderer()
+          symbol: symbol
+        };
+          
+        // Create a popupTemplate
+        const templateRX = {
+          title: "{incidentname} Fire",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
+                { 
+                  fieldName: "fireyear",
+                  label: "Year"
+                }, 
+                { 
+                  fieldName: "gisacres",
+                  label: "Acres",
+                format: {
+                        digitSeparator: true, // Uses a comma separator in numbers >999
+                        places: 2 // Sets the number of decimal places to 0 and rounds up
+                      }
+                }
+                ]
+              }
+              ]            
+        };
+          
+//        // Create a popupTemplate
+//        const templateTX = {
+//          title: "Treatment Type: {ACT}",
+//          content:[
+//              {
+//          type: "fields",
+//          fieldInfos: [
+//                { 
+//                  fieldName: "YEAR",
+//                  label: "Year"
+//                }, 
+//                { 
+//                  fieldName: "ACRES",
+//                  label: "Acres",
+//                format: {
+//                        digitSeparator: true, // Uses a comma separator in numbers >999
+//                        places: 2 // Sets the number of decimal places to 0 and rounds up
+//                      }
+//                },
+//                {
+//                  fieldName: "OWN_FULL",
+//                  label: "Owner"
+//                },
+////                { 
+////                  fieldName: "CATEGORY",
+////                  label: "Category"
+////                },
+//
+//                { 
+//                  fieldName: "PROJ",
+//                  label: "Project"
+//                }
+//                ]
+//              }
+//              ]            
+//        };
+          
+        // fire history feature layer
+        var fireLayer = new FeatureLayer({
+          url: "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/Historic_Geomac_Perimeters_Combined_2000_2018/FeatureServer/0/query?outFields=*&where=1%3D1",
+          title: "Fire History 2000-2018",
+          popupTemplate: templateRX,
+          renderer: simpleRenderer
+        });
+        
+        fireLayer.definitionExpression = "fireyear > 2015";
+        
+        map.add(fireLayer);
+          
+//        // treatment feature layer
+//        var txLayer = new FeatureLayer({
+//          url: "https://services6.arcgis.com/1KtlSd2mklZMBKaz/ArcGIS/rest/services/Tahoe_Forest_Fuels_Tx_OFFICIAL_Public_View/FeatureServer/0",
+//          title: "Fuels Treatment",
+//          popupTemplate: templateTX
+//        });
+//        
+//        txLayer.definitionExpression = "YEAR > 2015";
+//        
+//        map.add(txLayer);   
+//          
+        // boundary feature layer
+        var trpaLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
+          title: "TRPA Boundary"
+        });
+          
+        map.add(trpaLayer);
+          
+        // create legend card
+        var legend = new Legend({
+        view: view,
+        layerInfos: [
+          {
+            layer: fireLayer,
+            title: "Fire History 2015-2019"
+
+          },
+//          {
+//            layer: txLayer,
+//            title: "Forest Health Treatment 2015-2019"
+//
+//          }
+        ]
+        });
+
+        // Add widget to the top right corner of the view
+        view.ui.add(legend, "top-right");
+        
+        // Create collapasable button for legend
+        var legendExpand = new Expand({
+            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            expandTooltip: "Legend",
+            view: view,
+//            expanded: true,
+            autoCollapse: true,
+            content: legend.domNode,
+            group: "top-right"
+            });
+
+        // add layer list button to the top right corner of the view
+        view.ui.add(legendExpand, "top-right");
+
+        // Createa Home Button
+        var homeWidget = new Home({
+            view: view
+        });
+
+        // adds the home widget to the top left corner of the MapView
+        view.ui.add(homeWidget, "top-left");            
+     
+    });   
+	</script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
