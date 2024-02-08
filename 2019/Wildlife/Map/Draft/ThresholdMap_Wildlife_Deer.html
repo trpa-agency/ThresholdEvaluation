@@ -43,9 +43,9 @@
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
     />
-    <script src="https://js.arcgis.com/4.15/"></script>
+    <script src="https://js.arcgis.com/4.28/"></script>
 
     <script>
       require([
@@ -134,7 +134,7 @@
 
         // Habitat feature layer
         var habLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Threshold_Evaluation/MapServer/45",
+          url: "https://maps.trpa.org/server/rest/services/Wildlife_Habitat/MapServer/45",
           title: "Deer Fawning Habitat",
           renderer: polyRenderer,
           popupTemplate: template
@@ -144,7 +144,7 @@
         
         // TRPA Boundary feature layer
         var trpaLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/4",
           title: "TRPA Boundary"
         });
           
