@@ -44,9 +44,9 @@
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
     />
-    <script src="https://js.arcgis.com/4.15/"></script>
+    <script src="https://js.arcgis.com/4.28/"></script>
 
     <script>
       require([
@@ -87,11 +87,11 @@
             basemap: "topo-vector",
             });
                 
-//        var webmap = new WebMap({
-//              portalItem: { // autocasts as new PortalItem()
-//                id: "050cb95e85f941b8891eb538fe23328a"
-//              }
-//            });
+        var webmap = new WebMap({
+              portalItem: { // autocasts as new PortalItem()
+                id: "050cb95e85f941b8891eb538fe23328a"
+              }
+            });
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
@@ -138,7 +138,7 @@
         
         // well feature layer
         var trpaLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/4",
           title: "TRPA Boundary"
         });
           
