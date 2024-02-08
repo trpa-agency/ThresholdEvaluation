@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Air Quality</title>
+    <title>2019 Threshold Evaluation - Scenic Shoreline Unit</title>
 
     <style>
       html,
@@ -44,9 +44,9 @@
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
     />
-    <script src="https://js.arcgis.com/4.28/"></script>
+    <script src="https://js.arcgis.com/4.15/"></script>
 
     <script>
       require([
@@ -56,6 +56,7 @@
         "esri/WebMap",
         "esri/layers/FeatureLayer",
         "esri/layers/TileLayer",
+        "esri/popup/content/AttachmentsContent",
         "esri/widgets/Expand",
         "esri/widgets/Home",
         "esri/widgets/BasemapGallery",
@@ -71,6 +72,7 @@
         WebMap,
         FeatureLayer,
         TileLayer,
+        AttachmentsContent,
         Expand,
         Home,
         BasemapGallery,
@@ -93,37 +95,29 @@
         var view = new MapView({
               map: map,  // The WebMap instance created above
               container: "viewDiv",
-              center: [-120.01,39.01],
-              zoom: 10.5
+              center: [-120.07,38.96],
+              zoom: 14,
+             popup: {
+              dockEnabled: true,
+              dockOptions: {
+                position: "bottom-right",
+                // Disables the dock button from the popup
+                buttonEnabled: false,
+                // Ignore the default sizes that trigger responsive docking
+                breakpoint: false,
+              }}
             });
           
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-      
-        // Create a popupTemplate
-        var template = {
-          // autocasts as new PopupTemplate()
-          title: "Winter Traffic Count Location",
-          content: [
-            {
-              type: "fields",
-              fieldInfos: [
-                {
-                  fieldName: "id",
-                  label: "Site Name"
-                },
-                {
-                  fieldName: "Operator",
-                  label: "Operator"
-                }
-              ]
-            }
-          ]
-        };
-          
+        var fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left");
+        
         // Set a basic symbol on a layer to visualize all features the same way
-        var pointRenderer = {
+        var simpleRenderer = {
           type: "simple",  // autocasts as new SimpleRenderer()
           symbol: {
             type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
@@ -135,20 +129,59 @@
             }
           }
         };
-
-        // winter traffic feature layer
-        var countLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/105",
-          title: "Winter Traffic Count Location",
-          renderer: pointRenderer,
+          
+        // Create a popupTemplate
+        const template = {
+          title: "Scenic Unit: {CORRIDOR_NAME}",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
+                {
+                  fieldName: "UNIT",
+                  label: "Unit #"
+                },
+                {
+                  fieldName: "CURRENT_STATUS",
+                  label: "Status 2019"
+                }
+                ]
+              }
+              ]            
+        };
+        
+        let attachmentsElement = new AttachmentsContent({
+            displayType: "list"
+        }); 
+          
+        // Create a popupTemplate
+        const viewtemplate = {
+          title: "Scenic View Point: {ID}",
+          content:[attachmentsElement]            
+        };    
+          
+        // scenic feature layer
+        var scenicLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/3",
+          title: "Scenic Shoreline Unit",
           popupTemplate: template
         });
           
-        map.add(countLayer);
-        
-        // boundary feature layer
+        map.add(scenicLayer);
+          
+        var viewlayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Scenic_Status/MapServer/1",
+          title: "Scenic Shoreline Viewpoint",
+          popupTemplate: viewtemplate,
+          renderer: simpleRenderer,
+          minScale: 48000
+        })
+          
+        map.add(viewlayer);
+          
+        // well feature layer
         var trpaLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/4",
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
         });
           
@@ -159,15 +192,23 @@
         view: view,
         layerInfos: [
           {
-            layer: countLayer,
-            title: "Winter Traffic Count Location"
-          }
+            layer: scenicLayer,
+            title: "Scenic Shoreline Unit"
+          },
+         {
+            layer: viewlayer,
+            title: "Scenic Photo Point"
+          },
         ]
         });
 
         // Add widget to the top right corner of the view
         view.ui.add(legend, "top-right");
-        
+          
+        // Displays legend elements for the map's layers
+        // based on their minScale, maxScale, and legendEnabled properties
+        legend.respectLayerVisibility = true;
+          
         // Create collapasable button for legend
         var legendExpand = new Expand({
             expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
@@ -188,30 +229,24 @@
 
         // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
-        
-        // add full screen button
-        fullscreen = new Fullscreen({
-          view: view
-        });
-        view.ui.add(fullscreen, "top-left"); 
-          
+
         var basemapToggle = new BasemapToggle({
             container: document.createElement("div"),
             view: view,
             nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
         });
 
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
+        // Create an Expand instance and set the content
+        // property to the DOM node of the basemap gallery widget
+        var bgExpand = new Expand({
+            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+            expandTooltip: "Toggle Basemap",
+            view: view,
+            content: basemapToggle.domNode
+        });
+
+        // Add the basemap gallery button
+        view.ui.add(bgExpand, "bottom-left");       
     });   
 	</script>
   </head>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Threshold Template ArcGIS JS</title>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+
+      #infoDiv {
+        position: absolute;
+        top: 15px;
+        left: 60px;
+      }
+      #infoDiv input {
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px;
+      }
+
+      .esri-widget--button.active,
+      .esri-widget--button.active:hover,
+      .esri-widget--button.active:focus {
+        cursor: default;
+        background-color: #999696;
+      }
+      .esri-widget--button.active path,
+      .esri-widget--button.active:hover path,
+      .esri-widget--button.active:focus path {
+        fill: #e4e4e4;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
+    />
+    <script src="https://js.arcgis.com/4.28/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/WebMap",
+        "esri/layers/FeatureLayer",
+        "esri/layers/TileLayer",
+        "esri/widgets/Expand",
+        "esri/widgets/Home",
+        "esri/widgets/BasemapGallery",
+        "esri/widgets/BasemapToggle",
+        "esri/widgets/Search",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend"
+      ], function(
+        esriConfig,
+        Map,
+        MapView,
+        WebMap,
+        FeatureLayer,
+        TileLayer,
+        Expand,
+        Home,
+        BasemapGallery,
+        BasemapToggle,
+        Search,
+        LayerList,
+        Legend
+      ) {
+          {
+        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
+            };
+        
+        // create the map instance
+        var map = new Map({
+            basemap: "topo-vector",
+            });
+                
+        var webmap = new WebMap({
+               portalItem: { // autocasts as new PortalItem()
+                id: "050cb95e85f941b8891eb538fe23328a"
+             }
+            });
+
+        var view = new MapView({
+              map: map,  // The WebMap instance created above
+              container: "viewDiv",
+              center: [-120.01,39.05],
+              zoom: 10.5
+            });
+          
+        // move zoom buttons to top left
+        view.ui.move("zoom", "top-left");
+        
+        // Create a popupTemplate
+        const template = {
+          title: "Scenic Unit: {ROAD_UNIT_NAME}",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
+                {
+                  fieldName: "ROAD_UNIT",
+                  label: "Unit #"
+                },
+                {
+                  fieldName: "Status",
+                  label: "Status 2019"
+                },
+                {
+                  fieldName: "STATUS_2001",
+                  label: "Status 2001"
+                }
+                ]
+              }
+              ]            
+        };
+          
+        // well feature layer
+        var scenicLayer = new FeatureLayer({
+          url: "https://services6.arcgis.com/1KtlSd2mklZMBKaz/ArcGIS/rest/services/Tahoe_Forest_Fuels_Tx_OFFICIAL_Public_View/FeatureServer/0",
+          title: "Scenic Roadway Unit",
+          popupTemplate: template
+        });
+          
+        map.add(scenicLayer);
+        
+        // well feature layer
+        var trpaLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
+          title: "TRPA Boundary"
+        });
+          
+        map.add(trpaLayer);
+          
+        // create legend card
+        var legend = new Legend({
+        view: view,
+        layerInfos: [
+          {
+            layer: scenicLayer,
+            title: "Scenic Roadway Unit"
+          }
+        ]
+        });
+
+        // Add widget to the bottom right corner of the view
+        view.ui.add(legend, "top-right");
+          
+//        // ListItem in a LayerList instance
+//        const layerList = new LayerList({
+//              view: view,
+//              listItemCreatedFunction: function(event) {
+//                const item = event.item;
+//                if (item.layer.type != "group") {
+//                  // don't show legend twice
+//                  item.panel = {
+//                    content: "legend",
+//                    open: false
+//                  };
+//                }
+//              }
+//        });
+//
+//        view.ui.add(layerList, "top-right");
+//          
+//        // Create collapasable button for Table of Contents
+//        var layerListExpand = new Expand({
+//            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+//            expandTooltip: "Layer List",
+//            view: view,
+//            autoCollapse: true,
+//            content: layerList.domNode
+//            });
+//
+//        // add layer list button to the top right corner of the view
+//        view.ui.add(layerListExpand, "top-right");
+
+
+//        var parcels = new FeatureLayer({
+//            url: "https://maps.trpa.org/server/rest/services/Parcels/MapServer/0",
+//                popupTemplate: {
+//                // autocasts as new PopupTemplate()
+//                    title: "Parcel: {APN}",
+//                    overwriteActions: false
+//                }
+//        });
+//        
+//        webmap.add(parcels);
+//          
+//        // Create Search Widget with parcel layer as the source data
+//        var searchWidget = new Search({
+//          view: view,
+//          allPlaceholder: "Address or APN",
+//          locationEnabled: false,
+//          includeDefaultSources: false,
+//          popupEnabled: false,
+//          sources: [
+//            {
+//              layer: parcels,
+//              searchFields: ["APO_ADDRESS"],
+//              displayField: "APO_ADDRESS",
+//              exactMatch: false,
+//              outFields: ["APO_ADDRESS"],
+//              name: "Address",
+//              zoomScale: 24000,
+//            },
+//            {
+//              layer: parcels,
+//              searchFields: ["APN"],
+//              displayField: "APN",
+//              exactMatch: false,
+//              outFields: ["APN"],
+//              name: "APN",
+//              zoomScale: 24000,
+//            }
+//          ]
+//        });
+//
+//        // Add the search widget to the top left corner of the view
+//        view.ui.add(searchWidget, {
+//            position: "top-right"
+//        });
+
+//        // Createa Home Button
+//        var homeWidget = new Home({
+//            view: view
+//        });
+//
+//        // adds the home widget to the top left corner of the MapView
+//        view.ui.add(homeWidget, "top-left");            
+//
+//        var basemapToggle = new BasemapToggle({
+//            container: document.createElement("div"),
+//            view: view,
+//            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
+//        });
+//
+//        // Create an Expand instance and set the content
+//        // property to the DOM node of the basemap gallery widget
+//        var bgExpand = new Expand({
+//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+//            expandTooltip: "Toggle Basemap",
+//            view: view,
+//            content: basemapToggle.domNode
+//        });
+//
+//        // Add the basemap gallery button
+//        view.ui.add(bgExpand, "bottom-left"); 
+
+//        // add a legend widget instance to the view
+//        // and set the style to 'card'. This is a
+//        // responsive style, which is good for mobile devices
+//        // or 'classic' for PC users
+//        const legend = new Expand({
+//            expandIconClass: "esri-icon-layer-list",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
+//            expandTooltip: "Legend",
+//            content: new Legend({
+//                view: view,
+//                style: "classic" // other styles include 'card'
+//                }),
+//            view: view,
+//            expanded: false
+//        });
+//        view.ui.add(legend, "bottom-left");       
+    });   
+	</script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>

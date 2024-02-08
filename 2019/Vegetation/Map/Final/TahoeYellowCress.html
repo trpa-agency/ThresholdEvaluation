@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Air Quality</title>
+    <title>2019 Threshold Evaluation - Tahoe Yellow Cress Population Sites</title>
 
     <style>
       html,
@@ -44,38 +44,28 @@
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
     />
-    <script src="https://js.arcgis.com/4.28/"></script>
+    <script src="https://js.arcgis.com/4.15/"></script>
 
     <script>
       require([
         "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
-        "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
         "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
-        Map,
         MapView,
         WebMap,
         FeatureLayer,
-        TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
         LayerList,
         Legend,
         Fullscreen
@@ -100,26 +90,37 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-      
+        fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left");
+          
         // Create a popupTemplate
-        var template = {
-          // autocasts as new PopupTemplate()
-          title: "Winter Traffic Count Location",
-          content: [
-            {
-              type: "fields",
-              fieldInfos: [
+        const template = {
+          title: "Tahoe Yellow Cress Population Site",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
                 {
-                  fieldName: "id",
-                  label: "Site Name"
+                  fieldName: "SITE_NAME",
+                  label: "Location"
                 },
-                {
-                  fieldName: "Operator",
-                  label: "Operator"
+                { 
+                  fieldName: "OWNER",
+                  label: "Ownership Type"
+                },
+                              { 
+                  fieldName: "COUNT_VALUE",
+                  label: "Count"
+                },
+                              { 
+                  fieldName: "YEAR_OF_COUNT",
+                  label: "Year"
                 }
-              ]
-            }
-          ]
+                ]
+              }
+              ]            
         };
           
         // Set a basic symbol on a layer to visualize all features the same way
@@ -127,28 +128,29 @@
           type: "simple",  // autocasts as new SimpleRenderer()
           symbol: {
             type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-            size: 6,
-            color: "#337ab7",
+            size: 4,
+            color: "#ffffbf",
             outline: {  // autocasts as new SimpleLineSymbol()
               width: 0.5,
-              color: "white"
+              color: "#8a7121"
             }
           }
         };
 
-        // winter traffic feature layer
-        var countLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/105",
-          title: "Winter Traffic Count Location",
+        // well feature layer
+        var cressLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/9",
+          title: "Tahoe Yellow Cress Population Site",
           renderer: pointRenderer,
           popupTemplate: template
+//          definitionExpression: "YEAR_OF_COUNT = '2019'"
         });
           
-        map.add(countLayer);
+        map.add(cressLayer);
         
-        // boundary feature layer
+        // well feature layer
         var trpaLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/4",
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
         });
           
@@ -159,8 +161,9 @@
         view: view,
         layerInfos: [
           {
-            layer: countLayer,
-            title: "Winter Traffic Count Location"
+            layer: cressLayer,
+            title: "Tahoe Yellow Cress Population Site"
+
           }
         ]
         });
@@ -173,6 +176,7 @@
             expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
             expandTooltip: "Legend",
             view: view,
+//            expanded: true,
             autoCollapse: true,
             content: legend.domNode,
             group: "top-right"
@@ -188,30 +192,7 @@
 
         // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
-        
-        // add full screen button
-        fullscreen = new Fullscreen({
-          view: view
-        });
-        view.ui.add(fullscreen, "top-left"); 
-          
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });
-
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
+     
     });   
 	</script>
   </head>

@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2019 Threshold Evaluation - Air Quality</title>
+    <title>2019 Threshold Evaluation - Built Environment</title>
 
     <style>
       html,
@@ -51,31 +51,23 @@
     <script>
       require([
         "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
         "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
         "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
-        Map,
         MapView,
         WebMap,
         FeatureLayer,
         TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
         LayerList,
         Legend,
         Fullscreen
@@ -100,52 +92,99 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-      
-        // Create a popupTemplate
-        var template = {
-          // autocasts as new PopupTemplate()
-          title: "Winter Traffic Count Location",
-          content: [
-            {
-              type: "fields",
-              fieldInfos: [
-                {
-                  fieldName: "id",
-                  label: "Site Name"
-                },
-                {
-                  fieldName: "Operator",
-                  label: "Operator"
-                }
-              ]
-            }
-          ]
-        };
+        // setup full screen button
+        var fullscreen = new Fullscreen({
+          view: view
+        });
+        view.ui.add(fullscreen, "top-left");
           
-        // Set a basic symbol on a layer to visualize all features the same way
-        var pointRenderer = {
-          type: "simple",  // autocasts as new SimpleRenderer()
-          symbol: {
-            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-            size: 6,
-            color: "#337ab7",
+        // setup local plan renderer
+        var renderer = {
+          type: "unique-value",  // autocasts as new UniqueValueRenderer()
+          field: "PLAN_TYPE",
+//          defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
+          uniqueValueInfos: [{
+            // All features with value of "Area Plan" will be blue
+            value: "AREA PLAN",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 51,51, 204, 0.5 ],
             outline: {  // autocasts as new SimpleLineSymbol()
-              width: 0.5,
-              color: "white"
+                  width: 0.4,
+                  color: "grey"
+                }
             }
-          }
+          }, {
+            // All features with value of "Community Plan" will be green
+            value: "COMMUNITY PLAN",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 217,95, 14, 0.5 ],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.4,
+                  color: "grey"
+                }
+            }
+          }, {
+            // All features with value of "Plan Area Statement" will be transparent
+            value: "PLAN AREA STATEMENT",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color:[ 0,0,0, 0 ],
+            outline: {  // autocasts as new SimpleLineSymbol()
+                  width: 0.1,
+                  color: "grey"
+                }
+            }
+          }]
         };
 
-        // winter traffic feature layer
-        var countLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/105",
-          title: "Winter Traffic Count Location",
-          renderer: pointRenderer,
-          popupTemplate: template
+
+        // Create a popupTemplate
+        const template = {
+          title: "Plan Type: {PLAN_TYPE}",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
+                { 
+                  fieldName: "PLAN_NAME",
+                  label: "Plan Name"
+                }, 
+                { 
+                  fieldName: "JURISDICTION",
+                  label: "Jurisdiction"
+                },
+                { 
+                  fieldName: "GIS_ACRES",
+                  label: "Acres",
+                format: {
+                        digitSeparator: true, // Uses a comma separator in numbers >999
+                        places: 2 // Sets the number of decimal places to 0 and rounds up
+                      }
+                },
+                {
+                  fieldName: "File_URL",
+                  label: "Plan Document"
+                }
+                ]
+              }
+              ]            
+        };
+   
+
+        // local plan feature layer
+        var planLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/0",
+          title: "Planning Boundaries",
+          popupTemplate: template,
+          renderer: renderer,
+          minScale: 1000000,
         });
           
-        map.add(countLayer);
-        
+        map.add(planLayer);
+          
+//        
         // boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/4",
@@ -157,12 +196,13 @@
         // create legend card
         var legend = new Legend({
         view: view,
-        layerInfos: [
-          {
-            layer: countLayer,
-            title: "Winter Traffic Count Location"
-          }
-        ]
+//        layerInfos: [
+//          {
+//            layer: planLayer,
+//            title: "Local Plan"
+//
+//          }
+//        ]
         });
 
         // Add widget to the top right corner of the view
@@ -173,6 +213,7 @@
             expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
             expandTooltip: "Legend",
             view: view,
+//            expanded: true,
             autoCollapse: true,
             content: legend.domNode,
             group: "top-right"
@@ -188,30 +229,7 @@
 
         // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
-        
-        // add full screen button
-        fullscreen = new Fullscreen({
-          view: view
-        });
-        view.ui.add(fullscreen, "top-left"); 
-          
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });
-
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
+     
     });   
 	</script>
   </head>
