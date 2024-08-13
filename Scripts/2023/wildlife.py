@@ -87,7 +87,7 @@ def plot_bald_eagle(df, draft=False):
                             title_text='Number of Eagles'
                         )       
                     )
-    
+    # export chart
     if draft == True:
         fig.write_html(
             config=config,
