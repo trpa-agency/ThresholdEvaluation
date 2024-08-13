@@ -134,7 +134,7 @@
   * No Active Aquatic Invasive Plant Infestations
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
 * Deep Water (Pelagic) Lake Tahoe
-  * [Average Secchi Disk Transparency](WaterQuality\Chart\Final\Secchi_Depth.html)
+  * [Average Secchi Disk Transparency - Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
   * Phytoplankton Primary Productivity (Pelagic)
 * Groundwater
   * Discharge To Groundwater - Nitrogen
