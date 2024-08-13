@@ -1,8 +1,11 @@
 # 2023 Lake Tahoe Basin Threshold Evaluation 
-> Data Visualizations
-
+## Resources
+#### [Manage Indicators](https://www.laketahoeinfo.org/Indicator/ThresholdIndex)
 #### [Tracking Spreadsheet](https://tahoeregionalplanning.sharepoint.com/:x:/s/ResearchAnalysisTeam/EZ-W9RX9f-9LrPqdIc5xt1sBhBVaeNwAKCWv3epGp_MyJw?e=dEYbze) 
 #### [Web Service](https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer)
+#### [AGOL Group](https://trpa.maps.arcgis.com/home/group.html?id=cf243c33812043abbc4b98f7d2b4aa0c#overview)
+
+> Data Visualizations and Maps
 
 ## Air Quality
 * Carbon Monoxide
@@ -168,8 +171,14 @@
   * Reduce Total Annual Nitrogen Load
   * 
 ## Wildlife
-* Bald Eagle
-  * [Bald Eagle Winter Nesting - Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
-
+* Special Interest Species
+  * Northern Goshawk Population Sites
+  * Osprey Population Sites
+  * [Wintering Bald Eagle Population Sites - Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
+  * Nesting Bald Eagle Population Sites
+  * Golden Eagle Population Sites
+  * Peregrine Falcon Population Sites
+  * Deer Disturbance-Free Zone
+  * Waterfowl Population Sites
 
 #### [Give your feedback](https://arcg.is/z90110)
