@@ -29,7 +29,7 @@
 * Instream Flow
   * Non-Degradation Standard for Instream Flow
 * Lake Habitat
-  * Acres of "Prime" Fish Habitat
+  * [Acres of "Prime" Fish Habitat](Fisheries\Map\Final\LakeHabitat.html)
 * Stream Habitat
   * Stream Habitat Condition
 
@@ -80,15 +80,16 @@
 
 ## Soil Conservation
 * Impervious Cover
-  * Percent of Land Coverage Within Land Capability Class 1a (allow up to 1% impervious coverage)
-  * Percent of Land Coverage Within Land Capability Class 1b (allow up to 1% impervious coverage)	
-  * Percent of Land Coverage Within Land Capability Class 1c (allow up to 1% impervious coverage)
-  * Percent of Land Coverage Within Land Capability Class 2 (allow up to 1% impervious coverage)	
-  * Percent of Land Coverage Within Land Capability Class 3 (allow up to 5% impervious coverage)	
-  * Percent of Land Coverage Within Land Capability Class 4 (allow up to 20% impervious coverage)
-  * Percent of Land Coverage Within Land Capability Class 5 (allow up to 25% impervious coverage)
-  * Percent of Land Coverage Within Land Capability Class 6 (allow up to 30% impervious coverage)
-  * Percent of Land Coverage Within Land Capability Class 7 (allow up to 30% impervious coverage)	
+  * [Percent of Land Coverage Within Land Capability Class 1a (allow up to 1% impervious coverage)](SoilConservation\Map\Final\LandCapability_1a.html)
+  * [Percent of Land Coverage Within Land Capability Class 1b (allow up to 1% impervious coverage)](SoilConservation\Map\Final\LandCapability_1b.html)
+  * [Percent of Land Coverage Within Land Capability Class 1c (allow up to 1% impervious coverage)](SoilConservation\Map\Final\LandCapability_1c.html)
+  * [Percent of Land Coverage Within Land Capability Class 2 (allow up to 1% impervious coverage)](SoilConservation\Map\Final\LandCapability_2.html)
+  * [Percent of Land Coverage Within Land Capability Class 3 (allow up to 5% impervious coverage)](SoilConservation\Map\Final\LandCapability_3.html)
+  * [Percent of Land Coverage Within Land Capability Class 4 (allow up to 20% impervious coverage)](SoilConservation\Map\Final\LandCapability_4.html)
+  * [Percent of Land Coverage Within Land Capability Class 5 (allow up to 25% impervious coverage)](SoilConservation\Map\Final\LandCapability_5.html)
+  * [Percent of Land Coverage Within Land Capability Class 6 (allow up to 30% impervious coverage)](SoilConservation\Map\Final\LandCapability_6.html)
+  * [Percent of Land Coverage Within Land Capability Class 7 (allow up to 30% impervious coverage)](SoilConservation\Map\Final\LandCapability_7.html)
+
 * Stream Environment Zone (SEZ)
   * Preserve Stream Environment Zone (SEZ) Function
   * Wetland Restoration
