@@ -16,7 +16,7 @@
 * Ozone 
   * Highest 1-Hour Average Concentration of Ozone
   * Oxides Of Nitrogen Emissions
-* Reginonal Visibility
+* Regional Visibility
   * Regional Visibility 50th Percentile ("Average Visibility Days")
   * Regional Visibility 90th Percentile ("Worst Visibility Days")
 * Respirable and Fine Particulate Matter			
@@ -128,6 +128,7 @@
 * Uncommon Plant Communities
   * Deepwater Plants of Lake Tahoe
   * Freel Peak Cushion Plant Community
+* [New Forest Openings](Vegetation\Map\Final\Disturbance.html)
 
 ## Water Qaulity
 * Aquatic Invasive Species
