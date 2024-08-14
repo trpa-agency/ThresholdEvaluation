@@ -3,8 +3,11 @@ import pandas as pd
 # global variables
 # get path to save the file
 out_chart = local_path.parents[1] / '2023/WaterQuality/Chart'
+# set the template, font, and config for the charts
 template = 'plotly_white'
 font     = 'Calibri'
+config   = {"displayModeBar": False}
+
 # get secchi depth data
 def get_secchi_data_sql():
     # make sql database connection with pyodbc
@@ -23,7 +26,6 @@ def get_secchi_data_web():
 
 # A pretty specific graph
 def plot_secchi_depth(df, draft=False):
-    config = {"displayModeBar": False}
     # convert everything to feet
     df["annual_average"]  = df["annual_average"]  * 3.28084
     df["F5_year_average"] = df["F5_year_average"] * 3.28084
