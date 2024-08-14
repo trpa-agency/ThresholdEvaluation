@@ -16,7 +16,7 @@
 > Ozone 
   * Highest 1-Hour Average Concentration of Ozone
   * Oxides Of Nitrogen Emissions
-> Reginonal Visibility
+* Regional Visibility
   * Regional Visibility 50th Percentile ("Average Visibility Days")
   * Regional Visibility 90th Percentile ("Worst Visibility Days")
 > Respirable and Fine Particulate Matter			
@@ -31,9 +31,9 @@
 ## Fisheries
 > Instream Flow
   * Non-Degradation Standard for Instream Flow
-> Lake Habitat
+* Lake Habitat
   * Acres of "Prime" Fish Habitat
-> Stream Habitat
+* Stream Habitat
   * Stream Habitat Condition
 
 ## Noise
@@ -82,7 +82,7 @@
   * Travel Route Ratings for Shoreline Travel Units
 
 ## Soil Conservation
-> Impervious Cover
+* Impervious Cover
   * Percent of Land Coverage Within Land Capability Class 1a (allow up to 1% impervious coverage)
   * Percent of Land Coverage Within Land Capability Class 1b (allow up to 1% impervious coverage)	
   * Percent of Land Coverage Within Land Capability Class 1c (allow up to 1% impervious coverage)
@@ -92,7 +92,7 @@
   * Percent of Land Coverage Within Land Capability Class 5 (allow up to 25% impervious coverage)
   * Percent of Land Coverage Within Land Capability Class 6 (allow up to 30% impervious coverage)
   * Percent of Land Coverage Within Land Capability Class 7 (allow up to 30% impervious coverage)	
-> Stream Environment Zone (SEZ)
+* Stream Environment Zone (SEZ)
   * Preserve Stream Environment Zone (SEZ) Function
   * Wetland Restoration
   
@@ -127,6 +127,7 @@
 > Uncommon Plant Communities
   * Deepwater Plants of Lake Tahoe
   * Freel Peak Cushion Plant Community
+* [New Forest Openings](Vegetation\Map\Final\Disturbance.html)
 
 ## Water Qaulity
 > Aquatic Invasive Species
