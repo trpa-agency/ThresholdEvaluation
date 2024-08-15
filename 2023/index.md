@@ -5,35 +5,35 @@
 #### [Web Service](https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer)
 #### [AGOL Group](https://trpa.maps.arcgis.com/home/group.html?id=cf243c33812043abbc4b98f7d2b4aa0c#overview)
 
-> Data Visualizations and Maps
+## Data Visualizations and Maps
 
-## Air Quality
-> Carbon Monoxide
+> __Air Quality__
+***Carbon Monoxide***
   * Highest 8-hour Average
     * [Map]()
     * [Chart]()
   * Average Daily Winter Traffic Volumn, President's Weekend
     * [Map]()
     * [Chart]()
-> Nitrate Deposition
+***Nitrate Deposition***
   * Reduce Generation and Transport of Nitrate to Achieve Water Quality Standards
     * [Map]()
     * [Chart]()
-> Ozone 
+***Ozone*** 
   * Highest 1-Hour Average Concentration of Ozone
     * [Map]()
     * [Chart]()
   * Oxides Of Nitrogen Emissions
     * [Map]()
     * [Chart]()
-> Regional Visibility
+***Regional Visibility***
   * Regional Visibility 50th Percentile ("Average Visibility Days")
     * [Map]()
     * [Chart]()
   * Regional Visibility 90th Percentile ("Worst Visibility Days")
     * [Map]()
     * [Chart]()
-> Respirable and Fine Particulate Matter			
+***Respirable and Fine Particulate Matter***			
   * Highest 24-Hour PM10 Concentration
     * [Map]()
     * [Chart]()
@@ -46,7 +46,7 @@
   * Annual Average PM2.5 Concentration
     * [Map]()
     * [Chart]()
-> Sub-Regional Visibility
+***Sub-Regional Visibility***
   * Sub-Regional Visibility 50th Percentile ("Average Visibility Days")
     * [Map]()
     * [Chart]()
@@ -54,22 +54,22 @@
     * [Map]()
     * [Chart]()
 
-## Fisheries
-> Instream Flow
+> __Fisheries__
+***Instream Flow***
   * Non-Degradation Standard for Instream Flow
     * [Map]()
     * [Chart]()
-> Lake Habitat
+***Lake Habitat***
   * Acres of "Prime" Fish Habitat
     * [Map]()
     * [Chart]()
-> Stream Habitat
+***Stream Habitat***
   * Stream Habitat Condition
     * [Map]()
     * [Chart]()
 
-## Noise
-> Cumulative Noise Events
+> __Noise__
+***Cumulative Noise Events***
   * Wilderness And Roadless Areas
     * [Map]()
     * [Chart]()
@@ -97,7 +97,7 @@
   * Industrial Areas
     * [Map]()
     * [Chart]()
-> Single Noise Events
+***Single Noise Events***
   * Aircraft Noise Departure/Arrival (8 AM To 8 PM)
     * [Map]()
     * [Chart]()
@@ -144,26 +144,26 @@
     * [Map]()
     * [Chart]()
 
-## Recreation
-> Fair Share Distribution of Recreation Capacity
+> __Recreation__
+***Fair Share Distribution of Recreation Capacity***
   * Fair Share Distribution Of Recreation Capacity
     * [Map]()
     * [Chart]()
-> Quality of Recreation Experience and Access to Recreational Opportunities
+***Quality of Recreation Experience and Access to Recreational Opportunities***
   * Quality of Recreation Experience & Access to Recreational Opportunities
     * [Map]()
     * [Chart]()
 
-## Scenic
-> Built Environment
+> __Scenic__
+***Built Environment***
   * Built Environment (Community Design)
     * [Map]()
     * [Chart]()
-> Other Areas
+***Other Areas***
   * Scenic Quality of Other Areas (Recreation Sites and Bike Trails)
     * [Map]()
     * [Chart]()
-> Roadway and Shoreline Units
+***Roadway and Shoreline Units***
   * Scenic Quality Ratings for Roadway Travel Units (Scenic Resources)
     * [Map]()
     * [Chart]()
@@ -177,8 +177,8 @@
     * [Map]()
     * [Chart]()
 
-## Soil Conservation
-> Impervious Cover
+> __Soil Conservation__
+***Impervious Cover***
   * Percent of Land Coverage Within Land Capability Class 1a (allow up to 1% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_1a.html)
     * [Chart]()
@@ -206,7 +206,7 @@
   * Percent of Land Coverage Within Land Capability Class 7 (allow up to 30% impervious coverage)	
     * [Map](SoilConservation\Map\Final\LandCapability_7.html)
     * [Chart]()
-> Stream Environment Zone (SEZ)
+***Stream Environment Zone (SEZ)***
   * Preserve Stream Environment Zone (SEZ) Function
     * [Map]()
     * [Chart]()
@@ -214,14 +214,14 @@
     * [Map]()
     * [Chart]()
   
-## Transportation and Sustainable Communities
-> Transportation and Sustainable Communities
+> __Transportation and Sustainable Communities__
+***Transportation and Sustainable Communities***
   * Vehicles Miles Traveled per Capita
     * [Map]()
     * [Chart]()
 
-## Vegetation Preservation
-> Common Vegetation
+> __Vegetation Preservation__
+***Common Vegetation***
   * Vegetation Community Richness
     * [Map]()
     * [Chart]()
@@ -252,7 +252,7 @@
   * Appropriate Management Practices
     * [Map]()
     * [Chart]()
-> Late Seral/Old Growth Ecosystems
+***Late Seral/Old Growth Ecosystems***
   * Total Old Growth
     * [Map]()
     * [Chart]()
@@ -265,7 +265,7 @@
   * Montane Zone
     * [Map]()
     * [Chart]()
-> Sensitive Plants
+***Sensitive Plants***
   * Galena Rock Cress (Arabis Rigidissima V. Demote)
     * [Map]()
     * [Chart]()
@@ -284,7 +284,7 @@
   * Tahoe Yellow Cress (Rorippa Subumbellata) Updated 2024
     * [Map]()
     * [Chart]()
-> Uncommon Plant Communities
+***Uncommon Plant Communities***
   * Deepwater Plants of Lake Tahoe
     * [Map]()
     * [Chart]()
@@ -292,9 +292,9 @@
     * [Map]()
     * [Chart]()
 
-## Water Qaulity
-> Aquatic Invasive Species
-  * [Aquatic Invasive Species Prevention]
+> __Water Qaulity__
+***Aquatic Invasive Species***
+  * Aquatic Invasive Species Prevention
     * [Map](WaterQuality\Map\Final\WatercraftInspectionStations.html)
     * [Chart](WaterQuality\Chart\Final\Watercraft_Inspection_Stations.html)
   * No Active Aquatic Invasive Plant Infestations
@@ -303,14 +303,14 @@
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
     * [Map]()
     * [Chart]()
-> Deep Water (Pelagic) Lake Tahoe
+***Deep Water (Pelagic) Lake Tahoe***
   * Average Secchi Disk Transparency
     * [Map]()
     * [Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
   * Phytoplankton Primary Productivity (Pelagic)
     * [Map]()
     * [Chart]()
-> Groundwater
+***Groundwater***
   * Discharge To Groundwater - Nitrogen
     * [Map]()
     * [Chart]()
@@ -341,7 +341,7 @@
   * Discharge To Lake- Grease And Oil
     * [Map]()
     * [Chart]()
-> Nearshore (Littoral) Lake Tahoe
+***Nearshore (Littoral) Lake Tahoe***
   * Nearshore Attached Algae
     * [Map]()
     * [Chart]()
@@ -357,11 +357,11 @@
   * Littoral Periphyton Biomass
     * [Map]()
     * [Chart]()
-> Other Lakes
+***Other Lakes***
   * Attain Existing Water Quality Standards
     * [Map]()
     * [Chart]()
-> Surface Runoff
+***Surface Runoff***
   * Nitrogen Concentration (Surface Runoff)
     * [Map]()
     * [Chart]()
@@ -374,7 +374,7 @@
   * Suspended Sediment Concentration (Surface Runoff)
     * [Map]()
     * [Chart]()
-> Tributaries
+***Tributaries***
   * Nitrogen Concentration (Tributaries)
     * [Map]()
     * [Chart]()
@@ -387,7 +387,7 @@
   * Suspended Sediment Concentration (Tributaries)
     * [Map]()
     * [Chart]()
-> Load Reductions
+***Load Reductions***
   * Reduce Fine Sediment Particle Load
     * [Map]()
     * [Chart]()
@@ -398,8 +398,8 @@
     * [Map]()
     * [Chart]()
 
-## Wildlife
-> Special Interest Species
+> __Wildlife__
+***Special Interest Species***
   * Northern Goshawk Population Sites
     * [Map]()
     * [Chart](Wildlife\Chart\Final\Wildlife_Goshawk_NestSites.html)
