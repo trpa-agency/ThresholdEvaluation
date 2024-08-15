@@ -245,7 +245,26 @@ def stackedbar(
     fig.update_xaxes(tickformat=".0f")
     fig.update_traces(hovertemplate=hovertemplate)
     fig.update_layout(additional_formatting)
-
+    # if draft == True:
+    #     fig.write_html(
+    #         config=config,
+    #         file= path_html,
+    #         include_plotlyjs="directory",
+    #         div_id=div_id,
+    #         full_html=False,
+    #         # default_height=500,
+    #         # default_width=800,
+    #     )
+    # elif draft == False:
+    #     fig.write_html(
+    #         config=config,
+    #         file= path_html,
+    #         # include_plotlyjs="directory",
+    #         div_id=div_id,
+    #         full_html=False,
+    #         # default_height=500,
+    #         # default_width=800,
+    #     )
     fig.write_html(
         config=config,
         file=path_html,

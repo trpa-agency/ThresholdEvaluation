@@ -1,5 +1,7 @@
 from utils import *
 out_chart = local_path.parents[1] / '2023/Wildlife/Chart'
+# config, template, and font for the charts
+config = {"displayModeBar": False}
 template = 'plotly_white'
 font     = 'Calibri'
 
@@ -22,13 +24,12 @@ def get_waterford_data_web():
     return get_fs_data(waterfowl_url)
 
 # plot bald eagle data
-def plot_bald_eagle(df, draft=False):
+def plot_bald_eagle_winter(df, draft=False):
     # filter df for bald eagle
     df = df.loc[df['Wildlife_Species'] == 'Bald Eagle - winter']
     # add threshold value
     df['Threshold Value'] = 2
-    # config
-    config = {"displayModeBar": False}
+
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Total', color='Wildlife_Species')
 
@@ -107,4 +108,65 @@ def plot_bald_eagle(df, draft=False):
             full_html=False,
             # default_height=500,
             # default_width=800,
+        )
+
+# plot gosehawk data
+def plot_goshawk_data(df, draft=False):
+    # get goshawk data
+    df = df.loc[df['Wildlife_Species'] == 'Northern Goshawk']
+    # setup plot
+    fig = px.scatter(df, x = 'Year', y= 'Total', color='Wildlife_Species')
+
+    # update popup
+    fig.update_traces(customdata=df['Wildlife_Species'],
+                    hovertemplate='%{y:.0f} Active %{customdata} Nesting Territories<extra></extra>')
+
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold_Value'],
+        x=df['Year'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold: %{y:.0f}<extra></extra>'
+    ))
+
+    # set layout
+    fig.update_layout(
+        title='Northern Goshawk Nesting',
+        font_family=font,
+        template=template,
+        hovermode="x unified",
+        showlegend=True,
+        legend=dict(
+            title=""  # Set legend title to an empty string
+        ),
+        xaxis=dict(
+            tickmode='linear',
+            dtick=5
+        ),
+        yaxis=dict(
+            tickmode='linear',
+            tick0=0,
+            dtick=5,
+            range=[0, 20],
+            title_text='Active Nesting Territories'
+        )
+    )
+    # export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Wildlife_Goshawk_NestSites.html",
+            include_plotlyjs="directory",
+            div_id="Bald Eagle",
+            full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Wildlife_Goshawk_NestSites.html",
+            # include_plotlyjs="directory",
+            div_id="Bald_Eagle",
+            full_html=False
         )

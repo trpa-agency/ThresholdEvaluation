@@ -109,6 +109,8 @@
   * Relative Abundance of Shrub Vegetation Type
   * Relative Abundance of Deciduous Riparian Vegetation
   * Pattern: Limit Size Of New Forest Openings
+      * [Map](Vegetation\Map\Final\Disturbance.html) 
+      * [Chart]()
   * Pattern: Stand Composition And Age
   * Consistency with Bailey Land Capability System
   * Appropriate Management Practices
@@ -127,15 +129,18 @@
 > Uncommon Plant Communities
   * Deepwater Plants of Lake Tahoe
   * Freel Peak Cushion Plant Community
-* [New Forest Openings](Vegetation\Map\Final\Disturbance.html)
 
 ## Water Qaulity
 > Aquatic Invasive Species
-  * Aquatic Invasive Species Prevention
+  * [Aquatic Invasive Species Prevention]
+      * [Map]()
+      * [Chart](WaterQuality\Map\Final\WatercraftInspectionStations.html)
   * No Active Aquatic Invasive Plant Infestations
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
 > Deep Water (Pelagic) Lake Tahoe
-  * [Average Secchi Disk Transparency - Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
+  * Average Secchi Disk Transparency
+      * [Map]()
+      * [Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
   * Phytoplankton Primary Productivity (Pelagic)
 > Groundwater
   * Discharge To Groundwater - Nitrogen
@@ -173,8 +178,8 @@
 
 ## Wildlife
 > Special Interest Species
-  * Northern Goshawk Population Sites
-  * Osprey Population Sites
+  * [Northern Goshawk Population Sites](Wildlife\Chart\Final\Wildlife_Goshawk_NestSites.html)
+  * [Osprey Population Sites]()
   * [Wintering Bald Eagle Population Sites - Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
   * Nesting Bald Eagle Population Sites
   * Golden Eagle Population Sites

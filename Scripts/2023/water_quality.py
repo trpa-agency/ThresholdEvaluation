@@ -85,3 +85,59 @@ def plot_secchi_depth(df, draft=False):
             # default_height=500,
             # default_width=800,
         )
+
+# get watercraft inspectin stations data
+def get_watercraft_inspection_data_web():
+    # watercraft inspection stations data is indicator #16 in the LTinfo Data Center
+    url = 'https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/16'
+    # get data from web service on LTinfo
+    df = pd.read_json(url)
+    # rename columns 
+    df.rename(columns={'IndicatorProjectYear': 'Year', 
+                        'IndicatorProjectValue': 'Total', 
+                        'PMSubcategoryOption1': 'Category'}, inplace=True)
+    return df
+
+def get_inspection_data_sql():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde_tabular')
+    # get BMP Status data as dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("ELECT * FROM sde_tabular.SDE.ThresholdEvaluation_WatercraftInspections", conn)
+
+    return df
+
+# plot watercraft inspection stations data
+def plot_watercraft_inspections(df, draft=False):
+    stackedbar(
+        df,
+        path_html=out_chart / "Final/Watercraft_Inspection_Stations.html",
+        div_id="Watercraft Inspections",
+        x="Year",
+        y="Total",
+        facet=None,
+        color="Category",
+        color_sequence=[ "#5c6d70", "#a37774"],
+        orders=None,
+        y_title="Total Inspections",
+        x_title="Year",
+        hovermode="x unified",
+        orientation="v",
+        format=",.0f",
+        custom_data=["Category"],
+        hovertemplate="<br>".join(
+            ["<b>%{y:,.0f}</b> watercrafts inspected with", "<i>%{customdata[0]}</i>"]
+        )
+        + "<extra></extra>",
+        additional_formatting=dict(
+            legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            )
+        )
+    )
