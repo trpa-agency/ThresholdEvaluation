@@ -7,7 +7,7 @@
 
 ## Data Visualizations and Maps
 
-> ### Air Quality
+> ## Air Quality
 >
 ***Carbon Monoxide***
   * Highest 8-hour Average
@@ -60,7 +60,7 @@
     * [Map]()
     * [Chart]()
 
-> ### Fisheries
+> ## Fisheries
 >
 ***Instream Flow***
   * Non-Degradation Standard for Instream Flow
@@ -73,7 +73,7 @@
 ***Stream Habitat***
   * Stream Habitat Condition
 
-> ### Noise
+> ## Noise
 ***Cumulative Noise Events***
   * Wilderness And Roadless Areas
     * [Map]()
@@ -120,7 +120,7 @@
   * Motorcycles For Speeds Less Than 35 Mph
   * Motorcycles For Speeds Greater Than 35 Mph
 
-> ### Recreation
+> ## Recreation
 ***Fair Share Distribution of Recreation Capacity***
   * Fair Share Distribution Of Recreation Capacity
 >
@@ -128,7 +128,7 @@
   * Quality of Recreation Experience & Access to Recreational Opportunities
 
 
-> ### Scenic
+> ## Scenic
 ***Built Environment***
   * Built Environment (Community Design)
 >
@@ -149,7 +149,7 @@
     * [Map]()
     * [Chart]()
 
-> ### Soil Conservation
+> ## Soil Conservation
 ***Impervious Cover***
   * Percent of Land Coverage Within Land Capability Class 1a (allow up to 1% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_1a.html)
@@ -183,11 +183,11 @@
   * Preserve Stream Environment Zone (SEZ) Function
   * Wetland Restoration
   
-> ### Transportation and Sustainable Communities
+> ## Transportation and Sustainable Communities
 ***Transportation and Sustainable Communities***
   * Vehicles Miles Traveled per Capita
 
-> ### Vegetation Preservation
+> ## Vegetation Preservation
 ***Common Vegetation***
   * Vegetation Community Richness
   * Relative Abundance of Red Fir Forest In Seral Stages Other Than Mature
@@ -219,14 +219,13 @@
   * Deepwater Plants of Lake Tahoe
   * Freel Peak Cushion Plant Community
 
-> ### Water Qaulity
+> ## Water Qaulity
 ***Aquatic Invasive Species***
   * Aquatic Invasive Species Prevention
     * [Map](WaterQuality\Map\Final\WatercraftInspectionStations.html)
     * [Chart](WaterQuality\Chart\Final\Watercraft_Inspection_Stations.html)
   * No Active Aquatic Invasive Plant Infestations
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
-
 >
 ***Deep Water (Pelagic) Lake Tahoe***
   * Average Secchi Disk Transparency
@@ -273,7 +272,7 @@
   * Reduce Total Annual Phosphorus Load
   * Reduce Total Annual Nitrogen Load
 
-> ### Wildlife
+> ## Wildlife
 ***Special Interest Species***
   * Northern Goshawk Population Sites
     * [Map]()
