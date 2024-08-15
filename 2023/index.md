@@ -61,7 +61,7 @@
     * [Chart]()
 
 > ### Fisheries
-
+>
 ***Instream Flow***
   * Non-Degradation Standard for Instream Flow
 >
@@ -131,10 +131,10 @@
 > ### Scenic
 ***Built Environment***
   * Built Environment (Community Design)
-
+>
 ***Other Areas***
   * Scenic Quality of Other Areas (Recreation Sites and Bike Trails)
-
+>
 ***Roadway and Shoreline Units***
   * Scenic Quality Ratings for Roadway Travel Units (Scenic Resources)
     * [Map]()
@@ -206,7 +206,6 @@
   * Sub-Alpine Zone
   * Upper Montane Zone
   * Montane Zone
-
 >
 ***Sensitive Plants***
   * Galena Rock Cress (Arabis Rigidissima V. Demote)
@@ -246,7 +245,7 @@
   * Discharge To Lake - Iron
   * Discharge To Lake - Turbidity
   * Discharge To Lake- Grease And Oil
-
+>
 ***Nearshore (Littoral) Lake Tahoe***
   * Nearshore Attached Algae
   * Nearshore Turbidity (Stream Influence)
