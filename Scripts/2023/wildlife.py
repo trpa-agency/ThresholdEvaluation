@@ -110,6 +110,89 @@ def plot_bald_eagle_winter(df, draft=False):
             # default_width=800,
         )
 
+# plot bald eagle data
+def plot_bald_eagle_summer(df, draft=False):
+    # filter df for bald eagle
+    df= df.loc[df['Wildlife_Species'] == 'Bald Eagle - nesting']
+    # setup plot
+    fig = px.scatter(df, x = 'Year', y= 'Total', color='Wildlife_Species')
+    # update popup
+    fig.update_traces(customdata=df['Wildlife_Species'],
+                    hovertemplate='%{y:.0f} Active Bald Eagle Nests<extra></extra>')
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold_Value'],
+        x=df['Year'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold: %{y:.0f}<extra></extra>'
+    ))
+
+    # # create trendline
+    fig2 = px.scatter(df, x = 'Year', y= 'Total', 
+                    trendline='ols', trendline_color_override='#8a7121')
+
+    # # set up trendline trace
+    trendline = fig2.data[1]
+
+    # # get ols results
+    fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
+    # # get beta value
+    beta = fit_results.params[1]
+    print("Beta = " + str(fit_results.params[1]))
+    # # add beta value from trend line to data frame
+    df['Beta'] = fit_results.params[1]
+
+    # # create variable of beta
+    slope = df['Beta']
+
+    # # update trendline legend and popup
+    trendline.update(showlegend=True, name="Trend", line_width=3,
+                    customdata=slope, 
+                    hovertemplate='Trend: %{customdata:.2f}<extra></extra>')
+
+    # # add to figure
+    fig.add_trace(trendline)
+
+    # set layout
+    fig.update_layout(title='Bald Eagle Nesting Pairs',
+                        font_family=font,
+                        template=template,
+                        hovermode="x unified",
+                        showlegend=True,
+                        legend=dict(
+                        title=""),
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            dtick = 5
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 1,
+                            range=[0, 5],
+                            title_text='Number of Active Nests'
+                        )       
+                    )
+    # export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Wildlife_BaldEagle_NestSites.html",
+            include_plotlyjs="directory",
+            div_id="Bald Eagle",
+            full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Wildlife_BaldEagle_NestSites.html",
+            # include_plotlyjs="directory",
+            div_id="Bald_Eagle",
+            full_html=False
+        )
+
 # plot gosehawk data
 def plot_goshawk_data(df, draft=False):
     # get goshawk data
@@ -166,6 +249,92 @@ def plot_goshawk_data(df, draft=False):
         fig.write_html(
             config=config,
             file= out_chart / "Final/Wildlife_Goshawk_NestSites.html",
+            # include_plotlyjs="directory",
+            div_id="Bald_Eagle",
+            full_html=False
+        )
+
+# plot perigrine falcon data
+def plot_falcon_data(df, draft=False):
+    # setup dataframe
+    df = df.loc[df['Wildlife_Species'] == 'Peregrine Falcon']
+
+    # setup plot
+    fig = px.scatter(df, x = 'Year', y= 'Total', color='Wildlife_Species')
+
+    # update popup
+    fig.update_traces(customdata=df['Wildlife_Species'],
+                    hovertemplate='%{y:.0f} Active %{customdata} Nest Sites<extra></extra>')
+
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold_Value'],
+        x=df['Year'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold: %{y:.0f}<extra></extra>'
+    ))
+
+    # create trendline
+    fig2 = px.scatter(df, x = 'Year', y= 'Total', 
+                    trendline='ols', trendline_color_override='#8a7121')
+
+    # set up trendline trace
+    trendline = fig2.data[1]
+
+    # get ols results
+    fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
+    # get beta value
+    beta = fit_results.params[1]
+    print("Beta = " + str(fit_results.params[1]))
+    # add beta value from trend line to data frame
+    df['Beta'] = fit_results.params[1]
+
+    # create variable of beta
+    slope = df['Beta']
+
+    # update trendline legend and popup
+    trendline.update(showlegend=True, name="Trend", line_width=3,
+                    customdata=slope, 
+                    hovertemplate='Trend: %{customdata:.2f}<extra></extra>')
+
+    # add to figure
+    fig.add_trace(trendline)
+    # set layout
+    fig.update_layout(title=' Peregrine Falcon Nesting',
+                        font_family=font,
+                        template=template,
+                        hovermode="x unified",
+                        showlegend=True,
+                        legend=dict(
+                        title=""),
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            tick0=2008,
+                            dtick = 5
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 1,
+                            range=[0, 6],
+                            title_text='Number of Active Nests'
+                        )       
+                    )
+    # export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Wildlife_PeregrineFalcon_NestSites.html",
+            include_plotlyjs="directory",
+            div_id="Bald Eagle",
+            full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Wildlife_PeregrineFalcon_NestSites.html",
             # include_plotlyjs="directory",
             div_id="Bald_Eagle",
             full_html=False
