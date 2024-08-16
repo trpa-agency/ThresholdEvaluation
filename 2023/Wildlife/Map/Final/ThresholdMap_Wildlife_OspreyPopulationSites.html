@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2023 Threshold Evaluation - Water Quality - Other Lakes</title>
+    <title>2023 Threshold Evaluation - Osprey Population Sites</title>
 
     <style>
       html,
@@ -51,35 +51,26 @@
     <script>
       require([
         "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
-        "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
         "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
-        Map,
         MapView,
         WebMap,
         FeatureLayer,
-        TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
         LayerList,
         Legend,
         Fullscreen
       ) {
+        // set portal url
           {
         esriConfig.portalUrl = "https://maps.trpa.org/portal/";
             };
@@ -97,34 +88,30 @@
               zoom: 10.5
             });
           
-        // move zoom buttons to top left
-        view.ui.move("zoom", "top-left");
-        
-      
-//        // Create a popupTemplate
-//        var template = {
-//          // autocasts as new PopupTemplate()
-//          title: "",
-//          content: [
-//            {
-//              type: "fields",
-//              fieldInfos: [
-//                {
-//                  fieldName: "",
-//                  label: ""
-//                }
-//              ]
-//            }
-//          ]
-//        };
-
-          // Set a basic symbol on a layer to visualize all features the same way
-        var simpleRenderer = {
+          
+        // Create a popupTemplate
+        const template = {
+              title: "Osprey Nest",
+              content:[
+                  {
+              type: "fields",
+              fieldInfos: [
+                    {
+                      fieldName: "NEST_STATUS",
+                      label: "Nest Status"
+                    }
+                    ]
+                  }
+                  ]            
+            };
+          
+        // Set a basic symbol on a layer to visualize all features the same way
+        var pointRenderer = {
           type: "simple",  // autocasts as new SimpleRenderer()
           symbol: {
-            type: "simple-fill",  // autocasts as new SimpleMarkerSymbol()
-//            size: 6,
-            color: "#337ab7",
+            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+            size: 6,
+            color: "#279bdc",
             outline: {  // autocasts as new SimpleLineSymbol()
               width: 0.5,
               color: "white"
@@ -132,33 +119,31 @@
           }
         };
 
-
-        // boundary feature layer
+        // Nest feature layer
+        var nestLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/3",
+          title: "Osprey Population Site",
+          renderer: pointRenderer,
+          popupTemplate: template
+        });
+          
+        map.add(nestLayer);
+        
+        // TRPA Boundary feature layer
         var trpaLayer = new FeatureLayer({
           url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
           title: "TRPA Boundary"
         });
           
-        map.add(trpaLayer);      
-            
-        // land capability feature layer
-        var lakesLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Streams_and_Flood_Zone/MapServer/1",
-          title: "Other Lakes and Ponds",
-//          popupTemplate: template,
-          definitionExpression: "Class_name = 'Lacustrine (Lakes and Ponds)' AND NOT OBJECTID = 16551",
-          renderer: simpleRenderer
-        });
+        map.add(trpaLayer);
           
-        map.add(lakesLayer);
-          
-        // create legend card
+        // Create legend card
         var legend = new Legend({
         view: view,
-        activeLayerInfos: [
+        layerInfos: [
           {
-            layer: lakesLayer,
-            title: "Other Lakes and Ponds"
+            layer: nestLayer,
+            title: "Osprey Nest"
           }
         ]
         });
@@ -175,42 +160,28 @@
             content: legend.domNode,
             group: "top-right"
             });
-
-        // add layer list button to the top right corner of the view
+          
         view.ui.add(legendExpand, "top-right");
-
-        // Createa Home Button
+        
+        // Move zoom buttons to top left
+        view.ui.move("zoom", "top-left");
+        
+        // Create fullscreen toggle
+        var fullscreen = new Fullscreen({
+          view: view
+        });
+          
+        view.ui.add(fullscreen, "top-left");
+          
+        // Create Home Button
         var homeWidget = new Home({
             view: view
         });
 
-        // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
-        
-        // add full screen button
-        var fullscreen = new Fullscreen({
-          view: view
-        });
-        view.ui.add(fullscreen, "top-left"); 
-          
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });
 
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
-    });   
+        });     
+  
 	</script>
   </head>
   <body>

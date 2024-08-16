@@ -129,7 +129,6 @@
 ***Quality of Recreation Experience and Access to Recreational Opportunities***
   * Quality of Recreation Experience & Access to Recreational Opportunities
 
-
 > ## Scenic
 >
 ***Built Environment***
@@ -202,7 +201,7 @@
   * Relative Abundance of Shrub Vegetation Type
   * Relative Abundance of Deciduous Riparian Vegetation
   * Pattern: Limit Size Of New Forest Openings
-    * [Map](Vegetation\Map\Final\Disturbance.html) 
+    * [Map](Vegetation\Map\Final\Disturbance.html)
   * Pattern: Stand Composition And Age
   * Consistency with Bailey Land Capability System
   * Appropriate Management Practices
@@ -236,7 +235,7 @@
 >
 ***Deep Water (Pelagic) Lake Tahoe***
   * Average Secchi Disk Transparency
-    * [Map]()
+    * [Map](WaterQuality\Map\Final\LakeClaity.html)
     * [Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
   * Phytoplankton Primary Productivity (Pelagic)
 >
@@ -283,24 +282,25 @@
 >
 ***Special Interest Species***
   * Northern Goshawk Population Sites
-    * [Map]()
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_NorthernGoshawkPopulationSite.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_Goshawk_NestSites.html)
   * Osprey Population Sites
-    * [Map]()
-    * [Chart]()
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_OspreyPopulationSites.html)
+    * [Chart](Wildlife\Chart\Final\Wildlife_Osprey_NestSites.html)
   * Wintering Bald Eagle Population Sites
-    * [Map]()
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagleWinter.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
   * Nesting Bald Eagle Population Sites
-    * [Map]()
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagle.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_NestSites.html)
   * Golden Eagle Population Sites
   * Peregrine Falcon Population Sites
-    * [Map]()
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_PeregrinePopulationSites.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_PeregrineFalcon_NestSites.html)
   * Deer Disturbance-Free Zone
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_Deer.html)
   * Waterfowl Population Sites
-    * [Map]()
-    * [Chart]()
+    * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_Waterfowl.html)
+    * [Chart](Wildlife\Chart\Final\Wildlife_Waterfowl.html)
 
 #### [Give your feedback]()
