@@ -224,7 +224,7 @@
   * Deepwater Plants of Lake Tahoe
   * Freel Peak Cushion Plant Community
 
-> ## Water Qaulity
+> ## Water Quality
 >
 ***Aquatic Invasive Species***
   * Aquatic Invasive Species Prevention
@@ -277,6 +277,10 @@
   * Reduce Fine Sediment Particle Load
   * Reduce Total Annual Phosphorus Load
   * Reduce Total Annual Nitrogen Load
+  
+* [Aquatic Plants](WaterQuality\Map\Final\AquaticPlants.html)
+* [LTIMP Stations](WaterQuality\Map\Final\LTIMPStation.html)
+* [Periphyton Monitoring Sites](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
 
 ## Wildlife
 * Bald Eagle
