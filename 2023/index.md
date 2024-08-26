@@ -152,7 +152,7 @@
   * Nearshore Turbidity (No Stream Influence)
   * Phytoplankton Primary Productivity (Littoral)
   * Littoral Periphyton Biomass
-* Other Lakes - No longer needed as of 8/26/2024
+* Other Lakes
   * Attain Existing Water Quality Standards
 * Surface Runoff
   * Nitrogen Concentration (Surface Runoff)
@@ -168,9 +168,7 @@
   * Reduce Fine Sediment Particle Load
   * Reduce Total Annual Phosphorus Load
   * Reduce Total Annual Nitrogen Load
-* [Aquatic Plants](WaterQuality\Map\Final\AquaticPlants.html)
-* [LTIMP Stations](WaterQuality\Map\Final\LTIMPStation.html)
-* [Periphyton Monitoring Sites](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+
 ## Wildlife
 * Bald Eagle
   * [Bald Eagle Winter Nesting - Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
