@@ -278,6 +278,10 @@
   * Reduce Total Annual Phosphorus Load
   * Reduce Total Annual Nitrogen Load
 
+## Wildlife
+* Bald Eagle
+  * [Bald Eagle Winter Nesting - Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
+
 > ## Wildlife
 >
 ***Special Interest Species***
