@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2023 Threshold Evaluation - Water Quality - Other Lakes</title>
+    <title>2023 Threshold Evaluation - Deer Fawning Habitat</title>
 
     <style>
       html,
@@ -17,7 +17,6 @@
         margin: 0;
         padding: 0;
       }
-
 
       #infoDiv {
         position: absolute;
@@ -44,38 +43,30 @@
 
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
+      href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
     />
-    <script src="https://js.arcgis.com/4.15/"></script>
+    <script src="https://js.arcgis.com/4.28/"></script>
 
     <script>
       require([
         "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
         "esri/layers/FeatureLayer",
         "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
         "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
         esriConfig,
-        Map,
         MapView,
         WebMap,
         FeatureLayer,
         TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
         LayerList,
         Legend,
         Fullscreen
@@ -100,65 +91,72 @@
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-      
-//        // Create a popupTemplate
-//        var template = {
-//          // autocasts as new PopupTemplate()
-//          title: "",
-//          content: [
-//            {
-//              type: "fields",
-//              fieldInfos: [
-//                {
-//                  fieldName: "",
-//                  label: ""
-//                }
-//              ]
-//            }
-//          ]
-//        };
-
-          // Set a basic symbol on a layer to visualize all features the same way
-        var simpleRenderer = {
+        var fullscreen = new Fullscreen({
+          view: view
+        });
+          
+        view.ui.add(fullscreen, "top-left");
+          
+        // Create a popupTemplate
+        const template = {
+          title: "Deer Fawning Habitat",
+          content:[
+              {
+          type: "fields",
+          fieldInfos: [
+                {
+                  fieldName: "VEGTYPE",
+                  label: "Vegetation Type"
+                },
+                {
+                  fieldName: "COVERTYPE",
+                  label: "Cover Type"
+                }
+                ]
+              }
+              ]            
+        };
+          
+        // Set a basic symbol on a layer to visualize all features the same way
+        var polyRenderer = {
           type: "simple",  // autocasts as new SimpleRenderer()
           symbol: {
             type: "simple-fill",  // autocasts as new SimpleMarkerSymbol()
-//            size: 6,
-            color: "#337ab7",
+            size: 6,
+            color: "#4C7300",
             outline: {  // autocasts as new SimpleLineSymbol()
-              width: 0.5,
-              color: "white"
+              width: 0.1,
+              color: "white",
+              opacity:0.5  
             }
           }
         };
 
-
-        // boundary feature layer
+        // Habitat feature layer
+        var habLayer = new FeatureLayer({
+          url: "https://maps.trpa.org/server/rest/services/Wildlife_Habitat/MapServer/45",
+          title: "Deer Fawning Habitat",
+          renderer: polyRenderer,
+          popupTemplate: template
+        });
+          
+        map.add(habLayer);
+        
+        // TRPA Boundary feature layer
         var trpaLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
+          url: "https://maps.trpa.org/server/rest/services/Boundaries/FeatureServer/4",
           title: "TRPA Boundary"
         });
           
-        map.add(trpaLayer);      
-            
-        // land capability feature layer
-        var lakesLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Streams_and_Flood_Zone/MapServer/1",
-          title: "Other Lakes and Ponds",
-//          popupTemplate: template,
-          definitionExpression: "Class_name = 'Lacustrine (Lakes and Ponds)' AND NOT OBJECTID = 16551",
-          renderer: simpleRenderer
-        });
-          
-        map.add(lakesLayer);
+        map.add(trpaLayer);
           
         // create legend card
         var legend = new Legend({
         view: view,
-        activeLayerInfos: [
+        layerInfos: [
           {
-            layer: lakesLayer,
-            title: "Other Lakes and Ponds"
+            layer: habLayer,
+            title: "Deer Fawning Habitat"
           }
         ]
         });
@@ -186,30 +184,7 @@
 
         // adds the home widget to the top left corner of the MapView
         view.ui.add(homeWidget, "top-left");            
-        
-        // add full screen button
-        var fullscreen = new Fullscreen({
-          view: view
-        });
-        view.ui.add(fullscreen, "top-left"); 
-          
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });
-
-//        // Create an Expand instance and set the content
-//        // property to the DOM node of the basemap gallery widget
-//        var bgExpand = new Expand({
-//            expandIconClass: "esri-icon-basemap",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font
-//            expandTooltip: "Toggle Basemap",
-//            view: view,
-//            content: basemapToggle.domNode
-//        });
-//
-//        // Add the basemap gallery button
-//        view.ui.add(bgExpand, "bottom-left");       
+  
     });   
 	</script>
   </head>
