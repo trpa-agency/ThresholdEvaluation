@@ -50,7 +50,7 @@
     * [Chart]()
   * Annual Average PM2.5 Concentration
     * [Map]()
-    * [Chart]()
+    * [Chart](AirQuality\Chart\Final\AirQuality_AnnualPM25.html)
 >
 ***Sub-Regional Visibility***
   * Sub-Regional Visibility 50th Percentile ("Average Visibility Days")
@@ -281,10 +281,6 @@
 * [Aquatic Plants](WaterQuality\Map\Final\AquaticPlants.html)
 * [LTIMP Stations](WaterQuality\Map\Final\LTIMPStation.html)
 * [Periphyton Monitoring Sites](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
-
-## Wildlife
-* Bald Eagle
-  * [Bald Eagle Winter Nesting - Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
 
 > ## Wildlife
 >
