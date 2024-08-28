@@ -15,8 +15,9 @@ def get_soil_conservation_data_sql():
     # get BMP Status data as dataframe from BMP SQL Database
     with engine.begin() as conn:
         # create dataframe from sql query
-        df = pd.read_sql('SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_SoilConservation_ImperviousOverlayAnalysis_Change', conn)
-    return df
+        dfImpChg  = pd.read_sql('SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_SoilConservation_ImperviousOverlayAnalysis_Change', conn)
+        dfImp2019 = pd.read_sql('SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_SoilConservation_ImperviousOverlayAnalysis_2019', conn)
+    return dfImpChg, dfImp2019
 
 # get soil conservation data from web
 def get_soil_conservation_data_web():
