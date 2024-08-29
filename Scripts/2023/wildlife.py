@@ -14,6 +14,62 @@ def get_bald_eagle_data_sql():
         # create dataframe from sql query
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.bald_eagle_summarized", conn)
     return df
+def calculate_estimated_population(df_observed, df_estimated, parameter='EGPN'):
+    # Extract growth rates from df_estimated
+    growth_rate_row = df_estimated[df_estimated['Parameter'] == parameter]
+    
+    if not growth_rate_row.empty:
+        growth_rate = growth_rate_row['growth_rate'].values[0]
+        growth_rate_lower = growth_rate_row['growth_rate_low'].values[0]
+        growth_rate_upper = growth_rate_row['growth_rate_upper'].values[0]
+    else:
+        raise ValueError(f"No {parameter} parameter found in df_estimated")
+
+    # Ensure growth rates are numeric
+    growth_rate = float(growth_rate)
+    growth_rate_lower = float(growth_rate_lower)
+    growth_rate_upper = float(growth_rate_upper)
+
+    # Sort df_observed by 'Year' and reset index
+    df_observed = df_observed.sort_values(by='Year').reset_index(drop=True)
+    
+    # Initialize estimated population columns
+    df_observed['estimated_population'] = df_observed['Total']
+    df_observed['estimated_population_lower'] = df_observed['Total']
+    df_observed['estimated_population_upper'] = df_observed['Total']
+    
+    # Calculate estimated populations with growth rates
+    for i in range(1, len(df_observed)):
+        df_observed.loc[i, 'estimated_population'] = df_observed.loc[i-1, 'estimated_population'] * growth_rate
+        df_observed.loc[i, 'estimated_population_lower'] = df_observed.loc[i-1, 'estimated_population_lower'] * growth_rate_lower
+        df_observed.loc[i, 'estimated_population_upper'] = df_observed.loc[i-1, 'estimated_population_upper'] * growth_rate_upper
+    
+    return df_observed
+
+def get_bald_eagle_data_wt_estimate_sql():
+    engine = get_conn('sde_tabular')
+    # get BMP Status data as dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df_observed = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_Wildlife", conn)
+        df_estimated = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_Wildlife_Estimates", conn)
+    df_observed = df_observed.loc[df_observed['Wildlife_Species'] == 'Bald Eagle - winter']
+    df_estimated = df_estimated.loc[df_estimated['Species'] == 'Bald Eagle - winter']
+    df_observed = calculate_estimated_population(df_observed, df_estimated)
+    # growth_rate = df_estimated.loc[df_estimated['Parameter']=='EGPN','growth_rate'].values[0]
+    # growth_rate_lower = df_estimated.loc[df_estimated['Parameter']=='EGPN','growth_rate_low'].values[0]
+    # growth_rate_upper = df_estimated.loc[df_estimated['Parameter']=='EGPN','growth_rate_upper'].values[0]
+    # df_observed =df_observed.sort_values(by='Year').reset_index(drop=True)
+    # df_observed['estimated_population'] = df_observed['Total']
+    # df_observed['estimated_population_lower'] = df_observed['Total']
+    # df_observed['estimated_population_upper'] = df_observed['Total']
+    # for i in range(1,len(df_observed)):
+    #     df_observed.loc[i,'estimated_population'] = df_observed.loc[i-1,'estimated_population']*(growth_rate)
+    #     df_observed.loc[i,'estimated_population_lower'] = df_observed.loc[i-1,'estimated_population_lower']*(growth_rate_lower)
+    #     df_observed.loc[i,'estimated_population_upper'] = df_observed.loc[i-1,'estimated_population_upper']*(growth_rate_upper)
+    return df_observed
+
+
 
 def get_wildlife_data_web():
     wildlife_url = "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/96"
