@@ -7,7 +7,6 @@
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
     <title>2023 Threshold Evaluation - Osprey Population Sites</title>
-
     <style>
       html,
       body,
@@ -17,8 +16,6 @@
         margin: 0;
         padding: 0;
       }
-
-
       #infoDiv {
         position: absolute;
         top: 15px;
@@ -42,146 +39,83 @@
       }
     </style>
 
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.15/esri/themes/light/main.css"
-    />
-    <script src="https://js.arcgis.com/4.15/"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.29/"></script>
 
     <script>
       require([
-        "esri/config",
         "esri/views/MapView",
         "esri/WebMap",
-        "esri/layers/FeatureLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
-        esriConfig,
         MapView,
         WebMap,
-        FeatureLayer,
         Expand,
         Home,
-        LayerList,
         Legend,
         Fullscreen
       ) {
-        // set portal url
-          {
-        esriConfig.portalUrl = "https://maps.trpa.org/portal/";
-            };
-        
-        var map = new WebMap({
-              portalItem: { // autocasts as new PortalItem()
-                id: "733fa4512166430e8cc7b73dd62f44e1"
-              }
-            });
+          
+        var map = new WebMap({portalItem: {id: "cce614bb534749bf890333edab06c1a7"}});
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
               container: "viewDiv",
               center: [-120.01,39.01],
-              zoom: 10.5
+              zoom: 9
             });
-          
-          
-        // Create a popupTemplate
-        const template = {
-              title: "Osprey Nest",
-              content:[
-                  {
-              type: "fields",
-              fieldInfos: [
-                    {
-                      fieldName: "NEST_STATUS",
-                      label: "Nest Status"
-                    }
-                    ]
-                  }
-                  ]            
-            };
-          
-        // Set a basic symbol on a layer to visualize all features the same way
-        var pointRenderer = {
-          type: "simple",  // autocasts as new SimpleRenderer()
-          symbol: {
-            type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
-            size: 6,
-            color: "#279bdc",
-            outline: {  // autocasts as new SimpleLineSymbol()
-              width: 0.5,
-              color: "white"
-            }
-          }
-        };
-
-        // Nest feature layer
-        var nestLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Wildlife_Activity/MapServer/3",
-          title: "Osprey Population Site",
-          renderer: pointRenderer,
-          popupTemplate: template
-        });
-          
-        map.add(nestLayer);
         
-        // TRPA Boundary feature layer
-        var trpaLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/Boundaries/MapServer/4",
-          title: "TRPA Boundary"
-        });
           
-        map.add(trpaLayer);
-          
-        // Create legend card
-        var legend = new Legend({
-        view: view,
-        layerInfos: [
-          {
-            layer: nestLayer,
-            title: "Osprey Nest"
-          }
-        ]
+        // move zoom buttons to top left
+        view.ui.move("zoom", "top-left");
+        
+        // add fullscreen button to top left
+        var fullscreen = new Fullscreen({view: view});
+        view.ui.add(fullscreen, "top-left");
+
+        // Add map item to the legend
+        view.when(function() {
+          var featureLayer = map.layers.getItemAt(0);
+          var legend = new Legend({
+            view: view,
+            layerInfos: [
+              {
+                layer: featureLayer
+              }
+            ]
         });
 
-        // Add widget to the top right corner of the view
+        // create legend card
         view.ui.add(legend, "top-right");
         
         // Create collapasable button for legend
         var legendExpand = new Expand({
-            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            expandIconClass: "esri-icon-layers", 
             expandTooltip: "Legend",
             view: view,
+            expanded: true,
             autoCollapse: true,
             content: legend.domNode,
             group: "top-right"
             });
-          
+
+        // add layer list button to the top right corner of the view
         view.ui.add(legendExpand, "top-right");
-        
-        // Move zoom buttons to top left
-        view.ui.move("zoom", "top-left");
-        
-        // Create fullscreen toggle
-        var fullscreen = new Fullscreen({
-          view: view
-        });
-          
-        view.ui.add(fullscreen, "top-left");
-          
-        // Create Home Button
-        var homeWidget = new Home({
-            view: view
-        });
 
-        view.ui.add(homeWidget, "top-left");            
+        // Create a Home Button
+        var homeWidget = new Home({view: view});
+        view.ui.add(homeWidget, "top-left");
 
-        });     
-  
+        // Disable scroll on zoom
+        view.on("mouse-wheel", function(evt) {evt.stopPropagation(); });
+
+        
+      });
+    });
+
 	</script>
   </head>
   <body>
