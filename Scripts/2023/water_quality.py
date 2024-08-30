@@ -1,5 +1,4 @@
 from utils import *
-import pandas as pd
 # global variables
 # get path to save the file
 out_chart = local_path.parents[1] / '2023/WaterQuality/Chart'
@@ -141,3 +140,246 @@ def plot_watercraft_inspections(df, draft=False):
             )
         )
     )
+
+# get total nitrogen tributary data
+def get_total_nitrogen_annual_data_sql():
+    # make sql database connection
+    engine = get_conn('sde_tabular')
+    # get SQL table
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_TotalNitrogen_Concentration", conn)
+    # return dataframe
+    return df
+
+# get total nitrogen tributary data daily stats
+def get_total_nitrogen_daily_data_sql():
+    # make sql database connection
+    engine = get_conn('sde_tabular')
+    # get SQL table
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_TotalNitrogen_Concentration_DailyStats", conn)
+    # return dataframe
+    return df
+
+# get total phosphorus tributary data
+def get_total_phosphorus_annual_data_sql():
+    # make sql database connection
+    engine = get_conn('sde_tabular')
+    # get SQL table
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_TotalPhosphorus_Concentration", conn)
+    # return dataframe
+    return df
+
+# get total phosphorus tributary data daily stats
+def get_total_phosphorus_daily_data_sql():
+    # make sql database connection
+    engine = get_conn('sde_tabular')
+    # get SQL table
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_TotalPhosphorus_Concentration_DailyStats", conn)
+    # return dataframe
+    return df
+
+# get suspended sediment tributary data
+def get_suspended_sediment_annual_data_sql():
+    # make sql database connection
+    engine = get_conn('sde_tabular')
+    # get SQL table
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_SuspendedSediment_Concentration", conn)
+    # return dataframe
+    return df
+
+# get suspended sediment tributary data daily stats
+def get_suspended_sediment_daily_data_sql():
+    # make sql database connection
+    engine = get_conn('sde_tabular')
+    # get SQL table
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_SuspendedSediment_Concentration_DailyStats", conn)
+    # return dataframe
+    return df
+
+# get water quality data
+def get_waterquality_data():
+    # read csv file from data folder or F:\Research and Analysis\Water Quality Monitoring Program\Tributaries_LTIMP\Data and Summaries\WY23\wy23_tribThresholds.xlsx
+    xls = local_path.parents[0] / '2023/data/raw_data/wy23_tribThresholds.xlsx'
+    df = pd.read_excel(xls, sheet_name='WY_summary_mean')
+    # drop columns 'station_nm', 'MonitoringLocationIdentifier'
+    df = df.drop(columns=['station_nm', 'MonitoringLocationIdentifier'])
+
+    # get mean of all sites by year
+    df = df.groupby('WaterYear').mean().reset_index()
+    return df
+
+# plot total nitrogen concentration tributary data
+def plot_total_nitrogen(df, draft= True):
+    # rename columns
+    df.rename(columns={'WaterYear': 'Water Year', 'TN': 'Total Nitrogen (mg/L)'}, inplace=True)
+
+    fig = px.scatter(x=df['Water Year'], y=df['Total Nitrogen (mg/L)'], color_discrete_sequence=["#023f64"])
+    fig.update_traces(marker=dict(size=8))
+    fig.update_layout(
+        yaxis=dict(title="Total Nitrogen (mg/L)"),
+        xaxis=dict(title="Year", showgrid=False),
+        template="plotly_white",
+        hovermode="x unified",
+        dragmode=False,
+        margin=dict(t=20),
+        # title = "Lake Tahoe Secchi Depth",
+        legend=dict(
+            title="Total Nitrogen",
+            orientation="h",
+            entrywidth=100,
+            # entrywidthmode="fraction",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="right",
+            x=1,
+            # xref="container",
+            # yref="container"
+        ),
+    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Total_Nitrogen.html",
+            include_plotlyjs="directory",
+            div_id="Total_Nitrogen",
+            full_html=False,
+            # default_height=500,
+            # default_width=800,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Total_Nitrogen.html",
+            # include_plotlyjs="directory",
+            div_id="Total_Nitrogen",
+            full_html=False,
+            # default_height=500,
+            # default_width=800,
+        )
+
+def plot_total_phosphorus(df, draft= True):
+    df.rename(columns={'WaterYear': 'Water Year', 'TP': 'Total Phosphorus (mg/L)'}, inplace=True)
+    fig = px.scatter(x=df['Water Year'], y=df['Total Phosphorus (mg/L)'], color_discrete_sequence=["#023f64"])
+    fig.update_traces(marker=dict(size=8))
+    fig.update_layout(
+        yaxis=dict(title="Total Phosphorus (mg/L)"),
+        xaxis=dict(title="Year", showgrid=False),
+        template="plotly_white",
+        hovermode="x unified",
+        dragmode=False,
+        margin=dict(t=20),
+        # title = "Lake Tahoe Secchi Depth",
+        legend=dict(
+            title="Total Phosphorus",
+            orientation="h",
+            entrywidth=100,
+            # entrywidthmode="fraction",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="right",
+            x=1,
+            # xref="container",
+            # yref="container"
+        ),
+    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Total_Phosphorus.html",
+            include_plotlyjs="directory",
+            div_id="Total_Phosphorus",
+            full_html=False,
+            # default_height=500,
+            # default_width=800,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Total_Phosphorus.html",
+            # include_plotlyjs="directory",
+            div_id="Total_Phosphorus",
+            full_html=False,
+            # default_height=500,
+            # default_width=800,
+        )
+
+def plot_suspended_sediment(df, draft= True):
+    df.rename(columns={'WaterYear': 'Water Year', 'FSP': 'Suspended Sediment (mg/L)'}, inplace=True)
+    fig = px.scatter(x=df['Water Year'], y=df['Suspended Sediment (mg/L)'], color_discrete_sequence=["#023f64"])
+    fig.update_traces(marker=dict(size=8))
+    fig.update_layout(
+        yaxis=dict(title="Suspended Sediment (mg/L)"),
+        xaxis=dict(title="Year", showgrid=False),
+        template="plotly_white",
+        hovermode="x unified",
+        dragmode=False,
+        margin=dict(t=20),
+        # title = "Lake Tahoe Secchi Depth",
+        legend=dict(
+            title="Suspended Sediment",
+            orientation="h",
+            entrywidth=100,
+            # entrywidthmode="fraction",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="right",
+            x=1,
+            # xref="container",
+            # yref="container"
+        ),
+    )  
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Suspended_Sediment.html",
+            div_id="Suspended_Sediment",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Suspended_Sediment.html",
+            div_id="Suspended_Sediment",
+            full_html=False,
+        )
+
+# get phosporus load reduction data
+def get_phosphorus_load_reduction():
+    phURL = 'https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/254'
+    df = pd.read_json(phURL)
+    df.rename(columns={'IndicatorProjectYear': 'Year', 'IndicatorProjectValue': 'lbs/year'}, inplace=True)
+    return df
+
+def get_nitrogen_load_reduction():
+    nURL = 'https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/253'
+    df = pd.read_json(nURL)
+    df.rename(columns={'IndicatorProjectYear': 'Year', 'IndicatorProjectValue': 'lbs/year'}, inplace=True)
+    return df
+
+def get_data_forest_fuel():
+    eipForestTreatments = "https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/19"
+    data = pd.read_json(eipForestTreatments)
+    df = data[data["PMSubcategoryName1"] == "Treatment Zone"]
+    df = df.rename(
+        columns={
+            "IndicatorProjectYear": "Year",
+            "PMSubcategoryOption1": "Treatment Zone",
+            "IndicatorProjectValue": "Acres",
+        }
+    )
+    # change value Community Defense Zone to Defense Zone for consistency
+    df["Treatment Zone"] = df["Treatment Zone"].replace("Community Defense Zone", "Defense Zone")
+    df["Year"] = df["Year"].astype(str)
+    df = df.groupby(["Year", "Treatment Zone"]).agg({"Acres": "sum"}).reset_index()
+    return df
