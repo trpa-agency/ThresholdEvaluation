@@ -304,7 +304,7 @@
     * [Chart](Wildlife\Chart\Final\Wildlife_Osprey_NestSites.html)
   * Wintering Bald Eagle Population Sites
     * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagleWinter.html)
-    * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
+    * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter.html)
   * Nesting Bald Eagle Population Sites
     * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagle.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_NestSites.html)
