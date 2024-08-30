@@ -343,20 +343,43 @@ def plot_suspended_sediment(df, draft= True):
         fig.write_html(
             config=config,
             file= out_chart / "Draft/Suspended_Sediment.html",
-            include_plotlyjs="directory",
             div_id="Suspended_Sediment",
             full_html=False,
-            # default_height=500,
-            # default_width=800,
         )
     elif draft == False:
         fig.write_html(
             config=config,
             file= out_chart / "Final/Suspended_Sediment.html",
-            # include_plotlyjs="directory",
             div_id="Suspended_Sediment",
             full_html=False,
-            # default_height=500,
-            # default_width=800,
         )
-    
+
+# get phosporus load reduction data
+def get_phosphorus_load_reduction():
+    phURL = 'https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/254'
+    df = pd.read_json(phURL)
+    df.rename(columns={'IndicatorProjectYear': 'Year', 'IndicatorProjectValue': 'lbs/year'}, inplace=True)
+    return df
+
+def get_nitrogen_load_reduction():
+    nURL = 'https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/253'
+    df = pd.read_json(nURL)
+    df.rename(columns={'IndicatorProjectYear': 'Year', 'IndicatorProjectValue': 'lbs/year'}, inplace=True)
+    return df
+
+def get_data_forest_fuel():
+    eipForestTreatments = "https://www.laketahoeinfo.org/WebServices/GetReportedEIPIndicatorProjectAccomplishments/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476/19"
+    data = pd.read_json(eipForestTreatments)
+    df = data[data["PMSubcategoryName1"] == "Treatment Zone"]
+    df = df.rename(
+        columns={
+            "IndicatorProjectYear": "Year",
+            "PMSubcategoryOption1": "Treatment Zone",
+            "IndicatorProjectValue": "Acres",
+        }
+    )
+    # change value Community Defense Zone to Defense Zone for consistency
+    df["Treatment Zone"] = df["Treatment Zone"].replace("Community Defense Zone", "Defense Zone")
+    df["Year"] = df["Year"].astype(str)
+    df = df.groupby(["Year", "Treatment Zone"]).agg({"Acres": "sum"}).reset_index()
+    return df

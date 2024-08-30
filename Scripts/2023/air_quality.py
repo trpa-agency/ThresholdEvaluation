@@ -1031,10 +1031,3 @@ def plot_NOx(df, draft= False):
            div_id="AirQuality_NOx_Emissions",
            full_html=False
        )
-#---------------------------
-# Winter Traffic
-#----------------------------
-
-# plot winter traffic data
-def plot_winter_traffic(df, draft= False):
-    # set indicator
