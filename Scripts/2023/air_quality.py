@@ -1,5 +1,6 @@
 from utils import *
-
+# get path to save the file
+out_chart = local_path.parents[1] / '2023/AirQuality/Chart'
 # config, template, and font for the charts
 config = {"displayModeBar": False}
 template = 'plotly_white'

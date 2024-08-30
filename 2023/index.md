@@ -17,11 +17,6 @@
     * [Map]()
     * [Chart](AirQuality/Chart/Final/AirQuality_WinterTrafficVolume.html)
 >
-***Nitrate Deposition***
-  * Reduce Generation and Transport of Nitrate to Achieve Water Quality Standards
-    * [Map]()
-    * [Chart]()
->
 ***Ozone*** 
   * Highest 1-Hour Average Concentration of Ozone
     * [Map]()
@@ -253,10 +248,17 @@
 >
 ***Nearshore (Littoral) Lake Tahoe***
   * Nearshore Attached Algae
+    * [Map]()
+    * [Chart](WaterQuality/Chart/Draft/WaterQuality_NearshoreChl.html)
   * Nearshore Turbidity (Stream Influence)
   * Nearshore Turbidity (No Stream Influence)
   * Phytoplankton Primary Productivity (Littoral)
+    * [Map]()
+    * [Chart](WaterQuality/Chart/Draft/WaterQuality_NearshoreChl.html)
   * Littoral Periphyton Biomass
+    * [Map]()
+    * [Chart](WaterQuality/Chart/Draft/WaterQuality_NearshoreChl.html)
+    
 >
 ***Other Lakes***
   * Attain Existing Water Quality Standards
