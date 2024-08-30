@@ -54,6 +54,7 @@ def get_conn(db):
     # Get database user and password from environment variables on machine running script
     db_user             = os.environ.get('DB_USER')
     db_password         = os.environ.get('DB_PASSWORD')
+
     # driver is the ODBC driver for SQL Server
     driver              = 'ODBC Driver 17 for SQL Server'
     # server names are
