@@ -21,7 +21,16 @@ color_discrete_map = {'Cave Rock': '#33a02c',
                       'Stateline TRPA': '#cab2d6',
                       'Tahoe City': '#fdbf6f'                    
                         }
-# get  data
+# get winter traffic  data
+def get_wintertraffic_data_sql():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde_tabular')
+    # get BMP Status data as dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_WinterTrafficVolume", conn)
+    return df
+# get  NOX data
 def get_NOX_data_sql():
     # make sql database connection with pyodbc
     engine = get_conn('sde_tabular')
@@ -31,7 +40,7 @@ def get_NOX_data_sql():
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_NOX_Emissions", conn)
     return df
 
-# get  NOx data
+# get  Air Quality data
 def get_airquality_data_sql():
     # make sql database connection with pyodbc
     engine = get_conn('sde_tabular')
@@ -725,10 +734,8 @@ def plot_50_Bliss_vis(df, draft= False):
 # plot 03 1hour data
 def plot_90_Bliss_vis(df, draft= False):
 
-    # set indicator
-    #indicator = '3-year mean (90th Percentile, Mm-1)'
     # limit rows to indicator
-    dfVis90th = df.loc[(df['Indicator'] == '3-year mean (90th Percentile, Mm-1)')&
+    df = df.loc[(df['Indicator'] == '3-year mean (90th Percentile, Mm-1)')&
                       (df['Pollutant'] == 'Regional Visibility')]
 
     # correct threshold value errors
@@ -764,9 +771,6 @@ def plot_90_Bliss_vis(df, draft= False):
     # get ols results
     fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
     # get beta value
-    beta = fit_results.params[1]
-
-     # get beta value
     beta = fit_results.params[1]
 
     # update trendline
@@ -1029,5 +1033,69 @@ def plot_NOx(df, draft= False):
            file= out_chart / "Final/AirQuality_NOx_Emissions.html",
            # include_plotlyjs="directory",
            div_id="AirQuality_NOx_Emissions",
+           full_html=False
+       )
+#---------------------------
+# Winter Traffic
+#----------------------------
+
+# plot winter traffic data
+def plot_winter_traffic(df, draft= False):
+    df.dropna()
+    # set indicator
+
+    # setup plot
+    fig = px.scatter(df, x = 'Year', y= 'Value', 
+                 hover_data={'Year':True, # remove year from hover data
+                             'Value':':,.0f'}
+                             )
+
+    fig.update_traces(hovertemplate='Traffic Count:<br>%{y:,.0f} cars')
+
+
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold'],
+        x=df['Year'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+    hovertemplate='Threshold:<br>%{y:,.0f} cars<extra></extra>'
+    ))
+
+    # set layout
+    fig.update_layout(title='Winter Traffic Volume',
+                    font_family=font,
+                    template=template,
+                    showlegend=True,
+                    hovermode="x unified",
+                    xaxis = dict(
+                        tickmode = 'linear',
+                        tick0 = 1980,
+                        dtick = 5
+                    ),
+                    yaxis = dict(
+                        tickmode = 'linear',
+                        tick0 = 0,
+                        dtick = 5000,
+                        range=[0, 30000],
+                        title_text='Value'
+                    )
+                 )
+    # export chart
+    if draft == True:
+        fig.write_html(
+        config=config,
+        file= out_chart / "Draft/AirQuality_WinterTrafficVolume.html",
+        # include_plotlyjs="directory",
+        div_id="AirQuality_WinterTrafficVolume",
+        full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+           config=config,
+           file= out_chart / "Final/AirQuality_WinterTrafficVolume.html",
+           # include_plotlyjs="directory",
+           div_id="AirQuality_WinterTrafficVolume",
            full_html=False
        )
