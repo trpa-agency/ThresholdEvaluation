@@ -237,6 +237,7 @@
     * [Map](WaterQuality\Map\Final\LakeClaity.html)
     * [Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
   * Phytoplankton Primary Productivity (Pelagic)
+    * [Chart](WaterQuality\Chart\Final\Primary_Productivity.html)
 >
 ***Groundwater***
   * Discharge To Groundwater - Nitrogen
