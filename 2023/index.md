@@ -17,11 +17,6 @@
     * [Map]()
     * [Chart](AirQuality/Chart/Final/AirQuality_WinterTrafficVolume.html)
 >
-***Nitrate Deposition***
-  * Reduce Generation and Transport of Nitrate to Achieve Water Quality Standards
-    * [Map]()
-    * [Chart]()
->
 ***Ozone*** 
   * Highest 1-Hour Average Concentration of Ozone
     * [Map]()
@@ -109,6 +104,8 @@
   * Aircraft Noise Departure/Arrival (8 PM To 8 AM)
   * Watercraft Pass-By Test
   * Watercraft Shoreline Test
+    * [Map]()
+    * [Chart]()
   * Pre-1993 Watercraft-Stationary Test
   * Post 1992 Watercraft-Stationary Test
   * Off-Road Vehicles For Speeds Less Than 35 Mph
@@ -128,6 +125,7 @@
 >
 ***Quality of Recreation Experience and Access to Recreational Opportunities***
   * Quality of Recreation Experience & Access to Recreational Opportunities
+    * [Map]()
 
 > ## Scenic
 >
@@ -231,6 +229,7 @@
     * [Map](WaterQuality\Map\Final\WatercraftInspectionStations.html)
     * [Chart](WaterQuality\Chart\Final\Watercraft_Inspection_Stations.html)
   * No Active Aquatic Invasive Plant Infestations
+    * [Map](WaterQuality\Map\Final\AquaticPlants.html)
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
 >
 ***Deep Water (Pelagic) Lake Tahoe***
@@ -253,34 +252,46 @@
 >
 ***Nearshore (Littoral) Lake Tahoe***
   * Nearshore Attached Algae
+    * [Map](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Periphyton.html)
   * Nearshore Turbidity (Stream Influence)
   * Nearshore Turbidity (No Stream Influence)
   * Phytoplankton Primary Productivity (Littoral)
+    * [Map](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Periphyton.html)
   * Littoral Periphyton Biomass
+    * [Map](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Periphyton.html)
 >
 ***Other Lakes***
   * Attain Existing Water Quality Standards
 >
 ***Surface Runoff***
   * Nitrogen Concentration (Surface Runoff)
+    * [Chart](WaterQuality\Chart\Final\Nitrogen_Load_Reduction.html)
   * Phosphorus Concentration (Surface Runoff)
-  * Iron Concentration (Surface Runoff)
+    * [Chart](WaterQuality\Chart\Final\Phosphorous_Load_Reduction.html)
   * Suspended Sediment Concentration (Surface Runoff)
+    * [Chart](WaterQuality\Chart\Final\Fine_Sediment_Load_Reduction.html)
 >
 ***Tributaries***
   * Nitrogen Concentration (Tributaries)
+    * [Map](WaterQuality\Map\Final\LTIMPStation.html)
+    * [Chart](WaterQuality\Chart\Final\Total_Nitrogen.html)
   * Phosphorus Concentration (Tributaries)
-  * Iron Concentration (Tributaries)
+    * [Map](WaterQuality\Map\Final\LTIMPStation.html)
+    * [Chart](WaterQuality\Chart\Final\Total_Phosphorus.html)
   * Suspended Sediment Concentration (Tributaries)
+    * [Map](WaterQuality\Map\Final\LTIMPStation.html)
+    * [Chart](WaterQuality\Chart\Final\Suspended_Sediment.html)
 >
 ***Load Reductions***
   * Reduce Fine Sediment Particle Load
+    * [Chart](WaterQuality\Chart\Final\Fine_Sediment_Load_Reduction.html)
   * Reduce Total Annual Phosphorus Load
+    * [Chart](WaterQuality\Chart\Final\Phosphorous_Load_Reduction.html)
   * Reduce Total Annual Nitrogen Load
-  
-* [Aquatic Plants](WaterQuality\Map\Final\AquaticPlants.html)
-* [LTIMP Stations](WaterQuality\Map\Final\LTIMPStation.html)
-* [Periphyton Monitoring Sites](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Nitrogen_Load_Reduction.html)
 
 > ## Wildlife
 >
@@ -293,7 +304,7 @@
     * [Chart](Wildlife\Chart\Final\Wildlife_Osprey_NestSites.html)
   * Wintering Bald Eagle Population Sites
     * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagleWinter.html)
-    * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
+    * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter.html)
   * Nesting Bald Eagle Population Sites
     * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagle.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_NestSites.html)
