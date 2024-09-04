@@ -245,7 +245,7 @@
     * [Chart](WaterQuality\Chart\Final\Watercraft_Inspection_Stations.html)
   * No Active Aquatic Invasive Plant Infestations
     * [Map](WaterQuality\Map\Final\AquaticPlants.html)
-    * [Chart]()
+    * [Chart](WaterQuality\Chart\Final\AIS_Infestation.html)
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
 >
 ***Deep Water (Pelagic) Lake Tahoe***
