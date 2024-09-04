@@ -556,9 +556,6 @@ def get_primary_productivity_sql():
 def plot_primary_productivity(df, draft = False):
         # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Primary_Productivity', 
-    #                  hover_data={'Year':False, # remove year from hover data
-    #                              'Value':'y:.2f'
-    #                             }
                     )
 
     fig.update_traces(hovertemplate='Primary Productivity<br>%{y:.2f} gmC/m2/yr ')
@@ -643,73 +640,81 @@ def plot_primary_productivity(df, draft = False):
             # default_width=800,
         )
 
-def get_ais_infestation_data_web():
-    url = 'https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/114'
-    df = get_fs_data(url)
-    return df
-def get_ais_infestation_data_sql():
-    # make sql database connection with pyodbc
-    engine = get_conn('sde')
-    # get BMP Status data as dataframe from BMP SQL Database
+# get nearshore turbidity data
+def get_nearshore_turbidity_data():
+    engine = get_conn('sde_tabular')
     with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT Site_Name, Infest_Status_2023, Infest_Status_2022, Infest_Status_2021, Infest_Status_2020, Infest_Status_2019, Infest_Status_2018 FROM sde.SDE.AquaticInvasivePlants_ControlSites", conn)
-    df_melt = pd.melt(df, id_vars=['Site_Name'], value_vars=['Infest_Status_2023', 'Infest_Status_2022', 'Infest_Status_2021', 'Infest_Status_2020', 
-                                                             'Infest_Status_2019', 'Infest_Status_2018'],
-                                                            var_name='Year', value_name='Infestation_Status')
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.Nearshore_NTU", conn)
+        df = df.loc[df['Location'].isin(['Camp Richardson', 'Rubicon'])]
+        # drop objectid
+        df = df.drop(columns=['OBJECTID'])
+        # # unstack so we have Location, Year, Value
+        df = df.set_index(['Location']).unstack()
+        # flatten to dataframe
+        df = df.reset_index()
+        # create year column = to level_0[:4]
+        df['Year'] = df['level_0'].apply(lambda x: x[3:])
+        # drop level_0
+        df = df.drop(columns=['level_0'])
+        # rename columns 0 to Value
+        df = df.rename(columns={0: 'Value'})
+    return df
 
-    df_melt['Year'] = df_melt['Year'].str[-4:]
-    df_melt['Year'] = df_melt['Year'].astype(int)
-    df_melt['Infestation_Status'] = df_melt['Infestation_Status'].replace('n/a',None)
-    df_melt['Infestation_Status'] = df_melt['Infestation_Status'].str[0]
-    df_plot = df_melt.groupby(['Year','Infestation_Status']).size().reset_index(name='count')
-    AIS_Status = {'C':'Control', 'S':'Surveillance', 'P':'Planning'}
-    df_plot['Infestation_Status'] = df_plot['Infestation_Status'].replace(AIS_Status)
-    # calculate percentage of each infestation status by year
-    df_plot['total'] = df_plot.groupby('Year')['count'].transform('sum')
-
-    df_plot['percentage'] = round(df_plot['count']/df_plot['total']*100,2)
-    return df_plot
-
-def plot_ais_infestation(df, draft=True):
-    # setup plot
-    color_map = {'Control':'#a7c636', 'Surveillance':'#149ece', 'Planning':'#ed5151'}
-    fig = px.bar(df, x='Year', y='percentage', color='Infestation_Status', barmode='stack', title='AIS site status percentage',
-             labels={ 'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, color_discrete_map=color_map,
-        template="plotly_white",opacity=0.9)
-
-
-    # set layout
+# plot nearshore turbidity data
+def plot_nearshore_turbidity(df, draft=True):
+    df.rename(columns={'Value': 'Turbidity (NTU)'}, inplace=True)
+    fig = px.scatter(df, x='Year', y='Turbidity (NTU)', color="Location", color_discrete_sequence=["#023f64", "#a37774"])
+    # add threshold line
+    fig.add_trace(go.Scatter(
+        y=[1, 1],
+        x=[2015, 2023],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold<br>%{y:.2f} NTU<extra></extra>'
+    ))
+    # add threshold line equal to 3 NTU
+    fig.add_trace(go.Scatter(
+        y=[3, 3],
+        x=[2015, 2023],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold<br>%{y:.2f} NTU<extra></extra>'
+    ))
+    fig.update_traces(marker=dict(size=8), mode = 'lines+markers')
     fig.update_layout(
-                        font_family=font,
-                        template=template,
-                        showlegend=True,
-                        xaxis = dict(
-                            tickmode = 'linear',
-                            tick0 = 2018,
-                            dtick = 1,
-                            title_text='Year'
-                        ),
-                        yaxis = dict(
-                            tickmode = 'linear',
-                            tick0 = 0,
-                            dtick = 10,
-                            range=[0, 100],
-                            title_text='Percentage (%)'
-                        )
-                    
-                    )
+        yaxis=dict(title="Turbidity (NTU)"),
+        xaxis=dict(title="Year", showgrid=False),
+        template="plotly_white",
+        hovermode="x unified",
+        dragmode=False,
+        margin=dict(t=20),
+        # title = "Lake Tahoe Secchi Depth",
+        legend=dict(
+            title="Turbidity",
+            orientation="h",
+            entrywidth=100,
+            # entrywidthmode="fraction",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="right",
+            x=1,
+            # xref="container",
+            # yref="container"
+        ),
+    )
     if draft == True:
         fig.write_html(
             config=config,
-            file= out_chart / "Draft/AIS_Infestation.html",
-            div_id="AIS_Infestation",
-            full_html=False,
+            file= out_chart / "Draft/Nearshore_Turbidity.html",
+            div_id="Nearshore_Turbidity",
+            full_html=False
         )
     elif draft == False:
         fig.write_html(
             config=config,
-            file= out_chart / "Final/AIS_Infestation.html",
-            div_id="AIS_Infestation",
-            full_html=False,
+            file= out_chart / "Final/Nearshore_Turbidity.html",
+            div_id="Nearshore_Turbidity",
+            full_html=False
         )
