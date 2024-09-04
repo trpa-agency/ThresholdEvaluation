@@ -6,3 +6,5 @@ out_chart = local_path.parents[1] / '2023/Noise/Chart'
 template = 'plotly_white'
 font     = 'Calibri'
 config   = {"displayModeBar": False}
+
+# get the noise data

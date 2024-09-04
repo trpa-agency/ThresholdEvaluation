@@ -556,9 +556,6 @@ def get_primary_productivity_sql():
 def plot_primary_productivity(df, draft = False):
         # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Primary_Productivity', 
-    #                  hover_data={'Year':False, # remove year from hover data
-    #                              'Value':'y:.2f'
-    #                             }
                     )
 
     fig.update_traces(hovertemplate='Primary Productivity<br>%{y:.2f} gmC/m2/yr ')
@@ -641,4 +638,83 @@ def plot_primary_productivity(df, draft = False):
             full_html=False,
             # default_height=500,
             # default_width=800,
+        )
+
+# get nearshore turbidity data
+def get_nearshore_turbidity_data():
+    engine = get_conn('sde_tabular')
+    with engine.begin() as conn:
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.Nearshore_NTU", conn)
+        df = df.loc[df['Location'].isin(['Camp Richardson', 'Rubicon'])]
+        # drop objectid
+        df = df.drop(columns=['OBJECTID'])
+        # # unstack so we have Location, Year, Value
+        df = df.set_index(['Location']).unstack()
+        # flatten to dataframe
+        df = df.reset_index()
+        # create year column = to level_0[:4]
+        df['Year'] = df['level_0'].apply(lambda x: x[3:])
+        # drop level_0
+        df = df.drop(columns=['level_0'])
+        # rename columns 0 to Value
+        df = df.rename(columns={0: 'Value'})
+    return df
+
+# plot nearshore turbidity data
+def plot_nearshore_turbidity(df, draft=True):
+    df.rename(columns={'Value': 'Turbidity (NTU)'}, inplace=True)
+    fig = px.scatter(df, x='Year', y='Turbidity (NTU)', color="Location", color_discrete_sequence=["#023f64", "#a37774"])
+    # add threshold line
+    fig.add_trace(go.Scatter(
+        y=[1, 1],
+        x=[2015, 2023],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold<br>%{y:.2f} NTU<extra></extra>'
+    ))
+    # add threshold line equal to 3 NTU
+    fig.add_trace(go.Scatter(
+        y=[3, 3],
+        x=[2015, 2023],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold<br>%{y:.2f} NTU<extra></extra>'
+    ))
+    fig.update_traces(marker=dict(size=8), mode = 'lines+markers')
+    fig.update_layout(
+        yaxis=dict(title="Turbidity (NTU)"),
+        xaxis=dict(title="Year", showgrid=False),
+        template="plotly_white",
+        hovermode="x unified",
+        dragmode=False,
+        margin=dict(t=20),
+        # title = "Lake Tahoe Secchi Depth",
+        legend=dict(
+            title="Turbidity",
+            orientation="h",
+            entrywidth=100,
+            # entrywidthmode="fraction",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="right",
+            x=1,
+            # xref="container",
+            # yref="container"
+        ),
+    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Nearshore_Turbidity.html",
+            div_id="Nearshore_Turbidity",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Nearshore_Turbidity.html",
+            div_id="Nearshore_Turbidity",
+            full_html=False
         )
