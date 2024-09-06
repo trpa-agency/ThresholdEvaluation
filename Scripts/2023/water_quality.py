@@ -645,7 +645,7 @@ def get_nearshore_turbidity_data():
     engine = get_conn('sde_tabular')
     with engine.begin() as conn:
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.Nearshore_NTU", conn)
-        df = df.loc[df['Location'].isin(['Camp Richardson', 'Rubicon'])]
+        # df = df.loc[df['Location'].isin(['Camp Richardson', 'Rubicon'])]
         # drop objectid
         df = df.drop(columns=['OBJECTID'])
         # # unstack so we have Location, Year, Value
@@ -663,7 +663,7 @@ def get_nearshore_turbidity_data():
 # plot nearshore turbidity data
 def plot_nearshore_turbidity(df, draft=True):
     df.rename(columns={'Value': 'Turbidity (NTU)'}, inplace=True)
-    fig = px.scatter(df, x='Year', y='Turbidity (NTU)', color="Location", color_discrete_sequence=["#023f64", "#a37774"])
+    fig = px.scatter(df, x='Year', y='Turbidity (NTU)', color="Location")
     # add threshold line
     fig.add_trace(go.Scatter(
         y=[1, 1],
