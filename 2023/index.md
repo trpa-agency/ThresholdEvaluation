@@ -70,7 +70,7 @@
 ***Lake Habitat***
   * Acres of "Prime" Fish Habitat
     * [Map](Fisheries\Map\Final\LakeHabitat.html)
-    * [Chart](2023\Fisheries\Chart\Final\Fisheries_Habitat.html)
+    * [Chart](Fisheries\Chart\Final\Fisheries_Habitat.html)
 >
 ***Stream Habitat***
   * Stream Habitat Condition
