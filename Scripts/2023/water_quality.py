@@ -752,12 +752,14 @@ def get_ais_infestation_data_sql():
 
 def plot_ais_infestation(df, draft=True):
     # setup plot
-    color_map = {'Control':'#a7c636', 'Surveillance':'#149ece', 'Planning':'#ed5151'}
+    color_map = {'Control':"#a37774", 'Surveillance':"#5c6d70", 'Planning':"#015B3D"}
     fig = px.bar(df, x='Year', y='percentage', color='Infestation_Status', barmode='stack', title='AIS site status percentage',
              labels={ 'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, color_discrete_map=color_map,
         template="plotly_white",opacity=0.9)
 
-
+    fig.update_traces(
+        hovertemplate='<b>Year: %{x}</b><br>Status: %{fullData.name}<br>Percentage: %{y:.0f}%<extra></extra>'
+    )
     # set layout
     fig.update_layout(
                         font_family=font,
