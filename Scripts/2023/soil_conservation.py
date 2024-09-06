@@ -191,7 +191,7 @@ def plot_soil_conservation(df, landcap = None, draft=True):
 
     # create coverage bars
     fig.add_trace(go.Bar(
-        y=df['Acres of Coverage 2019'],
+        y=df['Acres of Coverage 2023'],
         x=df['Land Capability'],
         name= "Coverage 2019",
         marker_color=colors,
