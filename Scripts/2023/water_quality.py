@@ -718,3 +718,77 @@ def plot_nearshore_turbidity(df, draft=True):
             div_id="Nearshore_Turbidity",
             full_html=False
         )
+
+
+
+
+def get_ais_infestation_data_web():
+    url = 'https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/114'
+    df = get_fs_data(url)
+    return df
+def get_ais_infestation_data_sql():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde')
+    # get BMP Status data as dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT Site_Name, Infest_Status_2023, Infest_Status_2022, Infest_Status_2021, Infest_Status_2020, Infest_Status_2019, Infest_Status_2018 FROM sde.SDE.AquaticInvasivePlants_ControlSites", conn)
+    df_melt = pd.melt(df, id_vars=['Site_Name'], value_vars=['Infest_Status_2023', 'Infest_Status_2022', 'Infest_Status_2021', 'Infest_Status_2020', 
+                                                             'Infest_Status_2019', 'Infest_Status_2018'],
+                                                            var_name='Year', value_name='Infestation_Status')
+
+    df_melt['Year'] = df_melt['Year'].str[-4:]
+    df_melt['Year'] = df_melt['Year'].astype(int)
+    df_melt['Infestation_Status'] = df_melt['Infestation_Status'].replace('n/a',None)
+    df_melt['Infestation_Status'] = df_melt['Infestation_Status'].str[0]
+    df_plot = df_melt.groupby(['Year','Infestation_Status']).size().reset_index(name='count')
+    AIS_Status = {'C':'Control', 'S':'Surveillance', 'P':'Planning'}
+    df_plot['Infestation_Status'] = df_plot['Infestation_Status'].replace(AIS_Status)
+    # calculate percentage of each infestation status by year
+    df_plot['total'] = df_plot.groupby('Year')['count'].transform('sum')
+
+    df_plot['percentage'] = round(df_plot['count']/df_plot['total']*100,2)
+    return df_plot
+
+def plot_ais_infestation(df, draft=True):
+    # setup plot
+    color_map = {'Control':'#a7c636', 'Surveillance':'#149ece', 'Planning':'#ed5151'}
+    fig = px.bar(df, x='Year', y='percentage', color='Infestation_Status', barmode='stack', title='AIS site status percentage',
+             labels={ 'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, color_discrete_map=color_map,
+        template="plotly_white",opacity=0.9)
+
+
+    # set layout
+    fig.update_layout(
+                        font_family=font,
+                        template=template,
+                        showlegend=True,
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 2018,
+                            dtick = 1,
+                            title_text='Year'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            range=[0, 100],
+                            title_text='Percentage (%)'
+                        )
+                    
+                    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/AIS_Infestation.html",
+            div_id="AIS_Infestation",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/AIS_Infestation.html",
+            div_id="AIS_Infestation",
+            full_html=False,
+        )

@@ -71,6 +71,10 @@ def get_conn(db):
         connection_string = f"DRIVER={driver};SERVER={sql_14};DATABASE={db};UID={db_user};PWD={db_password}"
         connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_string})
         engine = create_engine(connection_url)
+    elif db == 'sde':
+        connection_string = f"DRIVER={driver};SERVER={sql_12};DATABASE={db};UID={db_user};PWD={db_password}"
+        connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_string})
+        engine = create_engine(connection_url)
     # else return None
     else:
         engine = None
