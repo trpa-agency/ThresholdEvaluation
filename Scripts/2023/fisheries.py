@@ -8,30 +8,26 @@ font     = 'Calibri'
 # get fish habitat data
 def get_fishhab():
     # Lake fish hab data
-    fishLakeHab = sdeBase + "\\sde.SDE.Fisheries\\sde.SDE.Fish_Habitat_2016"
-    # create spatial dataframe from parcel feature class
-    sdfLakeFishHab = pd.DataFrame.spatial.from_featureclass(fishLakeHab)
+    engine = get_conn('sde')
+    # get BMP Status data as dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("Select Habitat2015, Acres FROM sde.SDE.Fish_Habitat_2016", conn)
+
     # set field to string
-    sdfLakeFishHab = sdfLakeFishHab.astype({"Habitat2015": str})
+    
+    df['Condition'] = df['Habitat2015'].astype(str)
     # change domain values to text
-    sdfLakeFishHab.Habitat2015 = sdfLakeFishHab.Habitat2015.replace({"1": "Marginal",
+    df.Condition = df.Condition.replace({"1": "Marginal",
                                                                     "2": "Feed-Cover",
                                                                     "3": "Spawning" })
     # group by habitat values and acres
-    habAcres = sdfLakeFishHab['Acres'].groupby(sdfLakeFishHab['Habitat2015']) 
-    # get total for each hab type
-    marginal = sdfLakeFishHab[sdfLakeFishHab['Habitat2015']=='Marginal']['Acres'].sum()
-    feed = sdfLakeFishHab[sdfLakeFishHab['Habitat2015']=='Feed-Cover']['Acres'].sum()
-    spawn = sdfLakeFishHab[sdfLakeFishHab['Habitat2015']=='Spawning']['Acres'].sum()
-    # setup 
-    df = pd.DataFrame([marginal,feed,spawn],  columns=['Acres'])
-    df.loc[0,'Condition'] = 'Marginal'
-    df.loc[1,'Condition'] = 'Feed-Cover'
-    df.loc[2,'Condition'] = 'Spawning'
+    df = df.groupby(['Condition'])['Acres'].sum().reset_index()
+
     return df
 
 # plot fish habitat data
-def plot_fishhab(df, draft):
+def plot_fishhab(df,  draft=False):
     # set colors for bars
     colors = ['#CDCD66','#00A884','#8400A8']
     fig = px.bar(df,  color='Condition', color_discrete_sequence=colors)
