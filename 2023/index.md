@@ -62,7 +62,7 @@
     * [Chart](AirQuality/Chart/Final/AirQuality_SubRegVis90th_SouthLake.html)
 
 > ## Fisheries
->
+
 ***Instream Flow***
   * Non-Degradation Standard for Instream Flow
     * [Map]()
@@ -70,7 +70,7 @@
 ***Lake Habitat***
   * Acres of "Prime" Fish Habitat
     * [Map](Fisheries\Map\Final\LakeHabitat.html)
-    * [Chart]()
+    * [Chart](Fisheries\Chart\Final\Fisheries_Habitat.html)
 >
 ***Stream Habitat***
   * Stream Habitat Condition
