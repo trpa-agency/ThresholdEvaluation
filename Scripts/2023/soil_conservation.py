@@ -89,7 +89,7 @@ def transform_soil_conservation_data(dfImpChg, dfImp2019):
     df.loc[df['Land Capability'].isin(['5']), 'Threshold Acres'] = df['Total Acres']*0.25
     df.loc[df['Land Capability'].isin(['6','7']), 'Threshold Acres'] = df['Total Acres']*0.3
 
-    df2019 = df.drop(columns=['Threshold Acres', 'Threshold Value', 'Total Acres'])
+    # df2019 = df.drop(columns=['Threshold Acres', 'Threshold Value', 'Total Acres'])
 
     df = df[['Land Capability',
             'Acres of Hard Surface 2019',
@@ -137,6 +137,8 @@ def transform_new_coverage_data():
                     'Bailey7':'7'}
     # map values
     df['LandCapability'] = df['LandCapability'].map(landcap_dict)
+    # rename columns
+    df.rename(columns={'LandCapability':'Land Capability'}, inplace=True)
     # to csv
     df.to_csv(r"data/processed_data/LandCapability_Acres.csv")
     return df
@@ -151,15 +153,25 @@ def add_new_coverage(dfImpOld, dfImpNew):
     return dfImp
 
 # plot soil conservation data
-def plot_soil_conservation(df, landcap = None):
+def plot_soil_conservation(df, landcap = None, draft=True):
     df = df.sort_values(by='Land Capability')
-    if landcap:
-        df = df[df['Land Capability'] == landcap]
-    
+
     # create a bar chart
+    # create a dictionary of bar colors based on landcap
+    colordict = {'1A': 0,
+                 '1B': 1,
+                 '1C': 2,
+                 '2': 3,
+                 '3': 4,
+                 '4': 5,
+                 '5': 6,
+                 '6': 7,
+                 '7': 8}
+    
     # set color map
     colors = ['lightslategray',] * 9
-    colors[1] = '#279bdc'
+    # update color based on land capability
+    colors[colordict[landcap]] = '#279bdc'
 
     # create threshold lines
     fig = go.Figure(go.Scatter(
@@ -190,7 +202,7 @@ def plot_soil_conservation(df, landcap = None):
     ))
 
     # set layout
-    fig.update_layout(title='Impervious Cover in Land Capability Class 1B',
+    fig.update_layout(title=f'Impervious Cover in Land Capability Class {landcap}',
                         font_family=font,
                         template=template,
                         legend_title_text='',
@@ -199,8 +211,7 @@ def plot_soil_conservation(df, landcap = None):
                         barmode='overlay',
                         xaxis = dict(
                             tickmode = 'linear',
-                            title_text='Land Capability Class',
-    #                         range=[-1,4.5]
+                            title_text=f'Land Capability Class',
                         ),
                         yaxis = dict(
                             title_text='Acres',
@@ -209,11 +220,22 @@ def plot_soil_conservation(df, landcap = None):
                             range= [0,7000],
                             tick0 = 0,
                             dtick = 1000,
-                            tickformat=",.0"
+                            tickformat=","
                         )
                     )
 
     fig.show()
-    # save to HTML
-    fig.write_html(os.path.join(workspace, "SoilConservation_LandCapability_Coverage_1B.html"))
-    return None
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Draft/SoilConservation_{landcap}.html",
+            div_id=f"SoilConservatin_{landcap}",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"SoilConservation_{landcap}.html",
+            div_id=f"SoilConservation_{landcap}",
+            full_html=False,
+        )
