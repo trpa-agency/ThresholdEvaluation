@@ -7,3 +7,7 @@ out_chart = local_path.parents[1] / '2023/Vegetation/Chart'
 template = 'plotly_white'
 font     = 'Calibri'
 config   = {"displayModeBar": False}
+
+# get Tahoe yellow-cress data
+
+# plot the chart

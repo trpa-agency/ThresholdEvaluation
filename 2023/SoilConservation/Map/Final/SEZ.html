@@ -78,12 +78,16 @@
 
         // Add map item to the legend
         view.when(function() {
-          var featureLayer = map.layers.getItemAt(0);
+          var featureLayer = map.layers.getItemAt(1);
+          var featureLayer2 = map.layers.getItemAt(0);
           var legend = new Legend({
             view: view,
             layerInfos: [
               {
                 layer: featureLayer
+              },
+              {
+                layer: featureLayer2
               }
             ]
         });
