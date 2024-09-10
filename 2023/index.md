@@ -11,62 +11,71 @@
 >
 ***Carbon Monoxide***
   * Highest 8-hour Average
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_8hrCO.html)
   * Average Daily Winter Traffic Volumn, President's Weekend
-    * [Map]()
+    * [Map](AirQuality\Map\Final\WinterTrafficCountLocation.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_WinterTrafficVolume.html)
+>
+***Nitrate Deposition***
+  * Vehicle Miles Traveled (Threshold Dashboard)
+  * Reduce Generation and Transport of Nitrate to Achieve Water Quality Standards
+    * [Map](WaterQuality\Map\Final\LakeClaity.html)
+    * [Chart](AirQuality\Chart\Final\Midlake_Dissolved_Nitrogen.html)
 >
 ***Ozone*** 
   * Highest 1-Hour Average Concentration of Ozone
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_1hrOzone.html)
   * Oxides Of Nitrogen Emissions
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_NOx_Emissions.html)
 >
 ***Regional Visibility***
   * Regional Visibility 50th Percentile ("Average Visibility Days")
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_DLBliss.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_RegVis50th_Bliss.html)
   * Regional Visibility 90th Percentile ("Worst Visibility Days")
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_DLBliss.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_RegVis90th_Bliss.html)
 >
 ***Respirable and Fine Particulate Matter***			
   * Highest 24-Hour PM10 Concentration
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_24hrPM10.html)
   * Annual Average PM10 Concentration
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_AnnualPM10.html)
   * Highest 24-Hour PM2.5 Concentration
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_24hrPM25.html)
   * Annual Average PM2.5 Concentration
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_All.html)
     * [Chart](AirQuality\Chart\Final\AirQuality_AnnualPM25.html)
 >
 ***Sub-Regional Visibility***
   * Sub-Regional Visibility 50th Percentile ("Average Visibility Days")
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_LTCC.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_SubRegVis50th_SouthLake.html)
   * Sub-Regional Visibility 90th Percentile ("Worst Visibility Days")
-    * [Map]()
+    * [Map](AirQuality\Map\Final\AirQualityStation_LTCC.html)
     * [Chart](AirQuality/Chart/Final/AirQuality_SubRegVis90th_SouthLake.html)
 
 > ## Fisheries
->
+
 ***Instream Flow***
   * Non-Degradation Standard for Instream Flow
+    * [Map]()
 >
 ***Lake Habitat***
   * Acres of "Prime" Fish Habitat
     * [Map](Fisheries\Map\Final\LakeHabitat.html)
-    * [Chart]()
+    * [Chart](Fisheries\Chart\Final\Fisheries_Habitat.html)
 >
 ***Stream Habitat***
   * Stream Habitat Condition
+    * [Map](Fisheries\Map\Final\StreamHabitat.html)
+    * [Chart]()
 
 > ## Noise
 >
@@ -104,6 +113,8 @@
   * Aircraft Noise Departure/Arrival (8 PM To 8 AM)
   * Watercraft Pass-By Test
   * Watercraft Shoreline Test
+    * [Map](Noise\Map\Final\NoiseMonitoringLocation_Shoreline.html)
+    * [Chart]()
   * Pre-1993 Watercraft-Stationary Test
   * Post 1992 Watercraft-Stationary Test
   * Off-Road Vehicles For Speeds Less Than 35 Mph
@@ -120,17 +131,21 @@
 >
 ***Fair Share Distribution of Recreation Capacity***
   * Fair Share Distribution Of Recreation Capacity
+    * [Map](Recreation\Map\Final\Recreation.html)
 >
 ***Quality of Recreation Experience and Access to Recreational Opportunities***
   * Quality of Recreation Experience & Access to Recreational Opportunities
+    * [Map](Recreation\Map\Final\Recreation.html)
 
 > ## Scenic
 >
 ***Built Environment***
   * Built Environment (Community Design)
+    * [Map]()
 >
 ***Other Areas***
   * Scenic Quality of Other Areas (Recreation Sites and Bike Trails)
+    * [Map]()
 >
 ***Roadway and Shoreline Units***
   * Scenic Quality Ratings for Roadway Travel Units (Scenic Resources)
@@ -145,42 +160,45 @@
   * Travel Route Ratings for Shoreline Travel Units
     * [Map]()
     * [Chart]()
-
+    
 > ## Soil Conservation
 >
 ***Impervious Cover***
   * Percent of Land Coverage Within Land Capability Class 1a (allow up to 1% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_1a.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_1A.html)
   * Percent of Land Coverage Within Land Capability Class 1b (allow up to 1% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_1b.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_1B.html)
   * Percent of Land Coverage Within Land Capability Class 1c (allow up to 1% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_1c.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_1C.html)
   * Percent of Land Coverage Within Land Capability Class 2 (allow up to 1% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_2.html)
-    * [Chart]()	
+    * [Chart](SoilConservation\Chart\SoilConservation_2.html)	
   * Percent of Land Coverage Within Land Capability Class 3 (allow up to 5% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_3.html)
-    * [Chart]()	
+    * [Chart](SoilConservation\Chart\SoilConservation_3.html)	
   * Percent of Land Coverage Within Land Capability Class 4 (allow up to 20% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_4.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_4.html)
   * Percent of Land Coverage Within Land Capability Class 5 (allow up to 25% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_5.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_5.html)
   * Percent of Land Coverage Within Land Capability Class 6 (allow up to 30% impervious coverage)
     * [Map](SoilConservation\Map\Final\LandCapability_6.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_6.html)
   * Percent of Land Coverage Within Land Capability Class 7 (allow up to 30% impervious coverage)	
     * [Map](SoilConservation\Map\Final\LandCapability_7.html)
-    * [Chart]()
+    * [Chart](SoilConservation\Chart\SoilConservation_7.html)
 >
 ***Stream Environment Zone (SEZ)***
   * Preserve Stream Environment Zone (SEZ) Function
+    * [Map]()
+    * [Chart]()
   * Wetland Restoration
-  
+    * [Map]()
+    * [Chart]()
 > ## Transportation and Sustainable Communities
 >
 ***Transportation and Sustainable Communities***
@@ -226,6 +244,8 @@
     * [Map](WaterQuality\Map\Final\WatercraftInspectionStations.html)
     * [Chart](WaterQuality\Chart\Final\Watercraft_Inspection_Stations.html)
   * No Active Aquatic Invasive Plant Infestations
+    * [Map](WaterQuality\Map\Final\AquaticPlants.html)
+    * [Chart](WaterQuality\Chart\Final\AIS_Infestation.html)
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
 >
 ***Deep Water (Pelagic) Lake Tahoe***
@@ -233,6 +253,7 @@
     * [Map](WaterQuality\Map\Final\LakeClaity.html)
     * [Chart](WaterQuality\Chart\Final\Secchi_Depth.html)
   * Phytoplankton Primary Productivity (Pelagic)
+    * [Chart](WaterQuality\Chart\Final\Primary_Productivity.html)
 >
 ***Groundwater***
   * Discharge To Groundwater - Nitrogen
@@ -248,41 +269,48 @@
 >
 ***Nearshore (Littoral) Lake Tahoe***
   * Nearshore Attached Algae
-    * [Map]()
-    * [Chart](WaterQuality/Chart/Draft/WaterQuality_NearshoreChl.html)
+    * [Map](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Periphyton.html)
   * Nearshore Turbidity (Stream Influence)
+    * [Chart](WaterQuality\Chart\Final\Nearshore_Turbidity.html)
   * Nearshore Turbidity (No Stream Influence)
+    * [Chart](WaterQuality\Chart\Final\Nearshore_Turbidity.html)
   * Phytoplankton Primary Productivity (Littoral)
-    * [Map]()
-    * [Chart](WaterQuality/Chart/Draft/WaterQuality_NearshoreChl.html)
+    * [Map](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Periphyton.html)
   * Littoral Periphyton Biomass
-    * [Map]()
-    * [Chart](WaterQuality/Chart/Draft/WaterQuality_NearshoreChl.html)
-    
+    * [Map](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Periphyton.html)
 >
 ***Other Lakes***
   * Attain Existing Water Quality Standards
 >
 ***Surface Runoff***
   * Nitrogen Concentration (Surface Runoff)
+    * [Chart](WaterQuality\Chart\Final\Nitrogen_Load_Reduction.html)
   * Phosphorus Concentration (Surface Runoff)
-  * Iron Concentration (Surface Runoff)
+    * [Chart](WaterQuality\Chart\Final\Phosphorous_Load_Reduction.html)
   * Suspended Sediment Concentration (Surface Runoff)
+    * [Chart](WaterQuality\Chart\Final\Fine_Sediment_Load_Reduction.html)
 >
 ***Tributaries***
   * Nitrogen Concentration (Tributaries)
+    * [Map](WaterQuality\Map\Final\LTIMPStation.html)
+    * [Chart](WaterQuality\Chart\Final\Total_Nitrogen.html)
   * Phosphorus Concentration (Tributaries)
-  * Iron Concentration (Tributaries)
+    * [Map](WaterQuality\Map\Final\LTIMPStation.html)
+    * [Chart](WaterQuality\Chart\Final\Total_Phosphorus.html)
   * Suspended Sediment Concentration (Tributaries)
+    * [Map](WaterQuality\Map\Final\LTIMPStation.html)
+    * [Chart](WaterQuality\Chart\Final\Suspended_Sediment.html)
 >
 ***Load Reductions***
   * Reduce Fine Sediment Particle Load
+    * [Chart](WaterQuality\Chart\Final\Fine_Sediment_Load_Reduction.html)
   * Reduce Total Annual Phosphorus Load
+    * [Chart](WaterQuality\Chart\Final\Phosphorous_Load_Reduction.html)
   * Reduce Total Annual Nitrogen Load
-  
-* [Aquatic Plants](WaterQuality\Map\Final\AquaticPlants.html)
-* [LTIMP Stations](WaterQuality\Map\Final\LTIMPStation.html)
-* [Periphyton Monitoring Sites](WaterQuality\Map\Final\PeriphytonMonitoringSite.html)
+    * [Chart](WaterQuality\Chart\Final\Nitrogen_Load_Reduction.html)
 
 > ## Wildlife
 >
@@ -295,7 +323,7 @@
     * [Chart](Wildlife\Chart\Final\Wildlife_Osprey_NestSites.html)
   * Wintering Bald Eagle Population Sites
     * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagleWinter.html)
-    * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter_NestSites.html)
+    * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_Winter.html)
   * Nesting Bald Eagle Population Sites
     * [Map](Wildlife\Map\Final\ThresholdMap_Wildlife_BaldEagle.html)
     * [Chart](Wildlife\Chart\Final\Wildlife_BaldEagle_NestSites.html)

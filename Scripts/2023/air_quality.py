@@ -1100,3 +1100,99 @@ def plot_winter_traffic(df, draft= False):
            div_id="AirQuality_WinterTrafficVolume",
            full_html=False
        )
+
+# get midlake dissolved nitrogen data
+def get_midlake_dissolved_nitrogen_data():
+    engine = get_conn('sde_tabular')
+    with engine.begin() as conn:
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_MidLake_DissolvedNitrogen", conn)
+    return df
+
+# plot midlake dissolved nitrogen data
+def plot_midlake_dissolved_nitrogen(df, draft=True):
+    # df.rename(columns={'Value': 'Dissolved Nitrogen (mg/L)'}, inplace=True)
+    fig = px.scatter(df, x='Year', y='Value', color_discrete_sequence=["#023f64"])
+    # add threshold line
+    # setup plot
+    fig = px.scatter(df, x = 'Year', y= 'Value', 
+    #                  hover_data={'Year':False, # remove year from hover data
+    #                              'Value':'y:.2f'
+    #                             }
+                    )
+
+    fig.update_traces(hovertemplate='Dissolved Nitrogen<br>%{y:,.0f} g ha-1 yr-1')
+
+    df['Threshold']=1
+
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold'],
+        x=df['Year'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold<br>%{y:.2f} <extra></extra>'
+    ))
+    
+    # create trendline
+    fig2 = px.scatter(df, x = 'Year', y= 'Value', 
+                     trendline='ols', trendline_color_override='#8a7121')
+
+    # set up trendline trace
+    trendline = fig2.data[1]
+
+    # get ols results
+    fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
+    # get beta value
+    beta = fit_results.params[1]
+    print("Beta = " + str(fit_results.params[1]))
+    # add beta value from trend line to data frame
+    df['Beta'] = fit_results.params[1]
+
+    # create variable of beta
+    slope = df['Beta']
+
+    # update trendline
+    trendline.update(showlegend=True, name="Trend", line_width=3, 
+                     customdata=slope, hovertemplate='Trend<br>%{customdata:.2f}<extra></extra>')
+
+    # add to figure
+    fig.add_trace(trendline)
+
+    # set layout
+    fig.update_layout(title='Mid Lake Dissolved Nitrogen',
+                        font_family=font,
+                        template=template,
+                        showlegend=True,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 1990,
+                            dtick = 5,
+                            title_text='Year'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 500,
+                            range=[0, 4000],
+                            title_text='Value'
+                        )
+                    )
+    # remove threhold from legend
+    fig.for_each_trace(lambda t: t.update(showlegend=False) if t.name == 'Threshold' else ())
+    
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Midlake_Dissolved_Nitrogen.html",
+            div_id="Midlake_Dissolved_Nitrogen",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Midlake_Dissolved_Nitrogen.html",
+            div_id="Midlake_Dissolved_Nitrogen",
+            full_html=False
+        )

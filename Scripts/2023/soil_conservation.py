@@ -89,7 +89,7 @@ def transform_soil_conservation_data(dfImpChg, dfImp2019):
     df.loc[df['Land Capability'].isin(['5']), 'Threshold Acres'] = df['Total Acres']*0.25
     df.loc[df['Land Capability'].isin(['6','7']), 'Threshold Acres'] = df['Total Acres']*0.3
 
-    df2019 = df.drop(columns=['Threshold Acres', 'Threshold Value', 'Total Acres'])
+    # df2019 = df.drop(columns=['Threshold Acres', 'Threshold Value', 'Total Acres'])
 
     df = df[['Land Capability',
             'Acres of Hard Surface 2019',
@@ -117,22 +117,14 @@ def transform_new_coverage_data():
     dfNewImp.fillna(0, inplace=True)
     # drop parcle and jurisdiction columns
     dfNewImp.drop(['Parcel', 'Jurisdiction'], axis=1, inplace=True)
-    # group by
-    df = dfNewImp.groupby(['Bailey1a', 'Bailey1b', 'Bailey1c', 'Bailey2', 'Bailey3', 'Bailey4', 'Bailey5', 'Bailey6', 'Bailey7']).sum()
-    df = df.reset_index()
-    # stack the dataframe
-    df = df.stack().reset_index()
-    # # rename columns
-    df.rename(columns={'level_1':'LandCapability', 0:'SqFt'}, inplace=True)
-    # # drop columns
-    df.drop(['level_0'], axis=1, inplace=True)
-    # pivot the dataframe
-    pivot = pd.pivot_table(df,index=['LandCapability'],
-                                values='SqFt', aggfunc=np.sum)
-    # flatten pivot
-    flattened = pd.DataFrame(pivot.to_records())
+    # melt
+    df_melt = dfNewImp.melt(value_vars=['Bailey1a', 'Bailey1b', 'Bailey1c', 'Bailey2', 'Bailey3', 'Bailey4', 'Bailey5', 'Bailey6', 'Bailey7'], var_name='LandCapability', value_name='SqFt')
+    # # group by Bailey Type
+    df = df_melt.groupby(['LandCapability']).sum()
+    # # reset index
+    df.reset_index(inplace=True)
     # create acres column
-    flattened['Acres'] = flattened['SqFt']/43560
+    df['Acres'] = df['SqFt']/43560
     # rename values
     landcap_dict = {'Bailey1a':'1A', 
                     'Bailey1b':'1B', 
@@ -144,10 +136,11 @@ def transform_new_coverage_data():
                     'Bailey6':'6', 
                     'Bailey7':'7'}
     # map values
-    flattened['LandCapability'] = flattened['LandCapability'].map(landcap_dict)
+    df['LandCapability'] = df['LandCapability'].map(landcap_dict)
+    # rename columns
+    df.rename(columns={'LandCapability':'Land Capability'}, inplace=True)
     # to csv
-    flattened.to_csv(r"data/processed_data/LandCapability_Acres.csv")
-    df = flattened
+    df.to_csv(r"data/processed_data/LandCapability_Acres.csv")
     return df
 
 # add new coverage to existing coverage
@@ -160,8 +153,89 @@ def add_new_coverage(dfImpOld, dfImpNew):
     return dfImp
 
 # plot soil conservation data
-def plot_soil_conservation(df):
+def plot_soil_conservation(df, landcap = None, draft=True):
     df = df.sort_values(by='Land Capability')
+
     # create a bar chart
+    # create a dictionary of bar colors based on landcap
+    colordict = {'1A': 0,
+                 '1B': 1,
+                 '1C': 2,
+                 '2': 3,
+                 '3': 4,
+                 '4': 5,
+                 '5': 6,
+                 '6': 7,
+                 '7': 8}
     
-    return None
+    # set color map
+    colors = ['lightslategray',] * 9
+    # update color based on land capability
+    colors[colordict[landcap]] = '#279bdc'
+
+    # create threshold lines
+    fig = go.Figure(go.Scatter(
+        y=df['Threshold Acres'],
+        x=df['Land Capability'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 36,
+        customdata=df['Threshold Value'],
+        hovertemplate='Threshold:<br>%{customdata} coverage allowed<br>or %{y:,.0f} acres<extra></extra>'
+    ))
+
+    # create coverage bars
+    fig.add_trace(go.Bar(
+        y=df['Acres of Coverage 2023'],
+        x=df['Land Capability'],
+        name= "Coverage 2019",
+        marker_color=colors,
+    #     marker_color='rgb(188,202,200)', 
+        marker_line_color='rgb(88,48,10)',
+        opacity=0.6,
+        hovertemplate='<b>%{y:,.0f} acres</b> covered<extra></extra>'
+    ))
+
+    # set layout
+    fig.update_layout(title=f'Impervious Cover in Land Capability Class {landcap}',
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=True,
+                        hovermode="x unified",
+                        barmode='overlay',
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            title_text=f'Land Capability Class',
+                        ),
+                        yaxis = dict(
+                            title_text='Acres',
+                            tickmode = 'linear',
+                            rangemode="tozero",
+                            range= [0,7000],
+                            tick0 = 0,
+                            dtick = 1000,
+                            tickformat=","
+                        )
+                    )
+
+    fig.show()
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Draft/SoilConservation_{landcap}.html",
+            div_id=f"SoilConservatin_{landcap}",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"SoilConservation_{landcap}.html",
+            div_id=f"SoilConservation_{landcap}",
+            full_html=False,
+        )
