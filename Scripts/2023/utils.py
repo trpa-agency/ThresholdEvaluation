@@ -19,6 +19,7 @@ from arcgis.features import FeatureLayer
 # graphing packages
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 # external connection packages
 from sqlalchemy.engine import URL
 from sqlalchemy import create_engine
