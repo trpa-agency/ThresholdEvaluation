@@ -62,7 +62,7 @@
     * [Chart](AirQuality/Chart/Final/AirQuality_SubRegVis90th_SouthLake.html)
 
 > ## Fisheries
-
+>
 ***Instream Flow***
   * Non-Degradation Standard for Instream Flow
     * [Map]()
@@ -232,6 +232,8 @@
   * Long-Petaled Lewisia (Lewisia pygmaea longipetala)
   * Tahoe Yellow Cress (Rorippa Subumbellata)
   * Tahoe Yellow Cress (Rorippa Subumbellata) Updated 2024
+    * [Map](Vegetation\Map\Final\TahoeYellowCress.html)
+    * [Chart]()
 >
 ***Uncommon Plant Communities***
   * Deepwater Plants of Lake Tahoe
