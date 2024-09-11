@@ -109,3 +109,76 @@ def plot_TYC(df, draft= False):
             div_id="Vegetation_TahoeYellowCress",
             full_html=False
         )
+
+# get 2010 Ecobject data
+def get_ecobject_2010_data():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde_tabular')
+    # get dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.Vegetation_EcObject_2010", conn)
+    return df
+
+# get new veg change analysis data
+def get_new_veg_change_analysis_data():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde_tabular')
+    # get dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_NewVegChangeAnalysis", conn)
+    return df
+
+# get the vegetation type summary data from 2019
+def get_2019_vegtypesummary_data():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde_tabular')
+    # get dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_VegetationTypeSummary", conn)
+    return df
+
+# plot Vegetation Type
+def plot_veg():
+    # get data
+    df = get_ecobject_2010_data()
+    # create figure
+    fig = go.Figure()
+    # add trace
+    fig.add_trace(go.Bar(
+        x=df['Year'],
+        y=df['Total_Acres'],
+        name='Total Acres',
+        marker_color='#b3e2cd',
+        hovertemplate='<b>%{y:,.0f}</b> acres<extra></extra>'
+    ))
+    # set layout
+    fig.update_layout(
+        title='Vegetation Type',
+        font_family=font,
+        template=template,
+        showlegend=False,
+        hovermode="x unified",
+        xaxis = dict(
+            tickmode = 'linear',
+            tick0 = 1978,
+            dtick = 5,
+            title_text='Year'
+        ),
+        yaxis = dict(
+            tickmode = 'linear',
+            tick0 = 0,
+            dtick = 100,
+            title_text='Total Acres'
+        )
+    )
+    # export chart
+    fig.write_html(
+        config=config,
+        file= out_chart / "Final/Vegetation_Type.html",
+        # include_plotlyjs="directory",
+        div_id="Vegetation_Type",
+        full_html=False
+    )
