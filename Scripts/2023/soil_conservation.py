@@ -193,7 +193,7 @@ def plot_soil_conservation(df, landcap = None, draft=True):
     fig.add_trace(go.Bar(
         y=df['Acres of Coverage 2023'],
         x=df['Land Capability'],
-        name= "Coverage 2019",
+        name= "Coverage 2023",
         marker_color=colors,
     #     marker_color='rgb(188,202,200)', 
         marker_line_color='rgb(88,48,10)',
@@ -235,7 +235,7 @@ def plot_soil_conservation(df, landcap = None, draft=True):
     elif draft == False:
         fig.write_html(
             config=config,
-            file= out_chart / f"SoilConservation_{landcap}.html",
+            file= out_chart / f"Final/SoilConservation_{landcap}.html",
             div_id=f"SoilConservation_{landcap}",
             full_html=False,
         )
