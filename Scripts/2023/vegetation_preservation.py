@@ -7,6 +7,7 @@ out_chart = local_path.parents[1] / '2023/Vegetation/Chart'
 template = 'plotly_white'
 font     = 'Calibri'
 config   = {"displayModeBar": False}
+
 # get tahoe yellowcress  data
 def get_TYC_data_sql():
     # make sql database connection with pyodbc
@@ -16,6 +17,7 @@ def get_TYC_data_sql():
         # create dataframe from sql query
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_TahoeYellowCress", conn)
     return df
+
 #-------------
 #Plot Tahoe YellowCress
 #-------------
