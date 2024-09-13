@@ -8,6 +8,11 @@ template = 'plotly_white'
 font     = 'Calibri'
 config   = {"displayModeBar": False}
 
+#get SEZ Data
+def get_SEZ_data_web():
+    SEZ_url = "https://maps.trpa.org/server/rest/services/SEZ_Assessment_Unit/FeatureServer/0"
+    dfSEZ = get_fs_data_spatial(SEZ_url)
+    return dfSEZ
 # get soil conservation data
 def get_soil_conservation_data_sql():
     # make sql database connection with pyodbc
@@ -239,3 +244,58 @@ def plot_soil_conservation(df, landcap = None, draft=True):
             div_id=f"SoilConservation_{landcap}",
             full_html=False,
         )
+def plot_SEZ_scores(df,draft=True):
+    
+    # Calculate total acres per year
+    total_acres_per_year = df.groupby('Threshold_Year')['Acres'].sum().reset_index()
+    total_acres_per_year.rename(columns={'Acres': 'Total_Acres'}, inplace=True)
+    # Calculate acres per Final_Rating per year
+    acres_per_rating = df.groupby(['Threshold_Year', 'Final_Rating'])['Acres'].sum().reset_index()
+    # Merge total acres with acres per rating
+    merged_df = pd.merge(acres_per_rating, total_acres_per_year, on='Threshold_Year')
+    # Calculate percentage
+    merged_df['Percentage'] = (merged_df['Acres'] / merged_df['Total_Acres']) * 100
+    # Pivot the data
+    pivot_df = merged_df.pivot(index='Threshold_Year', columns='Final_Rating', values='Percentage').reset_index()
+    # Fill NaN with 0 (in case any ratings are missing for a year)
+    pivot_df.fillna(0, inplace=True)
+    
+    # Create the figure
+    fig = go.Figure()
+    # List of ratings
+    ratings = ['D', 'C', 'B', 'A']
+    colors = {'D': '#8a2c3c', 'C': '#c4671b', 'B': '#e7d01d', 'A': '#3b803f'}
+    #Addbarfor each rating
+    for rating in ratings:
+        fig.add_trace(go.Bar(
+            x=pivot_df['Threshold_Year'],
+            y=pivot_df[rating],
+            name=f'Rating {rating}',
+            marker_color=colors[rating]  # Assign color here
+        ))
+
+# Update layout to stack the bars
+    fig.update_layout(
+        barmode='stack',
+        title='Percentage of Acres by Final Rating for Each Year',
+        xaxis_title='Year',
+        yaxis_title='Percentage of Acres',
+        yaxis=dict(ticksuffix='%'),
+        legend_title='Final Rating'
+    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Draft/SoilConservation_SEZ_Scores.html",
+            div_id=f"SoilConservatin_SEZ_Scores",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Final/SoilConservation_SEZ_Scores.html",
+            div_id=f"SoilConservation_SEZ_Scores",
+            full_html=False,
+        )
+  
+     
