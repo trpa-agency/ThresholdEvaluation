@@ -360,7 +360,6 @@ def plot_old_growth(df, draft=True):
     # fig.update_layout(additional_formatting)
 
     # export chart
-    fig.show()
     if draft == True:
         fig.write_html(
             config=config,
