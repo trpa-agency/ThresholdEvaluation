@@ -211,6 +211,7 @@ def get_data_forest_fuel():
     df["Treatment Zone"] = df["Treatment Zone"].replace("Community Defense Zone", "Defense Zone")
     df["Year"] = df["Year"].astype(str)
     df = df.groupby(["Year", "Treatment Zone"]).agg({"Acres": "sum"}).reset_index()
+    df.sort_values(by=['Treatment Zone'], inplace=True)
     return df
 
 # plot forest health data
