@@ -271,6 +271,7 @@ def stackedbar(
     #         # default_height=500,
     #         # default_width=800,
     #     )
+
     fig.write_html(
         config=config,
         file=path_html,
