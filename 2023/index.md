@@ -195,7 +195,7 @@
 ***Stream Environment Zone (SEZ)***
   * Preserve Stream Environment Zone (SEZ) Function
     * [Map](SoilConservation\Map\Final\SEZ.html)
-    * ...
+    * [Chart](SoilConservation\Chart\Final\SEZ.html)
   * Wetland Restoration
     * [Map](SoilConservation\Map\Final\SEZ.html)
     * ...
@@ -227,6 +227,7 @@
     * ...
   * Appropriate Management Practices
     * [Map](Vegetation\Map\Final\FuelsTreatments.html)
+    * [Chart](Vegetation\Chart\Final\ForestFuelTreatment.html)
 >
 ***Late Seral/Old Growth Ecosystems***
   * Total Old Growth
