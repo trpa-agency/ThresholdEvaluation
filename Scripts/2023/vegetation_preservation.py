@@ -124,9 +124,9 @@ def get_ecobject_2010_data():
 
 # get new veg change analysis data
 def get_new_veg_change_analysis_data():
-    # make sql database connection with pyodbc
+    # make sql database connection
     engine = get_conn('sde_tabular')
-    # get dataframe from BMP SQL Database
+    # get dataframe from SQL view
     with engine.begin() as conn:
         # create dataframe from sql query
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_NewVegChangeAnalysis", conn)
@@ -307,9 +307,9 @@ def plot_forest_fuel(df, draft= True):
             div_id=div_id,
             full_html=False,
         )
-      
+
 # get the old growth forest data
-def get_old_growth_forest():
+def get_old_growth():
     data = get_fs_data(
         "https://maps.trpa.org/server/rest/services/Vegetation_Late_Seral/FeatureServer/0"
     )
@@ -317,69 +317,60 @@ def get_old_growth_forest():
     df = data[["SeralStage", "SpatialVar", "TRPA_VegType", "Acres"]]
     return df
 
+# plot old growth forest data
+def plot_old_growth(df, draft=True):
+    df = df.groupby("SeralStage").agg({"Acres": "sum"}).reset_index()
+    # plot settings
+    path_html="Total_Old_Growth.html"
+    div_id="OldGrowthForest_SeralStage"
+    x="SeralStage"
+    y="Acres"
+    color_sequence=["#208385"]
+    y_title="Acres"
+    x_title="Seral Stage"
+    custom_data=["SeralStage"]
+    hovertemplate="<br>".join(["<b>%{y:,.0f}</b> acres of", "<i>%{customdata[0]}</i> forest"]) + "<extra></extra>"
+    hovermode="x unified"
+    format=",.0f"
+    # plot
+    # figure 
+    fig = px.bar(df, x=x, y=y,  
+                color_discrete_sequence=color_sequence,
+                custom_data=custom_data
+            )
+    
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+    fig.update_layout(
+        yaxis=dict(tickformat=format, hoverformat=format, title=y_title),
+        xaxis=dict(title=x_title),
+        hovermode=hovermode,
+        template="plotly_white",
+        dragmode=False,
+        legend_title=None,
+    )
+    fig.for_each_yaxis(lambda yaxis: yaxis.update(showticklabels=True, tickformat=format))
+    fig.update_yaxes(
+        col=2, row=1, showticklabels=False, tickfont=dict(color="rgba(0,0,0,0)"), title=None
+    )
+    fig.update_yaxes(
+        col=3, row=1, showticklabels=False, tickfont=dict(color="rgba(0,0,0,0)"), title=None
+    )
+    fig.update_xaxes(tickformat=".0f")
+    fig.update_traces(hovertemplate=hovertemplate)
+    # fig.update_layout(additional_formatting)
 
-def plot_old_growth_forest(df):
-    seral = df.groupby("SeralStage").agg({"Acres": "sum"}).reset_index()
-    stackedbar(
-        seral,
-        path_html="html/2.1.b_OldGrowthForest_SeralStage.html",
-        div_id="2.1.b_OldGrowthForest_SeralStage",
-        x="SeralStage",
-        y="Acres",
-        facet=None,
-        color=None,
-        color_sequence=["#208385"],
-        orders=None,
-        y_title="Acres",
-        x_title="Seral Stage",
-        custom_data=["SeralStage"],
-        hovertemplate="<br>".join(["<b>%{y:,.0f}</b> acres of", "<i>%{customdata[0]}</i> forest"])
-        + "<extra></extra>",
-        hovermode="x unified",
-        orientation=None,
-        format=",.0f",
-    )
-    structure = df.groupby("SpatialVar").agg({"Acres": "sum"}).reset_index()
-    stackedbar(
-        structure,
-        path_html="html/2.1.b_OldGrowthForest_Structure.html",
-        div_id="2.1.b_OldGrowthForest_Structure",
-        x="SpatialVar",
-        y="Acres",
-        facet=None,
-        color=None,
-        color_sequence=["#208385"],
-        orders=None,
-        y_title="Acres",
-        x_title="Structure",
-        custom_data=["SpatialVar"],
-        hovertemplate="<br>".join(
-            ["<b>%{y:,.0f}</b> acres of", "<i>%{customdata[0]}</i> old growth forest"]
+    # export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft" / path_html,
+            div_id=div_id,
+            full_html=False,
         )
-        + "<extra></extra>",
-        hovermode="x unified",
-        orientation=None,
-        format=",.0f",
-    )
-    species = df.groupby("TRPA_VegType").agg({"Acres": "sum"}).reset_index()
-    stackedbar(
-        species,
-        path_html="html/2.1.b_OldGrowthForest_Species.html",
-        div_id="2.1.b_OldGrowthForest_Species",
-        x="TRPA_VegType",
-        y="Acres",
-        facet=None,
-        color=None,
-        color_sequence=["#208385"],
-        orders=None,
-        y_title="Acres",
-        x_title="Vegetation Type",
-        custom_data=["TRPA_VegType"],
-        hovertemplate="<br>".join(
-            ["<b>%{y:,.0f}</b> acres of", "<i>%{customdata[0]}</i> old growth forest"]
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final" / path_html,
+            div_id=div_id,
+            full_html=False,
         )
-        + "<extra></extra>",
-        hovermode="x unified",
-        orientation=None,
-        format=",.0f",
-    )
