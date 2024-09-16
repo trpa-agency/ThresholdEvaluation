@@ -264,7 +264,7 @@ def plot_SEZ_scores(df,draft=True):
     fig = go.Figure()
     # List of ratings
     ratings = ['D', 'C', 'B', 'A']
-    colors = {'D': '#8a2c3c', 'C': '#c4671b', 'B': '#e7d01d', 'A': '#3b803f'}
+    colors = {'D': '#963b3c', 'C': '#C28025', 'B': '#D4b746', 'A': '#3e8c43'}
     #Addbarfor each rating
     for rating in ratings:
         fig.add_trace(go.Bar(
