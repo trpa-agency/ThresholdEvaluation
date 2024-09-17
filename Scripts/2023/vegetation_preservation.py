@@ -586,4 +586,69 @@ def plot_yellowpine(df, draft=True):
             div_id="Vegetation_YellowPine",
             full_html=False
         )
-    
+
+def plot_veg_composition(df, draft=True):
+    colors = ['#448970','#BEFFE8','#448970','#BEFFE8','#448970','#BEFFE8','grey']
+
+    table = pd.pivot_table(df, values=['Acres'], index=['SeralStage'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+
+    df['TotalAcres']= 171438.19
+    df['SeralPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="SeralStage", y='SeralPercent',  color='SeralStage', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.2f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br> of undisturbed vegetation"
+        ])
+    )
+    # set layout
+    fig.update_layout(title="Stand Composition and Age - Seral Stage by Canopy Classification",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            categoryorder= 'array',
+                            categoryarray= ['Early Seral Closed', 'Early Seral Open', 
+                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Seral Stage'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            range=[0, 50],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Composition.html",
+            div_id="Vegetation_Composition",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Composition.html",
+            div_id="Vegetation_Composition",
+            full_html=False
+        )
