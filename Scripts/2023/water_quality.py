@@ -682,7 +682,7 @@ def plot_nearshore_turbidity(df, draft=True):
         mode='lines',
         hovertemplate='Threshold<br>%{y:.2f} NTU<extra></extra>'
     ))
-    fig.update_traces(marker=dict(size=8), mode = 'lines+markers')
+    fig.update_traces(marker=dict(size=8), mode = 'markers')
     fig.update_layout(
         yaxis=dict(title="Turbidity (NTU)"),
         xaxis=dict(title="Year", showgrid=False),
@@ -718,9 +718,6 @@ def plot_nearshore_turbidity(df, draft=True):
             div_id="Nearshore_Turbidity",
             full_html=False
         )
-
-
-
 
 def get_ais_infestation_data_web():
     url = 'https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/114'

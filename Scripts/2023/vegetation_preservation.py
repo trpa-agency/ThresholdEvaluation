@@ -7,6 +7,8 @@ out_chart = local_path.parents[1] / '2023/Vegetation/Chart'
 template = 'plotly_white'
 font     = 'Calibri'
 config   = {"displayModeBar": False}
+# 
+local_path = Path(__file__).parent
 
 # get tahoe yellowcress  data
 def get_TYC_data_sql():
@@ -120,6 +122,24 @@ def get_ecobject_2010_data():
     with engine.begin() as conn:
         # create dataframe from sql query
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.Vegetation_EcObject_2010", conn)
+    return df
+
+# get 2010 Ecobject data overlaid with Caldor Veg Burn Severity
+def get_ecobject_caldor_identity_data():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde_tabular')
+    # get dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_Vegetation_ID_Ecobejct2010_CaldorVegBurnSeverity", conn)
+    # columns to keep
+    columns_to_keep = ['SpatialVar', 'Ownership', 'Development',
+                    'WHRTYPE', 'Acres','QMD','Elev_Ft', 'SeralStage', 
+                    'TRPA_VegType','gridcode','FID_CaldorBurnSeverity']
+    # filter out columns
+    df = df[columns_to_keep]
+    # filter out Development
+    df = df[df['Development'] =='Undeveloped']
     return df
 
 # get new veg change analysis data
@@ -374,3 +394,194 @@ def plot_old_growth(df, draft=True):
             div_id=div_id,
             full_html=False,
         )
+
+# plot Red Fir forest abundance
+def plot_redfir(df, draft=True):
+    colors = ['lightslategray',] * 10
+    colors[1] = '#ff0000'
+
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    df = df.sort_values('Acres', ascending=False)
+
+    # setup chart
+    fig = px.bar(df, y="TRPA_VegType", x='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'], orientation='h',)
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{x:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
+    )
+
+    # create coverage bars
+    fig.add_trace(go.Bar(
+        x=[6.23],
+        y=['Red Fir Forest'],
+        name= "Red Fir Forest - QMD<11",
+        marker_color='#FF7F7F', 
+    #     marker_line_color='rgb(88,48,10)',
+    #     opacity=0.6,
+        orientation='h',
+        hovertemplate='<b>%{x:,.1f}%</b><br>or <b>10,673</b> acres<br>of total undisturbed vegetation <br>is immature Red Fir forest<br>(QMD<11")<extra></extra>'
+    ))
+
+    # create coverage bars
+    fig.add_trace(go.Bar(
+        x=[0.5],
+        y=['Red Fir Forest'],
+        name= "Red Fir Forest - Burned in Caldor Fire",
+        marker_color='#000000', 
+    #     marker_line_color='rgb(88,48,10)',
+    #     opacity=0.6,
+        orientation='h',
+        hovertemplate='<b>%{x:,.1f}%</b><br>or <b>862</b> acres<br>of total undisturbed vegetation<br>was Red Fir forest that burned in the Caldor Fire<extra></extra>'
+    ))
+
+    # set layout
+    fig.update_layout(title="Relative Abundance of Red Fir Forest In Seral Stages Other Than Mature",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="y unified",
+                        barmode = 'overlay',
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_RedFir.html",
+            div_id="Vegetation_RedFir",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_RedFir.html",
+            div_id="Vegetation_RedFir",
+            full_html=False
+        )
+
+# plot yellow pine abundance
+def plot_yellowpine(df, draft=True):
+    colors = ['lightslategray',] * 10
+    colors[0] = '#a8a800'
+
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    df = df.sort_values('Acres', ascending=False)
+
+    # setup chart
+    fig = px.bar(df, y="TRPA_VegType", x='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'], orientation='h',)
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{x:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
+    )
+
+    # create coverage bars
+    fig.add_trace(go.Bar(
+        x=[13.9],
+        y=['Yellow Pine Forest'],
+        name= "Yellow Pine Forest - QMD<11",
+        marker_color='#ffffbf', 
+    #     marker_line_color='rgb(88,48,10)',
+    #     opacity=0.6,
+        orientation='h',
+        hovertemplate='<b>%{x:,.1f}%</b><br>or <b>23,836</b> acres<br>of total undisturbed vegetation <br>is immature Yellow Pine Forest<br>(QMD<11")<extra></extra>'
+    ))
+
+    # create coverage bars
+    fig.add_trace(go.Bar(
+        x=[2.6],
+        y=['Yellow Pine Forest'],
+        name= "Yellow Pine Forest - Burned in Caldor Fire",
+        marker_color='#000000', 
+    #     marker_line_color='rgb(88,48,10)',
+    #     opacity=0.6,
+        orientation='h',
+        hovertemplate='<b>%{x:,.1f}%</b><br>or <b>4,536</b> acres<br>of total undisturbed vegetation<br>was Yellow Pine forest that burned in the Caldor Fire<extra></extra>'
+    ))
+
+    # set layout
+    fig.update_layout(title="Relative Abundance of Yellow Pine Forest In Seral Stages Other Than Mature",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="y unified",
+                        barmode = 'overlay',
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_YellowPine.html",
+            div_id="Vegetation_YellowPine",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_YellowPine.html",
+            div_id="Vegetation_YellowPine",
+            full_html=False
+        )
+    
