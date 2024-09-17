@@ -211,8 +211,10 @@
     * ...
   * Relative Abundance of Red Fir Forest In Seral Stages Other Than Mature
     * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_RedFir.html)
   * Relative Abundance of Yellow Pine Forest In Seral Stages Other Than Mature
     * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_YellowPine.html)
   * Relative Abundance of Meadows And Wetland Vegetation Types
     * [Map](Vegetation\Map\Final\MeadowWeltand.html)
   * Relative Abundance of Shrub Vegetation Type
@@ -231,6 +233,8 @@
 >
 ***Late Seral/Old Growth Ecosystems***
   * Total Old Growth
+    * [Map](Vegetation\Map\Final\TotalOldGrowth.html)
+    * [Chart](Vegetation\Chart\Final\Total_Old_Growth.html)
   * Sub-Alpine Zone
   * Upper Montane Zone
   * Montane Zone
@@ -243,7 +247,7 @@
   * Tahoe Yellow Cress (Rorippa Subumbellata)
   * Tahoe Yellow Cress (Rorippa Subumbellata) Updated 2024
     * [Map](Vegetation\Map\Final\TahoeYellowCress.html)
-    * [Chart]()
+    * [Chart](Vegetation\Chart\Final\Vegetation_TahoeYellowCress.html)
 >
 ***Uncommon Plant Communities***
   * Deepwater Plants of Lake Tahoe
