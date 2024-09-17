@@ -140,6 +140,8 @@ def get_ecobject_caldor_identity_data():
     df = df[columns_to_keep]
     # filter out Development
     df = df[df['Development'] =='Undeveloped']
+    # # drop nan values
+    df = df[df['TRPA_VegType'] != '']
     return df
 
 # get new veg change analysis data
