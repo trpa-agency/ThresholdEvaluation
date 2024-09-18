@@ -111,12 +111,12 @@ def plot_CDraba(df, draft=False):
 
 def plot_lewisia(df, draft=False):
     #Tahoe Draba data
-    fig = px.bar(df, x='year', y='subpopulations', title='Long-Petaled Lewisia Subpopulations', color_discrete_sequence=['rgba(0, 255, 0, 0.5)'])
+    fig = px.bar(df, x='year', y='subpopulations', title='Long-Petaled Lewisia Subpopulations', color_discrete_sequence=['rgba(119, 129, 92, 0.5)'])
         
     # Customize hover template for cleaner display
     fig.update_traces(
         marker=dict(
-            line=dict(color='#00FF00', width=2)  # Proper string format for color
+            line=dict(color='#77815c', width=2)  # Proper string format for color
         ),
         hovertemplate='<b>Subpopulations:</b> %{y}<extra></extra>'
     )
