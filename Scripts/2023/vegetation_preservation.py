@@ -652,3 +652,497 @@ def plot_veg_composition(df, draft=True):
             div_id="Vegetation_Composition",
             full_html=False
         )
+
+# plot deciduous forest abundance
+def plot_deciduous(df, draft=True):
+    colors = ['lightslategray',] * 10
+    colors[1] = '#cdf57a'
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+
+    # df2 = {'TRPA_VegType': 'Yellow Pine Forest', 'Acres': 23836.14, 'VegPercent': 13.9} 
+    # df = df.append(df2, ignore_index = True) 
+
+    # setup chart
+    fig = px.bar(df, x="TRPA_VegType", y='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
+    )
+
+    # set layout
+    fig.update_layout(title="Relative Abundance of Deciduous Riparian Vegetation Types",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        barmode = 'overlay',
+                        xaxis = dict(
+    #                         categoryorder= 'array',
+    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+    # export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Deciduous.html",
+            div_id="Vegetation_Deciduous",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Deciduous.html",
+            div_id="Vegetation_Deciduous",
+            full_html=False
+        )
+
+# plot wetland vegetation abundance
+def plot_wetland(df, draft=True):
+    colors = ['lightslategray',] * 10
+    colors[2] = '#b4d79e'
+    colors[8] ='#2f3f56'
+
+    # df= df.loc[(df['Development']=='Undeveloped')&(df['QMD']<11)]
+    df= df.loc[(df['Development']=='Undeveloped')]
+
+
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="TRPA_VegType", y='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
+    )
+
+    # set layout
+    fig.update_layout(title="Relative Abundance of Meadow and Wetland Vegetation Types",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        barmode = 'overlay',
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Wetland.html",
+            div_id="Vegetation_Wetland",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Wetland.html",
+            div_id="Vegetation_Wetland",
+            full_html=False
+        )
+
+# plot shrub abundance
+def plot_shrub(df, draft=True):
+    colors = ['lightslategray',] * 10
+    colors[5] = '#00a820'
+
+    # df= df.loc[(df['Development']=='Undeveloped')&(df['QMD']<11)]
+    df= df.loc[(df['Development']=='Undeveloped')]
+
+
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="TRPA_VegType", y='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
+    )
+
+    # set layout
+    fig.update_layout(title="Relative Abundance of Shrub Vegetation Types",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        barmode = 'overlay',
+                        xaxis = dict(
+    #                         categoryorder= 'array',
+    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Shrub.html",
+            div_id="Vegetation_Shrub",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Shrub.html",
+            div_id="Vegetation_Shrub",
+            full_html=False
+        )
+
+# plot subalpine seral stage
+def plot_seral_subalpine(df,draft=True):
+    colors = ['#BEFFE8','#448970','#66CDAB','grey']
+    # status dataframe
+    df= df.loc[(df.Elev_Ft>8500)]
+
+    df['SeralClass'] = ''
+
+    df.loc[df['SeralStage'] =='N/A', 'SeralClass'] = 'N/A'
+    df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
+    df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
+    df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
+
+    table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+
+    df['TotalAcres']= 25619.50
+    df['SeralPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="SeralClass", y='SeralPercent',  color='SeralClass', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.2f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation<br>above 8,500ft"
+        ])
+    )
+    # set layout
+    fig.update_layout(title="Sub-Alpine Zone Seral Stage",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            categoryorder= 'array',
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Seral Stage'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 50,
+                            range=[0, 100],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Seral_Subalpine.html",
+            div_id="Vegetation_SeralSubalpine",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Seral_Subalpine.html",
+            div_id="Vegetation_SeralSubalpine",
+            full_html=False
+        )
+
+# plot seral in the montane zone
+def plot_seral_upper_montane(df,draft=True):
+    colors = ['#BEFFE8','#448970','#66CDAB','grey']
+    # status dataframe
+    df= df.loc[((df.Elev_Ft>7000)&(df.Elev_Ft<=8500))]
+
+    df['SeralClass'] = ''
+
+    df.loc[df['SeralStage'] =='N/A', 'SeralClass'] = 'N/A'
+    df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
+    df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
+    df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
+
+    table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+
+    df['TotalAcres']= 93894.92
+    df['SeralPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="SeralClass", y='SeralPercent',  color='SeralClass', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.2f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation<br>between 7,000 & 8,500ft"
+        ])
+    )
+    # set layout
+    fig.update_layout(title="Upper Montane Zone Seral Stage",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            categoryorder= 'array',
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Seral Stage'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 50,
+                            range=[0, 100],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Seral_UpperMontane.html",
+            div_id="Vegetation_SeralUpperMontane",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Seral_UpperMontane.html",
+            div_id="Vegetation_SeralUpperMontane",
+            full_html=False
+        )
+
+# plot seral in the montane zone
+def plot_seral_montane(df,draft=True):
+    colors = ['#BEFFE8','#448970','#66CDAB','grey']
+
+    # status dataframe
+    df= df.loc[(df.Elev_Ft<=7000)]
+
+    df['SeralClass'] = ''
+
+    df.loc[df['SeralStage'] =='N/A', 'SeralClass'] = 'N/A'
+    df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
+    df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
+    df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
+
+    table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+
+    df['TotalAcres']= 51923.77
+    df['SeralPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="SeralClass", y='SeralPercent',  color='SeralClass', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.2f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br> of undisturbed vegetation<br>below 7,000ft"
+        ])
+    )
+    # set layout
+    fig.update_layout(title="Montane Zone Seral Stage",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            categoryorder= 'array',
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Seral Stage'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 50,
+                            range=[0, 100],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Seral_Montane.html",
+            div_id="Vegetation_SeralMontane",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Seral_Montane.html",
+            div_id="Vegetation_SeralMontane",
+            full_html=False
+        )
+
+# plot land capability
+def plot_landcapability(df, draft=True):
+    df = df.astype({"Land_Capab": str})
+    df = df.rename(columns={'Land_Capab':'Land Capability', 'GISAcre':'Total Acres', 'OWNERSHIP_': 'Ownership'})
+    df = df.replace(r'^\s*$', np.nan, regex=True)
+    df = df[df['Land Capability'].notna()]
+    df.set_index('Land Capability')
+    dfLCType = df.groupby("Land Capability")["Total Acres"].sum().reset_index()
+    df = dfLCType
+    df = df.dropna()
+    df = df.replace(r'^\s*$', np.nan, regex=True)
+    df = df.replace(to_replace='None', value=np.nan).dropna()
+
+    df['Land Capability']= pd.Categorical(df['Land Capability'], ['1A', '1B', '1C', '2', '3', '4', '5', '6', '7', ])
+
+    df.sort_values(by="Land Capability")
+
+    colors = ['#D1FF73','#FFFF00','#4CE600','#4C7300', 
+            '#0084A8', '#FFD37F','#FFAA00','#CD8966', '#734C00']
+
+    fig = px.bar(df, y="Land Capability", x="Total Acres", color="Land Capability", 
+                orientation="h", hover_name="Land Capability",
+                color_discrete_sequence=colors ,
+                title="Land Capability"
+                )
+
+    fig.update_traces(hovertemplate='%{y}<br>%{x:,.0f} acres<extra></extra>')
+
+    fig.update_layout(font_family=font, template=template, showlegend=True)
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Land_Capability.html",
+            div_id="LandCapability",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Land_Capability.html",
+            div_id="LandCapability",
+            full_html=False
+        )
+

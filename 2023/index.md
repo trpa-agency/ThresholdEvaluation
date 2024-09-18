@@ -217,17 +217,21 @@
     * [Chart](Vegetation\Chart\Final\Vegetation_YellowPine.html)
   * Relative Abundance of Meadows And Wetland Vegetation Types
     * [Map](Vegetation\Map\Final\MeadowWeltand.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Wetland.html)
   * Relative Abundance of Shrub Vegetation Type
     * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Shrub.html)
   * Relative Abundance of Deciduous Riparian Vegetation
     * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Deciduous.html)
   * Pattern: Limit Size Of New Forest Openings
     * [Map](Vegetation\Map\Final\Disturbance.html)
   * Pattern: Stand Composition And Age
     * [Map](Vegetation\Map\Final\Vegetation_StandCompositionAge.html)
     * [Chart](Vegetation\Chart\Final\Vegetation_Composition.html)
   * Consistency with Bailey Land Capability System
-    * ...
+    * [Map](SoilConservation\Map\Final\LandCapability.html)
+    * [Chart](Vegetation\Chart\Final\Land_Capability.html)
   * Appropriate Management Practices
     * [Map](Vegetation\Map\Final\FuelsTreatments.html)
     * [Chart](Vegetation\Chart\Final\ForestFuelTreatment.html)
@@ -237,8 +241,14 @@
     * [Map](Vegetation\Map\Final\TotalOldGrowth.html)
     * [Chart](Vegetation\Chart\Final\Total_Old_Growth.html)
   * Sub-Alpine Zone
+    * [Map](Vegetation\Map\Final\SeralStage.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Seral_Subalpine.html)
   * Upper Montane Zone
+    * [Map](Vegetation\Map\Final\SeralStage.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Seral_UpperMontane.html)
   * Montane Zone
+    * [Map](Vegetation\Map\Final\SeralStage.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Seral_Montane.html)
 >
 ***Sensitive Plants***
   * Galena Rock Cress (Arabis Rigidissima V. Demote)
