@@ -9,7 +9,144 @@ font     = 'Calibri'
 config   = {"displayModeBar": False}
 # 
 local_path = Path(__file__).parent
+#Get Sensitive Plant Data
+def get_TDraba_xslx():
+    # Set the path to SEnsitive plant Excel files
+    path = r'F:\Research and Analysis\Threshold reporting\ThresholdData\Vegetation\Sensitve Plants'
+    # Load the data from different sheets
+    df = pd.read_excel(f"{path}\DrabaData_2022_USFS.xlsx", sheet_name="Tahoe Draba subpopulations", skiprows=3 )
+    return df
+def get_CDraba_xslx():
+    # Set the path to SEnsitive plant Excel files
+    path = r'F:\Research and Analysis\Threshold reporting\ThresholdData\Vegetation\Sensitve Plants'
+    # Load the data from different sheets
+    df = pd.read_excel(f"{path}\DrabaData_2022_USFS.xlsx", sheet_name="Cup subpopulations", skiprows=2)
+    return df
+def get_lewisia_xslx():   
+    # Set the path to SEnsitive plant Excel files
+    path = r'F:\Research and Analysis\Threshold reporting\ThresholdData\Vegetation\Sensitve Plants'
+    # Load the data from different sheets
+    df = pd.read_excel(f"{path}\LELODataUpdated2022_USFS.xlsx", sheet_name="Long Petaled subpopulations", skiprows=2)
+    return df
 
+#-------------
+#Plot Sensitive Plants
+#----------------
+def plot_TDraba(df, draft=False):
+    #Tahoe Draba data
+    fig = px.bar(df, x='Year', y='subpopulations', title='Tahoe Draba Subpopulations', color_discrete_sequence=['rgba(31, 119, 180, 0.5)'])
+        
+    # Customize hover template for cleaner display
+    fig.update_traces(
+        marker=dict(
+            line=dict(color='#1f77b4', width=2)  # Proper string format for color
+        ),
+        hovertemplate='<b>Subpopulations:</b> %{y}<extra></extra>'
+    )
+
+    # Ensure that all years are displayed, even if there is no data for some
+    fig.update_layout(yaxis_title='Subpopulations',
+                  xaxis=dict(type='category'),
+                  font_family='Arial',  # Example font, replace with your font variable
+                  template='plotly_white',  # Example template, replace with your template variable
+                  showlegend=False,
+                  hovermode="x unified")
+
+# export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_TahoeDraba.html",
+            # include_plotlyjs="directory",
+            div_id="Vegetation_TahoeDraba",
+            full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_TahoeDraba.html",
+            # include_plotlyjs="directory",
+            div_id="Vegetation_TahoeDraba",
+            full_html=False
+        )    
+
+def plot_CDraba(df, draft=False):
+    #Tahoe Draba data
+    fig = px.bar(df, x='Year', y='subpopulations', title='Cup Draba Subpopulations', color_discrete_sequence=['rgba(138, 113, 33, 0.5)'])
+        
+    # Customize hover template for cleaner display
+    fig.update_traces(
+        marker=dict(
+            line=dict(color='#1f77b4', width=2)  # Proper string format for color
+        ),
+        hovertemplate='<b>Subpopulations:</b> %{y}<extra></extra>'
+    )
+
+    # Ensure that all years are displayed, even if there is no data for some
+    fig.update_layout(yaxis_title='Subpopulations',
+                      xaxis_title='Year',
+                  xaxis=dict(type='category'),
+                  font_family='Arial',  # Example font, replace with your font variable
+                  template='plotly_white',  # Example template, replace with your template variable
+                  showlegend=False,
+                  hovermode="x unified")
+
+# export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_CupDraba.html",
+            # include_plotlyjs="directory",
+            div_id="Vegetation_CupDraba",
+            full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_CupDraba.html",
+            # include_plotlyjs="directory",
+            div_id="Vegetation_CupDraba",
+            full_html=False
+        )    
+
+def plot_lewisia(df, draft=False):
+    #Tahoe Draba data
+    fig = px.bar(df, x='year', y='subpopulations', title='Long-Petaled Lewisia Subpopulations', color_discrete_sequence=['rgba(0, 255, 0, 0.5)'])
+        
+    # Customize hover template for cleaner display
+    fig.update_traces(
+        marker=dict(
+            line=dict(color='#00FF00', width=2)  # Proper string format for color
+        ),
+        hovertemplate='<b>Subpopulations:</b> %{y}<extra></extra>'
+    )
+
+    # Ensure that all years are displayed, even if there is no data for some
+    fig.update_layout(yaxis_title='Subpopulations',
+                  xaxis=dict(type='category'),
+                  font_family='Arial',  # Example font, replace with your font variable
+                  template='plotly_white',  # Example template, replace with your template variable
+                  showlegend=False,
+                  hovermode="x unified")
+
+# export chart
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Lewisia.html",
+            # include_plotlyjs="directory",
+            div_id="Vegetation_Lewisia",
+            full_html=False
+        )   
+    elif draft == False: 
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Lewisia.html",
+            # include_plotlyjs="directory",
+            div_id="Vegetation_Lewisia",
+            full_html=False
+        )    
+#--------------------------------------------------------------------------------         
 # get tahoe yellowcress  data
 def get_TYC_data_sql():
     # make sql database connection with pyodbc
@@ -19,7 +156,6 @@ def get_TYC_data_sql():
         # create dataframe from sql query
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_TahoeYellowCress", conn)
     return df
-
 #-------------
 #Plot Tahoe YellowCress
 #-------------
