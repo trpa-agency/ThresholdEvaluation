@@ -224,7 +224,8 @@
   * Pattern: Limit Size Of New Forest Openings
     * [Map](Vegetation\Map\Final\Disturbance.html)
   * Pattern: Stand Composition And Age
-    * [Map](Vegetation\Map\Final\SeralStage.html)
+    * [Map](Vegetation\Map\Final\Vegetation_StandCompositionAge.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Composition.html)
   * Consistency with Bailey Land Capability System
     * ...
   * Appropriate Management Practices
