@@ -67,7 +67,6 @@
               container: "viewDiv"
             });
         
-          
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
@@ -77,7 +76,7 @@
 
         // Add map item to the legend
         view.when(function() {
-          var featureLayer = map.layers.getItemAt(2);
+          var featureLayer = map.layers.getItemAt(0);
           var featureLayer2 = map.layers.getItemAt(1);
           var legend = new Legend({
             view: view,
