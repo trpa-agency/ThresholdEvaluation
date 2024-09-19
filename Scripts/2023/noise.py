@@ -461,77 +461,14 @@ def plot_watercraft(df, draft=False):
 
 # plot wildlife noise
 def plot_wildlife(draft=False):
-    ##Outdated chart... didn't want to delete this until the other chart is approved
-    #dfCriticalNoise = dfPlanNoise.loc[dfPlanNoise['Category'] == 'Critical Wildlife Habitat']
-    #dfCriticalNoise.astype({'Year': 'str'}).dtypes
-    #df = dfCriticalNoise 
 
-    area = ['Baldwin','Blackwood','Camp Richardson','East Shore','Emerald Bay',
-            'Freel Peak','Genoa Peak','Marlette Lake','Martis Peak','Truckee Marsh']
+    #Read excel file data
+    base_dir = r"F:\Research and Analysis\Threshold reporting\ThresholdData\Noise"
+    file_name = "ThresholdData_PlanAreaNoise.xlsx"
+    file_path = os.path.join(base_dir, file_name)
+    dfCriticalNoise = pd.read_excel(file_path)
 
-    vals = [46.5, 58.6, np.nan, 56.2,49.2, 47.5, np.nan, np.nan, 45.0, 48.0]
-
-    df = {'Plan Area':area, 'CNEL':vals}
-
-    df= pd.DataFrame(d)
-    df['Threshold Value']=45
-    df['Average']=50.2
-
-    fig = px.bar(df, x='Plan Area',y='CNEL')
-
-    fig.update_traces(hovertemplate='%{y:,.1f} dB',
-                        marker_color='rgb(188,202,200)', 
-                        marker_line_color='rgb(88,48,10)',
-                        opacity=0.6)
-
-
-    # create threshold line
-    fig.add_trace(go.Scatter(
-        y=df['Threshold Value'],
-        x=df['Plan Area'],
-        name= "Threshold",
-        line=dict(color='#333333', width=3),
-        mode='lines',
-        hovertemplate='Threshold:<br>%{y:.1f} dB<extra></extra>'
-    ))
-
-    # create threshold line
-    fig.add_trace(go.Scatter(
-        y=df['Average'],
-        x=df['Plan Area'],
-        name= "Average CNEL",
-        line=dict(color='#8a7121', width=3),
-        mode='lines',
-        hovertemplate='Average CNEL:<br>%{y:.1f} dB<extra></extra>'
-    ))
-    
-    # set layout
-    fig.update_layout(title='Average CNEL Values in Critical Wildlife Habitat Areas',
-                        font_family=font,
-                        template=template,
-                        showlegend=True,
-                        hovermode="x unified",
-                        xaxis = dict(
-                            tickmode = 'linear',
-                            dtick = 1,
-                            title_text='Plan Area'
-                        ),
-                        yaxis = dict(
-                            tickmode = 'linear',
-                            tick0 = 0,
-                            dtick = 20,
-                            range=[0, 80],
-                            title_text='A-weighted decibels'
-                        )
-                    )
-
-    fig.show()
-
-    # THIS IS WRONG---SEE BELOW
-    #get critical wildlife habitat area records
-    dfWildNoise = dfPlanNoise.loc[dfPlanNoise['Category'] == 'Critical Wildlife Habitat']
-    dfWildNoise.astype({'Year': 'str'}).dtypes
-    df = dfWildNoise 
+    df = dfCriticalNoise[dfCriticalNoise['Category'] == 'Critical Wildlife Habitat']
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
@@ -541,8 +478,8 @@ def plot_wildlife(draft=False):
 
     # create threshold line
     fig.add_trace(go.Scatter(
-        y=df['Threshold_Value'],
-        x=df['Year'],
+        y= df['Threshold_Value'],
+        x= df['Year'],
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
@@ -551,7 +488,7 @@ def plot_wildlife(draft=False):
 
 
     # update layout
-    fig.update_layout(title='Critical Wildlife Habitat Areas Noise',
+    fig.update_layout(title='Critical Wildlife Habitat',
                         font_family=font,
                         template=template,
                         showlegend=True,
@@ -569,3 +506,4 @@ def plot_wildlife(draft=False):
 
     # generate figure
     fig.show()
+    fig.write_html(os.path.join(draftworkspace, "Critical_Wildlife.html"))
