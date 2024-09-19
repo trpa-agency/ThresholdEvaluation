@@ -110,7 +110,7 @@
               type: "fields",
               fieldInfos: [
                 {
-                  fieldName: "ProjectNam",
+                  fieldName: "Project_Name",
                   label: "Project Name"
                 },
                                   {
@@ -150,14 +150,14 @@
 
         // station feature layer
         var stationLayer = new FeatureLayer({
-          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/12",
+          url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/0",
           title: "Water Quality Lake Clarity Project",
           renderer: pointRenderer,
-          popupTemplate: template
+          popupTemplate: template,
+          definitionExpression: "Planning___Design_Start_Year IN ('2016','2017','2018','2019') OR Implementation_Start_Year BETWEEN 2015 AND 2020 OR Completion_Year BETWEEN 2015 AND 2020"
         });
           
-//        stationLayer.definitionExpression = "site_no IN ('10336700', '10336698','10336610', '10336790', '10336676', '10336660','10336645')";
-//          
+
         map.add(stationLayer);
         
         // boundary feature layer

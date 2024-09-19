@@ -141,7 +141,8 @@
           url: "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/16",
           title: "Air Quality Station",
           renderer: pointRenderer,
-          popupTemplate: template
+          popupTemplate: template,
+          definitionExpression: "Active_2019 = 1"
         });
           
         map.add(airLayer);
