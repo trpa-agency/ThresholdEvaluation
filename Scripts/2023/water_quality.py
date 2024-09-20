@@ -801,7 +801,7 @@ def plot_tahoe_keys(draft=True):
     }
     df = pd.DataFrame(data)
     color_map = {'Eurasian Watermilfoil':"#a37774", 'Coontail':"#5c6d70", 'Curlyleaf Pondweed':"#015B3D"}
-    fig = px.bar(df, x='Species', y='Square_Feet', color='Species', title='Tahoe Keys AIS 2020',
+    fig = px.bar(df, x='Species', y='Square_Feet', color='Species', title='Volume of Aquatic Invasive Species',
                 labels={ 'Species': 'Species', 'Square_Feet':'Square Feet'}, color_discrete_map=color_map,
             template="plotly_white",opacity=0.9)
 
@@ -812,7 +812,7 @@ def plot_tahoe_keys(draft=True):
                         template=template,
                         showlegend=True,
                         xaxis = dict(
-                            title_text='Volume of Aquatic Invasive Species'
+                            title_text='Species'
                         ),
                         yaxis = dict(
                             title_text='Cubic Yards',
