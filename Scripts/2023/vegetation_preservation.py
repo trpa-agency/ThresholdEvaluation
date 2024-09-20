@@ -52,7 +52,7 @@ def plot_TDraba(df, draft=False):
                   showlegend=False,
                   hovermode="x unified")
 
-# export chart
+    # export chart
     if draft == True:
         fig.write_html(
             config=config,

@@ -82,31 +82,31 @@
 ***Cumulative Noise Events***
   * Wilderness And Roadless Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_WildernessRoadless.html)
   * Critical Wildlife Habitat Areas
     * [Map]()
     * [Chart]()
   * Low Density Residential Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_LowDensityResidential.html)
   * Rural Outdoor Recreation Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_RuralOutdoorRecreation.html)
   * High Density Residential Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_HighDensityResidential.html)
   * Urban Outdoor Recreation Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_UrbanOutdoorRecreation.html)
   * Hotel/Motel Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_Hotel.html)
   * Commercial Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_Commercial.html)
   * Industrial Areas
     * [Map]()
-    * [Chart]()
+    * [Chart](Noise\Chart\Final\Noise_Industrial.html)
 > 
 ***Single Noise Events***
   * Aircraft Noise Departure/Arrival (8 AM To 8 PM)
@@ -114,7 +114,7 @@
   * Watercraft Pass-By Test
   * Watercraft Shoreline Test
     * [Map](Noise\Map\Final\NoiseMonitoringLocation_Shoreline.html)
-    * ...
+    * [Chart](Noise\Chart\Final\Noise_Watercraft.html)
   * Pre-1993 Watercraft-Stationary Test
   * Post 1992 Watercraft-Stationary Test
   * Off-Road Vehicles For Speeds Less Than 35 Mph
@@ -198,7 +198,7 @@
     * [Chart](SoilConservation\Chart\Final\SEZ.html)
   * Wetland Restoration
     * [Map](SoilConservation\Map\Final\SEZ.html)
-    * ...
+
 > ## Transportation and Sustainable Communities
 >
 ***Transportation and Sustainable Communities***
@@ -253,8 +253,14 @@
 ***Sensitive Plants***
   * Galena Rock Cress (Arabis Rigidissima V. Demote)
   * Tahoe Draba (Draba asterophora var. asterophora)
+    * [Map](Vegetation\Map\Final\Vegetation_SensitivePlants.html)
+    * [CHart](Vegetation\Chart\Final\Vegetation_TahoeDraba.html)
   * Cup Lake Draba (Draba asterophora var. macrocarpa)
+    * [Map](Vegetation\Map\Final\Vegetation_SensitivePlants.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_CupDraba.html)
   * Long-Petaled Lewisia (Lewisia pygmaea longipetala)
+    * [Map](Vegetation\Map\Final\Vegetation_SensitivePlants.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Lewisia.html)
   * Tahoe Yellow Cress (Rorippa Subumbellata)
   * Tahoe Yellow Cress (Rorippa Subumbellata) Updated 2024
     * [Map](Vegetation\Map\Final\TahoeYellowCress.html)
@@ -274,6 +280,7 @@
     * [Map](WaterQuality\Map\Final\AquaticPlants.html)
     * [Chart](WaterQuality\Chart\Final\AIS_Infestation.html)
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
+    * [Chart](WaterQuality\Chart\Final\Tahoe_Keys_Infestation.html)
 >
 ***Deep Water (Pelagic) Lake Tahoe***
   * Average Secchi Disk Transparency
