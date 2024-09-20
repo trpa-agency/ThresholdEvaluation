@@ -486,7 +486,6 @@ def plot_wildlife(draft=False):
         hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
     ))
 
-
     # update layout
     fig.update_layout(title='Critical Wildlife Habitat',
                         font_family=font,
@@ -502,8 +501,6 @@ def plot_wildlife(draft=False):
                         )  
                     )
                     
-
-
     # generate figure
     fig.show()
     fig.write_html(os.path.join(draftworkspace, "Critical_Wildlife.html"))

@@ -30,7 +30,7 @@ def get_lewisia_xslx():
     return df
 
 #-------------
-#Plot Sensitive Plants
+# Plot Sensitive Plants
 #----------------
 def plot_TDraba(df, draft=False):
     #Tahoe Draba data
