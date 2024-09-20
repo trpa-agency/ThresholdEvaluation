@@ -280,6 +280,7 @@
     * [Map](WaterQuality\Map\Final\AquaticPlants.html)
     * [Chart](WaterQuality\Chart\Final\AIS_Infestation.html)
   * Reduce Average Aquatic Invasive Plant Abundance in the Tahoe Keys
+    * [Chart](WaterQuality\Chart\Final\Tahoe_Keys_Infestation.html)
 >
 ***Deep Water (Pelagic) Lake Tahoe***
   * Average Secchi Disk Transparency
