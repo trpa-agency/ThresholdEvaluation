@@ -265,6 +265,7 @@ def plot_SEZ_scores(df,draft=True):
     # List of ratings
     ratings = ['D', 'C', 'B', 'A']
     colors = {'D': '#963b3c', 'C': '#C28025', 'B': '#D4b746', 'A': '#3e8c43'}
+   
     #Addbarfor each rating
     for rating in ratings:
         fig.add_trace(go.Bar(
@@ -277,7 +278,7 @@ def plot_SEZ_scores(df,draft=True):
 # Update layout to stack the bars
     fig.update_layout(
         barmode='stack',
-        title='Percentage of Acres by Final Rating for Each Year',
+        title='Regional SEZ Condition Index Per Year',
         xaxis_title='Year',
         yaxis_title='Percentage of Acres',
         yaxis=dict(ticksuffix='%'),

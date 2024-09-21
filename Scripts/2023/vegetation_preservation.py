@@ -77,7 +77,7 @@ def plot_CDraba(df, draft=False):
     # Customize hover template for cleaner display
     fig.update_traces(
         marker=dict(
-            line=dict(color='#1f77b4', width=2)  # Proper string format for color
+            line=dict(color='#8A7121', width=2)  # Proper string format for color
         ),
         hovertemplate='<b>Subpopulations:</b> %{y}<extra></extra>'
     )
