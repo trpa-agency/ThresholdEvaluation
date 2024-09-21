@@ -27,6 +27,7 @@ def get_fishhab():
                                          "Spawning"  : "Excellent Habitat" })
     # group by habitat values and acres
     df = df.groupby(['Condition'])['Acres'].sum().reset_index()
+    df['Threshold Value'] = 5948
     return df
 
 # plot fish habitat data
@@ -36,7 +37,11 @@ def plot_fishhab(df,  draft=False):
     # drop index
     # df = df.drop(df.index[0])
     colors = ['#00A884','#CDCD66']
+
     fig = px.bar(df, x='Condition', y='Acres',  color='Condition', color_discrete_sequence=colors)
+
+    # add threhold line chart
+    # fig.add_trace(go.Scatter(x=df['Condition'], y=[1000, 1000], mode='lines', name='Threshold', line=dict(color='red', width=2)))
     fig.update_xaxes(title= 'Habitat',tickfont=dict(family='Calibri', size=14))
     fig.update_yaxes(title= 'Acres',  tickfont=dict(family='Calibri', size=14))
     fig.update_xaxes(
@@ -44,6 +49,17 @@ def plot_fishhab(df,  draft=False):
     )
     fig.update_traces(hovertemplate='%{x}<br>%{y:,.0f} acres<extra></extra>')
     fig.update_layout(font=dict(family=font, size=14))
+        # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold Value'],
+        x=df['Condition'],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        marker_line_width=2, 
+        marker_size = 36,
+        hovertemplate='Threshold :<br>%{y:,.0f} acres<extra></extra>'
+    ))
     # set layout
     fig.update_layout(title="Fish Habitat - Nearshore Lake Tahoe",
                         xaxis_type='category',
