@@ -301,48 +301,84 @@ def get_2019_vegtypesummary_data():
     return df
 
 # plot Vegetation Type
-def plot_veg():
-    # get data
-    df = get_ecobject_2010_data()
-    # create figure
-    fig = go.Figure()
-    # add trace
-    fig.add_trace(go.Bar(
-        x=df['Year'],
-        y=df['Total_Acres'],
-        name='Total Acres',
-        marker_color='#b3e2cd',
-        hovertemplate='<b>%{y:,.0f}</b> acres<extra></extra>'
-    ))
-    # set layout
-    fig.update_layout(
-        title='Vegetation Type',
-        font_family=font,
-        template=template,
-        showlegend=False,
-        hovermode="x unified",
-        xaxis = dict(
-            tickmode = 'linear',
-            tick0 = 1978,
-            dtick = 5,
-            title_text='Year'
-        ),
-        yaxis = dict(
-            tickmode = 'linear',
-            tick0 = 0,
-            dtick = 100,
-            title_text='Total Acres'
-        )
-    )
-    # export chart
-    fig.write_html(
-        config=config,
-        file= out_chart / "Final/Vegetation_Type.html",
-        # include_plotlyjs="directory",
-        div_id="Vegetation_Type",
-        full_html=False
+def plot_veg_abundance(df, draft=True):
+    # dfVegSum = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_VegetationTypeSummary", conn)
+    colors = ['#9ed7c2','#cdf57a','#b4d79e', 
+            '#ff0000', '#a5f57a','#00a820','#df73ff', 
+            '#3e72b0','#2f3f56', '#a8a800']
+
+    # df= df.loc[(df['Development']=='Undeveloped')&(df['QMD']<11)]
+    df= df.loc[(df['Development']=='Undeveloped')]
+
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="TRPA_VegType", y='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
     )
 
+
+    # set layout
+    fig.update_layout(title="Vegetation Type % Abundance",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        barmode = 'overlay',
+                        xaxis = dict(
+    #                         categoryorder= 'array',
+    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    fig.show()
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Abundance.html",
+            div_id="Vegetation_Abundance",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Abundance.html",
+            div_id="Vegetation_Abundance",
+            full_html=False
+        )
+        
 # get forest fuels treatment data
 def get_data_forest_fuel_sql():
     # make sql database connection with pyodbc
