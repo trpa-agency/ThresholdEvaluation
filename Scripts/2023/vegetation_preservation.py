@@ -33,6 +33,7 @@ def get_lewisia_xslx():
 # Plot Sensitive Plants
 #----------------
 def plot_TDraba(df, draft=False):
+    Threshold_Value= 5
     #Tahoe Draba data
     fig = px.bar(df, x='Year', y='subpopulations', title='Tahoe Draba Subpopulations', color_discrete_sequence=['rgba(31, 119, 180, 0.5)'])
         
@@ -47,11 +48,21 @@ def plot_TDraba(df, draft=False):
     # Ensure that all years are displayed, even if there is no data for some
     fig.update_layout(yaxis_title='Subpopulations',
                   xaxis=dict(type='category'),
-                  font_family='Arial',  # Example font, replace with your font variable
-                  template='plotly_white',  # Example template, replace with your template variable
+                  font_family=font,  # Example font, replace with your font variable
+                  template=template,  # Example template, replace with your template variable
                   showlegend=False,
                   hovermode="x unified")
-
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        #y=[Threshold_Value, Threshold_Value],
+        y=[Threshold_Value] * len(df['Year']),  # Create a constant line
+        x=df['Year'],
+        #x=[2003,2024],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold :<br>%{y:.2f}<extra></extra>'
+    ))
     # export chart
     if draft == True:
         fig.write_html(
@@ -86,8 +97,8 @@ def plot_CDraba(df, draft=False):
     fig.update_layout(yaxis_title='Subpopulations',
                       xaxis_title='Year',
                   xaxis=dict(type='category'),
-                  font_family='Arial',  # Example font, replace with your font variable
-                  template='plotly_white',  # Example template, replace with your template variable
+                  font_family=font,  # Example font, replace with your font variable
+                  template=template,  # Example template, replace with your template variable
                   showlegend=False,
                   hovermode="x unified")
 
@@ -124,8 +135,8 @@ def plot_lewisia(df, draft=False):
     # Ensure that all years are displayed, even if there is no data for some
     fig.update_layout(yaxis_title='Subpopulations',
                   xaxis=dict(type='category'),
-                  font_family='Arial',  # Example font, replace with your font variable
-                  template='plotly_white',  # Example template, replace with your template variable
+                  font_family=font,  # Example font, replace with your font variable
+                  template=template,  # Example template, replace with your template variable
                   showlegend=False,
                   hovermode="x unified")
 
