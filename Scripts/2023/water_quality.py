@@ -795,28 +795,32 @@ def plot_ais_infestation(df, draft=True):
 def plot_tahoe_keys(draft=True):
     # setup plot
     data = {
-    'Year': [2020, 2020, 2020],
+    'Year': ["2020", "2020", "2020"],
     'Species': ['Eurasian Watermilfoil', 'Coontail', 'Curlyleaf Pondweed'],
     'Square_Feet': [131729, 181720, 188664]
     }
     df = pd.DataFrame(data)
+    threshold = df['Square_Feet'].sum()*0.25
     color_map = {'Eurasian Watermilfoil':"#a37774", 'Coontail':"#5c6d70", 'Curlyleaf Pondweed':"#015B3D"}
-    fig = px.bar(df, x='Species', y='Square_Feet', color='Species', title='Volume of Aquatic Invasive Species',
+    fig = px.bar(df, x='Year', y='Square_Feet', color='Species', title='Volume of Aquatic Invasive Species',
+                 barmode='stack',
                 labels={ 'Species': 'Species', 'Square_Feet':'Square Feet'}, color_discrete_map=color_map,
             template="plotly_white",opacity=0.9)
 
-    
+    # add threshold line
+    fig.add_hline(y=threshold, line_dash="dot", line_color="black", 
+                  annotation_text="Threshold Target", annotation_position="bottom right")
     # set layout
     fig.update_layout(
                         font_family=font,
                         template=template,
                         showlegend=True,
                         xaxis = dict(
-                            title_text='Species'
+                            title_text='Year'
                         ),
                         yaxis = dict(
                             title_text='Cubic Yards',
-                            range=[0, 200000]
+                            range=[0, 500000]
                         )
 
                     

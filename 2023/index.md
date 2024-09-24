@@ -208,7 +208,8 @@
 >
 ***Common Vegetation***
   * Vegetation Community Richness
-    * ...
+    * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Abundance.html)
   * Relative Abundance of Red Fir Forest In Seral Stages Other Than Mature
     * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
     * [Chart](Vegetation\Chart\Final\Vegetation_RedFir.html)
