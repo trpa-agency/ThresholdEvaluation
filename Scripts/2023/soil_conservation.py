@@ -14,6 +14,14 @@ def get_SEZ_data_web():
     dfSEZ = get_fs_data_spatial(SEZ_url)
     return dfSEZ
 # get soil conservation data
+def get_sez_data_sql():
+    # make sql database connection with pyodbc
+    engine = get_conn('sde')
+    # get BMP Status data as dataframe from BMP SQL Database
+    with engine.begin() as conn:
+        # create dataframe from sql query
+        dfSEZ  = pd.read_sql('SELECT Threshold_Year, Final_Points_Possible, Final_Total_Points FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
+    return dfSEZ
 def get_soil_conservation_data_sql():
     # make sql database connection with pyodbc
     engine = get_conn('sde_tabular')
@@ -299,4 +307,42 @@ def plot_SEZ_scores(df,draft=True):
             full_html=False,
         )
   
-     
+def plot_SEZ_Score_Totals(df, draft=True):
+    fig = px.scatter(df, x='Threshold_Year', y='Index_Percent', 
+                     title='SEZ Condition Index Scores')
+    fig.update_layout(
+        xaxis_title='Year',
+        yaxis_title='Percent of Total Possible Points',
+        yaxis=dict(ticksuffix='%', range=[0, 100]),
+        showlegend=False,
+        template=template,
+        font_family=font,
+        # change marker size
+        
+    )
+    #fig.update_traces(marker=dict(size=12))
+    # add a line at 88% to show the threshold
+    # fig.add_shape(
+    #     dict(
+    #         type='line',
+    #         x0=2019,
+    #         x1=2023,
+    #         y0=88,
+    #         y1=88,
+    #         line=dict(color='red', width=2),
+    #     )
+    # )
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Draft/SoilConservation_SEZ_Score_Totals.html",
+            div_id=f"SoilConservatin_SEZ_Score_Totals",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Final/SoilConservation_SEZ_Score_Totals.html",
+            div_id=f"SoilConservation_SEZ_Score_Totals",
+            full_html=False,
+        )
