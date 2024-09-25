@@ -28,6 +28,8 @@ def get_fishhab():
     # group by habitat values and acres
     df = df.groupby(['Condition'])['Acres'].sum().reset_index()
     df['Threshold Value'] = 5948
+    # set marginal habitat to NaN for threshold line
+    df.loc[df['Condition'] == 'Marginal', 'Threshold Value'] = np.nan
     return df
 
 # plot fish habitat data
@@ -53,12 +55,15 @@ def plot_fishhab(df,  draft=False):
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
         x=df['Condition'],
-        name= "Threshold",
         line=dict(color='#333333', width=3),
-        mode='lines',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
         marker_line_width=2, 
-        marker_size = 36,
-        hovertemplate='Threshold :<br>%{y:,.0f} acres<extra></extra>'
+        marker_size = 240,
+        customdata=df['Threshold Value'],
+        hovertemplate='Threshold target<br>of %{y:,.0f} acres<extra></extra>'
     ))
     # set layout
     fig.update_layout(title="Fish Habitat - Nearshore Lake Tahoe",
