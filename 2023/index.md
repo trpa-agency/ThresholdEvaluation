@@ -239,8 +239,8 @@
 >
 ***Late Seral/Old Growth Ecosystems***
   * Total Old Growth
-    * [Map](Vegetation\Map\Final\TotalOldGrowth.html)
-    * [Chart](Vegetation\Chart\Final\Total_Old_Growth.html)
+    * [Map](Vegetation\Map\Final\SeralStage.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_SeralStage.html)
   * Sub-Alpine Zone
     * [Map](Vegetation\Map\Final\SeralStage.html)
     * [Chart](Vegetation\Chart\Final\Vegetation_Seral_Subalpine.html)
