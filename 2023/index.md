@@ -150,16 +150,16 @@
 ***Roadway and Shoreline Units***
   * Scenic Quality Ratings for Roadway Travel Units (Scenic Resources)
     * [Map](Scenic\Map\Final\Scenic_Roadway.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Roadway_Attainment.html)
   * Travel Route Ratings for Roadway Travel Units
     * [Map](Scenic\Map\Final\Scenic_Roadway.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Roadway_Rating.html)
   * Scenic Quality Ratings for Shoreline Travel Units (Scenic Resources)
     * [Map](Scenic\Map\Final\Scenic_Shoreline.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Shoreline_Attainment.html)
   * Travel Route Ratings for Shoreline Travel Units
     * [Map](Scenic\Map\Final\Scenic_Shoreline.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Shoreline_Rating.html)
     
 > ## Soil Conservation
 >
