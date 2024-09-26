@@ -184,8 +184,8 @@ def plot_TYC(df, draft= False):
     df = df[df['Year'] != 2021]
     # Define thresholds based on lake level conditions
     thresholds = {
-        'low': {'condition': lambda x: x <= 6224, 'value': 32},
-        'mid': {'condition': lambda x: 6224 < x < 6227, 'value': 26},
+        'low': {'condition': lambda x: x < 6225, 'value': 36},
+        'mid': {'condition': lambda x: 6225 <= x < 6227, 'value': 26},
         'high': {'condition': lambda x: x >= 6227, 'value': 20}
     }
 
