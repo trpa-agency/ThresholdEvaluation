@@ -169,7 +169,7 @@ def plot_lewisia(df, draft=False):
 #--------------------------------------------------------------------------------         
 # get tahoe yellowcress  data
 def get_TYC_data_sql():
-    # make sql database connection with pyodbc
+    # make sql database connection
     engine = get_conn('sde_tabular')
     # get dataframe from BMP SQL Database
     with engine.begin() as conn:
