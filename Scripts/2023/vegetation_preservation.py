@@ -289,6 +289,8 @@ def get_ecobject_caldor_identity_data():
     df = df[df['Development'] =='Undeveloped']
     # # drop nan values
     df = df[df['TRPA_VegType'] != '']
+    # set SeralStage = N/A to Not Classified
+    df['SeralStage'] = df['SeralStage'].replace('N/A', 'Not Classified')
     return df
 
 # get new veg change analysis data
@@ -359,8 +361,6 @@ def plot_veg_abundance(df, draft=True):
                         hovermode="x unified",
                         barmode = 'overlay',
                         xaxis = dict(
-    #                         categoryorder= 'array',
-    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
                             tickmode = 'linear',
                             title_text='Vegetation Type'
                         ),
@@ -808,7 +808,7 @@ def plot_veg_composition_canopy(df, draft=True):
                         xaxis = dict(
                             categoryorder= 'array',
                             categoryarray= ['Early Seral Closed', 'Early Seral Open', 
-                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'N/A'],
+                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -845,7 +845,8 @@ def plot_seral_stage(df, draft=True):
     df.loc[df['SeralStage'] =='N/A', 'SeralClass'] = 'N/A'
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
-    df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
+    df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral'
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
@@ -881,7 +882,7 @@ def plot_seral_stage(df, draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -957,7 +958,7 @@ def plot_veg_composition(df, draft=True):
                         xaxis = dict(
                             categoryorder= 'array',
                             categoryarray= ['Early Seral Closed', 'Early Seral Open', 
-                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'N/A'],
+                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -1029,8 +1030,6 @@ def plot_deciduous(df, draft=True):
                         hovermode="x unified",
                         barmode = 'overlay',
                         xaxis = dict(
-    #                         categoryorder= 'array',
-    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
                             tickmode = 'linear',
                             title_text='Vegetation Type'
                         ),
@@ -1180,8 +1179,6 @@ def plot_shrub(df, draft=True):
                         hovermode="x unified",
                         barmode = 'overlay',
                         xaxis = dict(
-    #                         categoryorder= 'array',
-    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
                             tickmode = 'linear',
                             title_text='Vegetation Type'
                         ),
@@ -1222,7 +1219,7 @@ def plot_seral_subalpine(df,draft=True):
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
     df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
-
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
 
@@ -1257,7 +1254,7 @@ def plot_seral_subalpine(df,draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -1296,6 +1293,7 @@ def plot_seral_upper_montane(df,draft=True):
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
     df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
@@ -1331,7 +1329,7 @@ def plot_seral_upper_montane(df,draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -1371,7 +1369,7 @@ def plot_seral_montane(df,draft=True):
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
     df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
-
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
 
@@ -1406,7 +1404,7 @@ def plot_seral_montane(df,draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
