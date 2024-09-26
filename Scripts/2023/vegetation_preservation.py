@@ -46,7 +46,14 @@ def plot_TDraba(df, draft=False):
     )
 
     # Ensure that all years are displayed, even if there is no data for some
-    fig.update_layout(yaxis_title='Subpopulations',
+    fig.update_layout(
+                yaxis_title='Subpopulations',
+                yaxis=dict(
+                range=[0, 50],  # Adjust the range to stay above 0 and slightly above the max value
+                tickmode='linear',
+                tick0=0,  
+                dtick=10   
+                ),
                   xaxis=dict(type='category'),
                   font_family=font,  # Example font, replace with your font variable
                   template=template,  # Example template, replace with your template variable
@@ -54,14 +61,16 @@ def plot_TDraba(df, draft=False):
                   hovermode="x unified")
     # create threshold line
     fig.add_trace(go.Scatter(
-        #y=[Threshold_Value, Threshold_Value],
         y=[Threshold_Value] * len(df['Year']),  # Create a constant line
         x=df['Year'],
-        #x=[2003,2024],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
-        mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f}<extra></extra>'
+        hovertemplate='Threshold :<br>%{y:.2f}<extra></extra>',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 200,   
     ))
     # export chart
     if draft == True:
@@ -175,8 +184,8 @@ def plot_TYC(df, draft= False):
     df = df[df['Year'] != 2021]
     # Define thresholds based on lake level conditions
     thresholds = {
-        'low': {'condition': lambda x: x <= 6224, 'value': 32},
-        'mid': {'condition': lambda x: 6224 < x < 6227, 'value': 26},
+        'low': {'condition': lambda x: x < 6225, 'value': 36},
+        'mid': {'condition': lambda x: 6225 <= x < 6227, 'value': 26},
         'high': {'condition': lambda x: x >= 6227, 'value': 20}
     }
 
