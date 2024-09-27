@@ -21,7 +21,7 @@ def get_scenic_corridor_rating():
 # get scenic viewpoint rating data
 def get_scenic_viewpoint_rating():
     # make sql database connection with pyodbc
-    engine = get_conn('sde_tabular')
+    engine = get_conn('sde')
     # get dataframe from BMP SQL Database
     with engine.begin() as conn:
         # create dataframe from sql query
