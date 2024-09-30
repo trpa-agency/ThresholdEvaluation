@@ -748,20 +748,36 @@ def get_ais_infestation_data_sql():
     return df_plot
 
 def plot_ais_infestation(df, draft=True):
+    # # reorder categories
+    # df['Infestation_Status'] = pd.Categorical(df['Infestation_Status'], categories=['Planning','Control', 'Surveillance'], ordered=True)
     # setup plot
     color_map = {'Control':"#a37774", 'Surveillance':"#5c6d70", 'Planning':"#015B3D"}
-    fig = px.bar(df, x='Year', y='percentage', color='Infestation_Status', barmode='stack', title='AIS site status percentage',
-             labels={ 'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, color_discrete_map=color_map,
-        template="plotly_white",opacity=0.9)
-
+    fig = px.bar(df, x='Year', y='percentage', 
+                 color='Infestation_Status', 
+                 barmode='stack', 
+                 title='AIS Site Status by Year',
+                 labels={'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, 
+                 color_discrete_map=color_map,
+                 template="plotly_white", 
+                 opacity=0.9,
+                 custom_data=['Infestation_Status','count','total'],
+                 category_orders={'Infestation_Status':['Planning','Control','Surveillance']}
+               )
+    # update hovertemplate
     fig.update_traces(
-        hovertemplate='<b>Year: %{x}</b><br>Status: %{fullData.name}<br>Percentage: %{y:.0f}%<extra></extra>'
+        hovertemplate="<br>".join([
+            "<b>%{y:.0f}%</b> of infestation sites were in",
+            "<b>%{customdata[0]}</b> status, or",
+            "<b>%{customdata[1]:,.0f} of the %{customdata[2]:,.0f}</b> total sites<br>"
+        ])+ "<extra></extra>",
     )
     # set layout
     fig.update_layout(
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        hovermode="x unified",
+
                         xaxis = dict(
                             tickmode = 'linear',
                             tick0 = 2018,
@@ -777,6 +793,7 @@ def plot_ais_infestation(df, draft=True):
                         )
                     
                     )
+    fig.show()
     if draft == True:
         fig.write_html(
             config=config,
