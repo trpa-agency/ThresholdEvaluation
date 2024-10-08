@@ -5,7 +5,7 @@ config = {"displayModeBar": False}
 template = 'plotly_white'
 font     = 'Calibri'
 
-# get fish habitat data
+# get fish habitat dataS
 def get_fishhab():
     # Lake fish hab data
     engine = get_conn('sde')
