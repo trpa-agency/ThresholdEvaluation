@@ -503,14 +503,14 @@ def plot_periphyton(df, draft=True):
                             }
 
     # setup plot
-    fig = px.line(df, x = 'Year', y= 'Chl', color='site',
+    fig = px.scatter(df, x = 'Year', y= 'Chl', color='site',
                     color_discrete_map = color_discrete_map)
 
     fig.update_traces(hovertemplate='<br>%{y:.2f}')
 
 
     # set layout
-    fig.update_layout(title="Nearshore Attached Algae - Average Chlorophyll",
+    fig.update_layout(title="Nearshore Attached Algae",
                         font_family=font,
                         template=template,
                         showlegend=True,
@@ -523,9 +523,9 @@ def plot_periphyton(df, draft=True):
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
+                            dtick = 10,
                             range=[0, 110],
-                            title_text='Average Chl'
+                            title_text='Average Chlorophyll'
                         )
                     
                     )

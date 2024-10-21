@@ -87,3 +87,72 @@ def plot_fishhab(df,  draft=False):
             div_id="Fish_Habitat",
             full_html=False,
         )
+#Get Stream HAbitat Condition Data (CSCI Scores
+# get stream condition index scores dataS
+def get_CSCI():
+    #Get data from REST service
+    CSCIAverages_url = "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/84"
+    df = get_fs_data(CSCIAverages_url)
+    # Lake fish hab data
+    #engine = get_conn('sde')
+    # get BMP Status data as dataframe from BMP SQL Database
+    #with engine.begin() as conn:
+        # create dataframe from sql query
+       # df = pd.read_sql("sde.SDE.Stream?6", conn)
+#Plot Stream Habitat Condition
+def plot_avgCSCI(df,  draft=False):
+    # match colors to map features
+    colors = ['#E6E600','#E69800','#38A800']
+    # Sort DataFrame by 'Year'
+    df = df.sort_values(by='Year')
+# setup plot if only using average for all trend sites
+#fig = px.scatter(dfStreamStatus, x = 'Year', y= 'Value')
+#Update Pop up for average of all trend sites.. not per panel
+#fig.update_traces(hovertemplate='%{y:.2f} Average CSCI Score<extra></extra>')
+    #setup plot
+    fig = go.Figure()
+    # Filter data for Test A and Test B
+    df_trend_a = df[df['Trend_Panel'] == 'A']
+    df_trend_b = df[df['Trend_Panel'] == 'B']
+    # Add traces for Test A and Test B
+    fig.add_trace(go.Scatter(x=df_trend_a['Year'], y=df_trend_a['Value'], mode='markers',
+                          marker=dict(color='blue'), name='Trend Panel A',
+                         hovertemplate='<b>%{y:.2f}</b> Average CSCI score for all 24 sites in <b>Trend Panel A</b><extra></extra>'))
+    fig.add_trace(go.Scatter(x=df_trend_b['Year'], y=df_trend_b['Value'], mode='markers',
+                         marker=dict(color='green'), name='Trend Panel B',
+                         hovertemplate='%{y:.2f} Average CSCI score for all 24 sites in <b>Trend Panel B</b><extra></extra>'))
+    # update layout
+    fig.update_layout(title='Stream Bioassessment',
+                  xaxis_title= 'Year',
+                  hovermode="x unified",
+                  font_family=font,
+                  template=template,
+                  legend=dict(
+                #orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95
+                ),
+                  yaxis=dict(
+                      tickmode='linear',
+                      tick0=0,
+                      dtick=0.05,
+                      range=[0.8, 1.05],
+                      title_text='Average California Stream Condition Index'
+                  ))
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Fisheries_StreamStatus.html",
+            div_id="Fisheries_StreamStatus",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Fisheries_StreamStatus.html",
+            div_id="Fisheries_StreamStatus",
+            full_html=False,
+        )
