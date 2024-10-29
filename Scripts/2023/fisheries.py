@@ -93,6 +93,7 @@ def get_CSCI():
     #Get data from REST service
     CSCIAverages_url = "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/84"
     df = get_fs_data(CSCIAverages_url)
+    return df
     # Lake fish hab data
     #engine = get_conn('sde')
     # get BMP Status data as dataframe from BMP SQL Database
@@ -102,7 +103,7 @@ def get_CSCI():
 #Plot Stream Habitat Condition
 def plot_avgCSCI(df,  draft=False):
     # match colors to map features
-    colors = ['#E6E600','#E69800','#38A800']
+    #colors = ['#E6E600','#E69800','#38A800']
     # Sort DataFrame by 'Year'
     df = df.sort_values(by='Year')
 # setup plot if only using average for all trend sites
@@ -119,7 +120,7 @@ def plot_avgCSCI(df,  draft=False):
                           marker=dict(color='blue'), name='Trend Panel A',
                          hovertemplate='<b>%{y:.2f}</b> Average CSCI score for all 24 sites in <b>Trend Panel A</b><extra></extra>'))
     fig.add_trace(go.Scatter(x=df_trend_b['Year'], y=df_trend_b['Value'], mode='markers',
-                         marker=dict(color='green'), name='Trend Panel B',
+                         marker=dict(color='orange'), name='Trend Panel B',
                          hovertemplate='%{y:.2f} Average CSCI score for all 24 sites in <b>Trend Panel B</b><extra></extra>'))
     # update layout
     fig.update_layout(title='Stream Bioassessment',
