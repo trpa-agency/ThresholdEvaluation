@@ -471,22 +471,12 @@ def plot_watercraft(df, draft=False):
         )
 
 # plot wildlife noise
-def plot_wildlife(draft=False):
-
-    #Read excel file data
-    base_dir = r"F:\Research and Analysis\Threshold reporting\ThresholdData\Noise"
-    file_name = "ThresholdData_PlanAreaNoise.xlsx"
-    file_path = os.path.join(base_dir, file_name)
-    dfCriticalNoise = pd.read_excel(file_path)
-
-    df = dfCriticalNoise[dfCriticalNoise['Category'] == 'Critical Wildlife Habitat']
-
+def plot_wildlife(df, draft=False):
+    df = df.loc[df['Category'] == 'Critical Wildlife Habitat']
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
-
     # update popup
     fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
-
     # create threshold line
     fig.add_trace(go.Scatter(
         y= df['Threshold_Value'],
@@ -496,7 +486,6 @@ def plot_wildlife(draft=False):
         mode='lines',
         hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
     ))
-
     # update layout
     fig.update_layout(title='Critical Wildlife Habitat',
                         font_family=font,
@@ -508,7 +497,7 @@ def plot_wildlife(draft=False):
                             tickmode = 'linear',
                             tick0 = 0,
                             dtick = 5,
-                            range=[40, 80],
+                            range=[40, 60],
                             title_text='Average Decibels'
                         )  
                     )
@@ -516,14 +505,14 @@ def plot_wildlife(draft=False):
     if draft == True:
         fig.write_html(
             config=config,
-            file= out_chart / "Draft/Critical_Wildlife.html",
+            file= out_chart / "Draft/Noise_CriticalWildlife.html",
             div_id="Critical_Wildlife",
             full_html=False
         )
     elif draft == False:
         fig.write_html(
             config=config,
-            file= out_chart / "Final/Critical_Wildlife.html",
+            file= out_chart / "Final/Noise_CriticalWildlife.html",
             div_id="Critical_Wildlife",
             full_html=False
         )                

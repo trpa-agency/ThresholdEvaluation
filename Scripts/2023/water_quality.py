@@ -501,12 +501,19 @@ def plot_periphyton(df, draft=True):
                         'Tahoe City': '#DAA520',
                         'Zephyr Pt.': '#708090'                                
                             }
+    #color_discrete_map = {'Incline West': '#016c59', #forest green
+       #                 'Pineland': '#9CBA83',  #olivina
+        #                'Rubicon Pt.': '#67a9cf', #gray blue
+         #               'Sugar Pine Pt.': '#CEC198', #yuma
+          #              'Tahoe City': '#66c2a4', #mint green
+           #             'Zephyr Pt.': '#d9f0a3'  #ellow green                              
+            #                }
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Chl', color='site',
                     color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>%{y:.2f}')
+    fig.update_traces(hovertemplate='<br>%{y:.2f}', marker=dict(size=10))
 
 
     # set layout
@@ -514,7 +521,9 @@ def plot_periphyton(df, draft=True):
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        legend_title="",
                         hovermode="x unified",
+                        dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
                             tick0 = 1985,
