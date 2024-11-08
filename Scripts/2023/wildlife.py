@@ -444,7 +444,8 @@ def plot_bald_eagle_summer(df, draft=False):
     fig = px.scatter(df, x = 'Year', y= 'Total', color='Wildlife_Species')
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Active Bald Eagle Nests<extra></extra>')
+                    hovertemplate='%{y:.0f} Active Bald Eagle Nests<extra></extra>',
+                    name="Active Bald Eagle Nests")
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -466,7 +467,6 @@ def plot_bald_eagle_summer(df, draft=False):
     fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
     # # get beta value
     beta = fit_results.params[1]
-    print("Beta = " + str(fit_results.params[1]))
     # # add beta value from trend line to data frame
     df['Beta'] = fit_results.params[1]
 

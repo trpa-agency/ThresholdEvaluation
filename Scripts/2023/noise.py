@@ -426,7 +426,7 @@ def plot_watercraft(df, draft=False):
     fig = px.scatter(df, x = 'Year', y= 'Value')
 
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> exceedances per day<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> average exceedances per day<extra></extra>')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -435,7 +435,7 @@ def plot_watercraft(df, draft=False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} exceedances per day<extra></extra>'
+        hovertemplate='Threshold:<br>%{y:.0f} average exceedances per day<extra></extra>'
     ))
     # update layout
     fig.update_layout(title= 'Shoreline Noise',

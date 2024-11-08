@@ -65,7 +65,7 @@ def plot_pm2_5_annual(df, draft= False):
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site',
                     color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>%{y:.2f} ppm')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -74,7 +74,7 @@ def plot_pm2_5_annual(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold :%{y:.2f} ppm<extra></extra>'
     ))
 
     # Using boolean indexing with case-insensitive comparison
@@ -98,7 +98,7 @@ def plot_pm2_5_annual(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                    customdata=slope, hovertemplate='Trend :<br>%{customdata:.2f}<extra></extra>')
+                    customdata=slope, hovertemplate='Trend :%{customdata:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -108,6 +108,8 @@ def plot_pm2_5_annual(df, draft= False):
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        dragmode=False,
+                        legend_title_text=None, #Remove legend title
                         hovermode="x unified",
                         xaxis = dict(
                             tickmode = 'linear',
@@ -119,7 +121,7 @@ def plot_pm2_5_annual(df, draft= False):
                             tick0 = 0,
                             dtick = 5,
                             range=[0, 15],
-                            title_text='Value (ppm)'
+                            title_text='Parts per Million)'
                         )
                     
                     )
@@ -146,7 +148,7 @@ def plot_pm2_5_annual(df, draft= False):
 # plot PM 2.5 24hour data
 def plot_pm2_5_24hour(df, draft= False):
     # set indicator
-    indicator = 'PM2.5 - 3 YR AVG. 98% 24 HR'
+    indicator = 'PM2.5 - HIGH 24 HR'
     # limit rows to indicator
     df = df.loc[df['Indicator'] == indicator]
     # correct threshold value errors
@@ -155,7 +157,7 @@ def plot_pm2_5_24hour(df, draft= False):
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', 
                  color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>%{y:.2f} ppm')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
 
 
@@ -166,7 +168,7 @@ def plot_pm2_5_24hour(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
     ))
 
     # filter trend analysis
@@ -183,15 +185,10 @@ def plot_pm2_5_24hour(df, draft= False):
     fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
     # get beta value
     beta = fit_results.params[1]
-    # add beta value from trend line to data frame
-    #df.loc[df['Indicator'] == indicator, 'Beta'] = fit_results.params[1]
-
-    # create variable of beta
-    #slope = df.loc[df['Indicator'] == indicator, 'Beta']
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend :<br>Slope: {beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -201,7 +198,9 @@ def plot_pm2_5_24hour(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    dragmode=False,
                     hovermode="x unified",
+                    legend_title_text=None, #Remove legend title
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1980,
@@ -210,9 +209,9 @@ def plot_pm2_5_24hour(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 10,
-                        range=[0, 80],
-                        title_text='Value (ppm)'
+                        dtick = 20,
+                        range=[0, 520],
+                        title_text='Parts per Million'
                     )
                   
                  )
@@ -254,7 +253,7 @@ def plot_pm10_annual(df, draft= False):
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site',
                  color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>%{y:.2f} ppm')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -263,7 +262,7 @@ def plot_pm10_annual(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
     ))
 
 
@@ -285,7 +284,7 @@ def plot_pm10_annual(df, draft= False):
     trendline = fig2.data[1]
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend:<br>Slope: {beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: %{beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -295,7 +294,9 @@ def plot_pm10_annual(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
                     hovermode="x unified",
+                    dragmode=False,
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1985,
@@ -306,7 +307,7 @@ def plot_pm10_annual(df, draft= False):
                         tick0 = 0,
                         dtick = 5,
                         range=[0, 30],
-                        title_text='Value (ppm)'
+                        title_text='Parts per Million'
                     )
                   
                  )
@@ -347,7 +348,7 @@ def plot_pm10_24hr(df, draft= False):
                  color_discrete_map = color_discrete_map)
          
 
-    fig.update_traces(hovertemplate='<br>%{y:.2f} ppm')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
 
     # create threshold line
@@ -357,7 +358,7 @@ def plot_pm10_24hr(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
     ))
 
     # create trendline
@@ -376,7 +377,7 @@ def plot_pm10_24hr(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend:<br>Slope: {beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -387,6 +388,8 @@ def plot_pm10_24hr(df, draft= False):
                     template=template,
                     showlegend=True,
                     hovermode="x unified",
+                    legend_title_text=None, #Remove legend title
+                    dragmode=False,
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1985,
@@ -397,7 +400,7 @@ def plot_pm10_24hr(df, draft= False):
                         tick0 = 0,
                         dtick = 25,
                         range=[0, 225],
-                        title_text='Value (ppm)'
+                        title_text='Parts per Million'
                     )
                   
                  )
@@ -436,7 +439,7 @@ def plot_o3_1hour_high(df, draft= False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site') 
                 
-    fig.update_traces(hovertemplate='<br>%{y:.2f} ppm')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
 
     # create threshold line
@@ -446,7 +449,7 @@ def plot_o3_1hour_high(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
     ))
 
 
@@ -464,7 +467,7 @@ def plot_o3_1hour_high(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend :<br>Slope: {beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -474,6 +477,8 @@ def plot_o3_1hour_high(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
+                    dragmode=False,
                     hovermode="x unified",
                     xaxis = dict(
                         tickmode = 'linear',
@@ -485,7 +490,7 @@ def plot_o3_1hour_high(df, draft= False):
                         tick0 = 0,
                         dtick = 0.01,
                         range=[0.06, 0.11],
-                        title_text='Value (ppm)'
+                        title_text='Parts per Million'
                     )
                   
                  )
@@ -510,7 +515,7 @@ def plot_o3_1hour_high(df, draft= False):
 #---------------------------
 # CO 8- Hour Average
 #----------------------------
-# plot PM 2.5 24hour data
+# plot CO 8hour data
 def plot_co_8hour_avg(df, draft= False):
     # Set indicator
     indicator = 'CO - HIGH 8 HR'
@@ -526,7 +531,7 @@ def plot_co_8hour_avg(df, draft= False):
 
     # Setup main plot
     fig = px.scatter(df, x='Year', y='Value', color='Site')
-    fig.update_traces(hovertemplate='<br>%{y:.2f} ppm')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
     # Create threshold line
     fig.add_trace(go.Scatter(
@@ -535,7 +540,7 @@ def plot_co_8hour_avg(df, draft= False):
         name="Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
     ))
 
 
@@ -558,7 +563,7 @@ def plot_co_8hour_avg(df, draft= False):
 
     # Update trendline with slope information
     trendline_full.update(showlegend=True, name="Trend (All)", line_width=3,  
-                      hovertemplate=f'Trend (All):<br>Slope: {beta_full:.2f}<extra></extra>')
+                      hovertemplate=f'Trend (All): {beta_full:.2f}<extra></extra>')
 
     # Add trendline to the main figure
     fig.add_trace(trendline_full)
@@ -586,7 +591,7 @@ def plot_co_8hour_avg(df, draft= False):
     #df.loc[df['Indicator'] == indicator, 'Beta_Filtered'] = beta_filtered
 
     trendline_filtered.update(showlegend=True, name="Trend (Stateline TRPA)", line_width=3,
-                          hovertemplate=f'Trend (Stateline TRPA):<br>Slope: {beta_filtered:.2f}<extra></extra>')
+                          hovertemplate=f'Trend (Stateline TRPA): %{beta_filtered:.2f}<extra></extra>')
 
 
     # Add trendline to the main figure
@@ -599,7 +604,9 @@ def plot_co_8hour_avg(df, draft= False):
                   font_family=font,
                   template=template,
                   showlegend=True,
+                  legend_title_text=None, #Remove legend title
                   hovermode="x unified",
+                  dragmode=False,
                   xaxis=dict(
                       tickmode='linear',
                       tick0=1985,
@@ -610,7 +617,7 @@ def plot_co_8hour_avg(df, draft= False):
                       tick0=0,
                       dtick=1,
                       range=[0, 10],
-                      title_text='Value (ppm)'
+                      title_text='Parts per Million'
                   )
                  )
 
@@ -656,7 +663,7 @@ def plot_50_Bliss_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <br>%{y:.2f} Mm-1')
+    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -666,7 +673,7 @@ def plot_50_Bliss_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
     ))
 
 
@@ -685,7 +692,7 @@ def plot_50_Bliss_vis(df, draft= False):
     beta = fit_results.params[1]
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                  hovertemplate=f'Trend :<br>Slope: {beta:.2f}<extra></extra>')
+                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -695,7 +702,9 @@ def plot_50_Bliss_vis(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
                     hovermode="x unified",
+                    dragmode=False,
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1985,
@@ -748,7 +757,7 @@ def plot_90_Bliss_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <br>%{y:.2f} Mm-1')
+    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -758,7 +767,7 @@ def plot_90_Bliss_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
     ))
 
 
@@ -776,7 +785,7 @@ def plot_90_Bliss_vis(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate='Trend :<br>Slope: {beta:.2f}<extra></extra>')
+                 hovertemplate='Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -786,7 +795,9 @@ def plot_90_Bliss_vis(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
                     hovermode="x unified",
+                    dragmode=False,
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1985,
@@ -837,7 +848,7 @@ def plot_50_SLT_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <br>%{y:.2f} Mm-1')
+    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -847,7 +858,7 @@ def plot_50_SLT_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
     ))
 
     # set layout
@@ -855,7 +866,9 @@ def plot_50_SLT_vis(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
                     hovermode="x unified",
+                    dragmode=False,
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1985,
@@ -905,7 +918,7 @@ def plot_90_SLT_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <br>%{y:.2f} Mm-1')
+    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -915,7 +928,7 @@ def plot_90_SLT_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
     ))
 
     # set layout
@@ -923,7 +936,9 @@ def plot_90_SLT_vis(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
                     hovermode="x unified",
+                    dragmode=False,
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1985,
@@ -966,7 +981,7 @@ def plot_NOx(df, draft= False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
 
-    fig.update_traces(hovertemplate='<br>%{y: .2f}')
+    fig.update_traces(hovertemplate='<b>%{y: .2f}</b> tons per day<extra></extra>')
 
 
     # create threshold line
@@ -976,7 +991,7 @@ def plot_NOx(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f} <extra></extra>'
+        hovertemplate='Threshold: %{y:.2f} <extra></extra>'
     ))
 
 
@@ -995,7 +1010,7 @@ def plot_NOx(df, draft= False):
     
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                  hovertemplate=f'Trend :<br>Slope: {beta:.2f}<extra></extra>')
+                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -1005,6 +1020,8 @@ def plot_NOx(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
+                    dragmode=False,
                     hovermode="x unified",
                     xaxis = dict(
                         tickmode = 'linear',
@@ -1016,7 +1033,7 @@ def plot_NOx(df, draft= False):
                         tick0 = 0,
                         dtick = 1,
                         range=[0, 8],
-                        title_text='Value'
+                        title_text='Tons per Day'
                     )
                  )
    # export chart
@@ -1051,7 +1068,7 @@ def plot_winter_traffic(df, draft= False):
                              'Value':':,.0f'}
                              )
 
-    fig.update_traces(hovertemplate='Traffic Count:<br>%{y:,.0f} cars')
+    fig.update_traces(hovertemplate='Traffic Count: <b>%{y:,.0f}</b> cars')
 
 
     # create threshold line
@@ -1061,7 +1078,7 @@ def plot_winter_traffic(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-    hovertemplate='Threshold:<br>%{y:,.0f} cars<extra></extra>'
+    hovertemplate='Threshold :%{y:,.0f} cars<extra></extra>'
     ))
 
     # set layout
@@ -1069,6 +1086,8 @@ def plot_winter_traffic(df, draft= False):
                     font_family=font,
                     template=template,
                     showlegend=True,
+                    legend_title_text=None, #Remove legend title
+                    dragmode=False,
                     hovermode="x unified",
                     xaxis = dict(
                         tickmode = 'linear',
@@ -1080,9 +1099,9 @@ def plot_winter_traffic(df, draft= False):
                         tick0 = 0,
                         dtick = 5000,
                         range=[0, 30000],
-                        title_text='Value'
+                        title_text='Number of Cars'
                     )
-                 )
+                )
     # export chart
     if draft == True:
         fig.write_html(
@@ -1120,7 +1139,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
     #                             }
                     )
 
-    fig.update_traces(hovertemplate='Dissolved Nitrogen<br>%{y:,.0f} g ha-1 yr-1')
+    fig.update_traces(hovertemplate='Dissolved Nitrogen: <b>%{y:,.0f}</b> g ha-1 yr-1')
 
     df['Threshold']=1
 
@@ -1131,7 +1150,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold<br>%{y:.2f} <extra></extra>'
+        hovertemplate='Threshold : %{y:.2f} <extra></extra>'
     ))
     
     # create trendline
@@ -1154,7 +1173,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                     customdata=slope, hovertemplate='Trend<br>%{customdata:.2f}<extra></extra>')
+                     customdata=slope, hovertemplate='Trend: {customdata:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -1164,6 +1183,8 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        legend_title_text=None, #Remove legend title
+                        dragmode=False,
                         hovermode="x unified",
                         xaxis = dict(
                             tickmode = 'linear',
@@ -1176,11 +1197,11 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
                             tick0 = 0,
                             dtick = 500,
                             range=[0, 4000],
-                            title_text='Value'
+                            title_text='Grams per Hectare per Year'
                         )
                     )
-    # remove threhold from legend
-    fig.for_each_trace(lambda t: t.update(showlegend=False) if t.name == 'Threshold' else ())
+    # remove threhold from legend?
+    #?fig.for_each_trace(lambda t: t.update(showlegend=False) if t.name == 'Threshold' else ())
     
     if draft == True:
         fig.write_html(
