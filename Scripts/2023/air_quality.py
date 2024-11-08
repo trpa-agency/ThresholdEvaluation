@@ -74,7 +74,7 @@ def plot_pm2_5_annual(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :%{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
     # Using boolean indexing with case-insensitive comparison
@@ -98,7 +98,7 @@ def plot_pm2_5_annual(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                    customdata=slope, hovertemplate='Trend :%{customdata:.2f}<extra></extra>')
+                    customdata=slope, hovertemplate='Trend: %{customdata:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -121,7 +121,7 @@ def plot_pm2_5_annual(df, draft= False):
                             tick0 = 0,
                             dtick = 5,
                             range=[0, 15],
-                            title_text='Parts per Million)'
+                            title_text='Parts per Million'
                         )
                     
                     )
@@ -168,7 +168,7 @@ def plot_pm2_5_24hour(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
     # filter trend analysis
@@ -262,7 +262,7 @@ def plot_pm10_annual(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
 
@@ -358,7 +358,7 @@ def plot_pm10_24hr(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
     # create trendline
@@ -467,7 +467,7 @@ def plot_o3_1hour_high(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: %{beta:.4f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -540,7 +540,7 @@ def plot_co_8hour_avg(df, draft= False):
         name="Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
 
@@ -767,7 +767,7 @@ def plot_90_Bliss_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:d} Mm-1<extra></extra>'
     ))
 
 
@@ -858,7 +858,7 @@ def plot_50_SLT_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:d} Mm-1<extra></extra>'
     ))
 
     # set layout
@@ -991,7 +991,7 @@ def plot_NOx(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} <extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} <extra></extra>'
     ))
 
 
@@ -1150,7 +1150,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold : %{y:.2f} <extra></extra>'
+        hovertemplate='Threshold : %{y} <extra></extra>'
     ))
     
     # create trendline
@@ -1173,7 +1173,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                     customdata=slope, hovertemplate='Trend: {customdata:.2f}<extra></extra>')
+                     customdata=slope, hovertemplate='Trend: {customdata}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
