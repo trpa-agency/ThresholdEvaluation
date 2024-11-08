@@ -209,8 +209,8 @@ def plot_pm2_5_24hour(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 20,
-                        range=[0, 520],
+                        dtick = 35,
+                        range=[0, 525],
                         title_text='Parts per Million'
                     )
                   
