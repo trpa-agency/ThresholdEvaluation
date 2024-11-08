@@ -172,10 +172,10 @@ def plot_pm2_5_24hour(df, draft= False):
     ))
 
     # filter trend analysis
-    dfTrend = df[df['Include_in_Trend_Analysis'].str.lower() == 'yes']
+    #dfTrend = df[df['Include_in_Trend_Analysis'].str.lower() == 'yes']
 
     # create trendline
-    fig2 = px.scatter(dfTrend, x = 'Year', y= 'Value', 
+    fig2 = px.scatter(df, x = 'Year', y= 'Value', 
                  trendline='ols', trendline_color_override='#8a7121')
 
     # set up trendline trace
@@ -209,8 +209,8 @@ def plot_pm2_5_24hour(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 20,
-                        range=[0, 520],
+                        dtick = 50,
+                        range=[0, 525],
                         title_text='Parts per Million'
                     )
                   
