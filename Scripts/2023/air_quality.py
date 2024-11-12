@@ -148,7 +148,7 @@ def plot_pm2_5_annual(df, draft= False):
 # plot PM 2.5 24hour data
 def plot_pm2_5_24hour(df, draft= False):
     # set indicator
-    indicator = 'PM2.5 - HIGH 24 HR'
+    indicator = 'PM2.5 - 3 YR AVG. 98% 24 HR'
     # limit rows to indicator
     df = df.loc[df['Indicator'] == indicator]
     # correct threshold value errors
@@ -209,8 +209,8 @@ def plot_pm2_5_24hour(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 50,
-                        range=[0, 525],
+                        dtick = 10,
+                        range=[0, 80],
                         title_text='Parts per Million'
                     )
                   
