@@ -59,7 +59,7 @@ def plot_pm2_5_annual(df, draft= False):
     df = df.loc[df['Indicator'] == indicator]
 
     # correct threshold value errors
-    df['Threshold Value'] = 12
+    df['Threshold Value'] = 9
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site',
@@ -245,7 +245,7 @@ def plot_pm10_annual(df, draft= False):
 
     # limit rows to indicator
     df = df.loc[df['Indicator'] == indicator]
-    # correct threshold value errors
+    # correct threshold value errors- CA 
     df['Threshold Value'] = 20
 
 
