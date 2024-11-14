@@ -858,9 +858,36 @@ def plot_50_SLT_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:d} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:,.0f} Mm-1<extra></extra>'
     ))
+    
+    #Filter for new data /newest site only
+    dfTrend = df[df['Site'] == 'LTCC']
+   
+   # create trendline
+    fig2 = px.scatter(dfTrend, x = 'Year', y= 'Value', 
+                     trendline='ols', trendline_color_override='#8a7121')
 
+    # set up trendline trace
+    trendline = fig2.data[1]
+
+    # get ols results
+    fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
+    # get beta value
+    beta = fit_results.params[1]
+    #print("Beta = " + str(fit_results.params[1]))
+    # add beta value from trend line to data frame
+    dfTrend['Beta'] = fit_results.params[1]
+
+    # create variable of beta
+    slope = dfTrend['Beta']
+
+    # update trendline
+    trendline.update(showlegend=True, name="Trend", line_width=3, 
+                     customdata=slope, hovertemplate='Trend: %{customdata:,.2f} Mm-1<extra></extra>')
+    # add to figure
+    fig.add_trace(trendline)
+    # set layout
     # set layout
     fig.update_layout(title='Sub-Regional Visibility 50th Percentile South Lake Tahoe',
                     font_family=font,
@@ -904,7 +931,7 @@ def plot_50_SLT_vis(df, draft= False):
 # SubRegional Visibility 90th Percentile SLT
 #----------------------------
 
-# plot 03 1hour data
+# plot 90th percentiledata
 def plot_90_SLT_vis(df, draft= False):
     # limit rows to indicator
     df = df.loc[(df['Indicator'] == '3-year mean (90th Percentile, Mm-1)')&
@@ -918,7 +945,7 @@ def plot_90_SLT_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
+    fig.update_traces(hovertemplate='3-year mean: <b>%{y:,.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -928,9 +955,35 @@ def plot_90_SLT_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:,.0f} Mm-1<extra></extra>'
     ))
 
+    dfTrend = df[df['Site'] == 'LTCC']
+   
+   # create trendline
+    fig2 = px.scatter(dfTrend, x = 'Year', y= 'Value', 
+                     trendline='ols', trendline_color_override='#8a7121')
+
+    # set up trendline trace
+    trendline = fig2.data[1]
+
+    # get ols results
+    fit_results = px.get_trendline_results(fig2).px_fit_results.iloc[0]
+    # get beta value
+    beta = fit_results.params[1]
+    #print("Beta = " + str(fit_results.params[1]))
+    # add beta value from trend line to data frame
+    dfTrend['Beta'] = fit_results.params[1]
+
+    # create variable of beta
+    slope = dfTrend['Beta']
+
+    # update trendline
+    trendline.update(showlegend=True, name="Trend", line_width=3, 
+                     customdata=slope, hovertemplate='Trend: %{customdata:,.2f} Mm-1<extra></extra>')
+
+    # add to figure
+    fig.add_trace(trendline)
     # set layout
     fig.update_layout(title='Sub-Regional Visibility 90th Percentile South Lake Tahoe',
                     font_family=font,
@@ -1128,7 +1181,7 @@ def get_midlake_dissolved_nitrogen_data():
     return df
 
 # plot midlake dissolved nitrogen data
-def plot_midlake_dissolved_nitrogen(df, draft=True):
+def plot_midlake_dissolved_nitrogen(df, draft=False):
     # df.rename(columns={'Value': 'Dissolved Nitrogen (mg/L)'}, inplace=True)
     fig = px.scatter(df, x='Year', y='Value', color_discrete_sequence=["#023f64"])
     # add threshold line
@@ -1173,7 +1226,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                     customdata=slope, hovertemplate='Trend: {customdata}<extra></extra>')
+                     customdata=slope, hovertemplate='Trend: %{customdata:,.2f} g/ha/year<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -1196,7 +1249,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=True):
                             tickmode = 'linear',
                             tick0 = 0,
                             dtick = 500,
-                            range=[0, 4000],
+                            range=[0, 3500],
                             title_text='Grams per Hectare per Year'
                         )
                     )
