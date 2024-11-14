@@ -785,7 +785,7 @@ def plot_90_Bliss_vis(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate='Trend: {beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
