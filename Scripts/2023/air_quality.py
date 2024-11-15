@@ -159,8 +159,6 @@ def plot_pm2_5_24hour(df, draft= False):
 
     fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
-
-
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -284,7 +282,7 @@ def plot_pm10_annual(df, draft= False):
     trendline = fig2.data[1]
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend: %{beta:.2f}<extra></extra>')
+                 hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -467,7 +465,7 @@ def plot_o3_1hour_high(df, draft= False):
 
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                 hovertemplate=f'Trend: %{beta:.4f}<extra></extra>')
+                 hovertemplate=f'Trend: {beta:.4f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
@@ -570,8 +568,6 @@ def plot_co_8hour_avg(df, draft= False):
 
 
     # Filtered data trendline (2013-2023/TRPA Stateline)
-    #----------------------#
-
     # Create trendline using the filtered data
     fig_filtered_trendline = px.scatter(df_trendline, x='Year', y='Value', 
                                     color_discrete_map=color_discrete_map,
@@ -585,19 +581,12 @@ def plot_co_8hour_avg(df, draft= False):
 
     # Get beta value
     beta_filtered = fit_results_filtered.params[1]
-    
-
-    # Add beta value to the main DataFrame
-    #df.loc[df['Indicator'] == indicator, 'Beta_Filtered'] = beta_filtered
 
     trendline_filtered.update(showlegend=True, name="Trend (Stateline TRPA)", line_width=3,
-                          hovertemplate=f'Trend (Stateline TRPA): %{beta_filtered:.2f}<extra></extra>')
-
+                          hovertemplate=f'Trend (Stateline TRPA): {beta_filtered:.2f}<extra></extra>')
 
     # Add trendline to the main figure
     fig.add_trace(trendline_filtered)
-
-    #----------------------#
 
     # Set layout
     fig.update_layout(title="Carbon Monoxide - 8 hour Average Concentration",
@@ -663,7 +652,7 @@ def plot_50_Bliss_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
+    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.1f}</b> Mm-1')
 
 
     # create threshold line
@@ -673,7 +662,7 @@ def plot_50_Bliss_vis(df, draft= False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold: %{y:.2f} Mm-1<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} Mm-1<extra></extra>'
     ))
 
 
@@ -692,7 +681,7 @@ def plot_50_Bliss_vis(df, draft= False):
     beta = fit_results.params[1]
     # update trendline
     trendline.update(showlegend=True, name="Trend", line_width=3, 
-                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
+                  hovertemplate=f'Trend: {beta:.1f}<extra></extra>')
 
     # add to figure
     fig.add_trace(trendline)
