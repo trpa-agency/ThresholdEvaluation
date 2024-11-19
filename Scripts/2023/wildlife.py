@@ -95,7 +95,7 @@ def plot_osprey_data_wt_estimate(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Osprey Nests Observed<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Osprey Nests Observed<extra></extra>')
     # # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
@@ -131,11 +131,12 @@ def plot_osprey_data_wt_estimate(df, draft=False):
 
     # set layout
     fig.update_layout(title='Osprey Nests',
-                        legend_title_text='',
-                        font_family=font,
+                    font_family=font,
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
+                        legend_title_text=None, #Remove legend title
                         xaxis = dict(
                             tickmode = 'linear',
                             dtick = 5
@@ -181,7 +182,7 @@ def plot_pfalcon_data_wt_estimate(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Peregrine Falcon Nests Observed<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Peregrine Falcon Nests Observed<extra></extra>')
     # # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
@@ -222,6 +223,7 @@ def plot_pfalcon_data_wt_estimate(df, draft=False):
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
                             dtick = 5
@@ -268,7 +270,7 @@ def plot_bald_eagle_winter_est(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Bald Eagles Observed<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Bald Eagles Observed<extra></extra>')
     # # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
@@ -309,6 +311,7 @@ def plot_bald_eagle_winter_est(df, draft=False):
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
                             dtick = 5
@@ -361,7 +364,8 @@ def plot_bald_eagle_winter(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Bald Eagles Observed<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Bald Eagles Observed<extra></extra>',
+                    name='Winter Bald Eagle Count'),
     # # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
@@ -402,6 +406,7 @@ def plot_bald_eagle_winter(df, draft=False):
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
                             dtick = 5
@@ -418,7 +423,7 @@ def plot_bald_eagle_winter(df, draft=False):
     if draft == True:
         fig.write_html(
             config=config,
-            file= out_chart / "Draft/Wildlife_BaldEagle_Winter_NestSites.html",
+            file= out_chart / "Draft/Wildlife_BaldEagle_Winter.html",
             include_plotlyjs="directory",
             div_id="Bald Eagle",
             full_html=False,
@@ -428,7 +433,7 @@ def plot_bald_eagle_winter(df, draft=False):
     elif draft == False: 
         fig.write_html(
             config=config,
-            file= out_chart / "Final/Wildlife_BaldEagle_Winter_NestSites.html",
+            file= out_chart / "Final/Wildlife_BaldEagle_Winter.html",
             # include_plotlyjs="directory",
             div_id="Bald_Eagle",
             full_html=False,
@@ -444,7 +449,7 @@ def plot_bald_eagle_summer(df, draft=False):
     fig = px.scatter(df, x = 'Year', y= 'Total', color='Wildlife_Species')
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Active Bald Eagle Nests<extra></extra>',
+                    hovertemplate='<b>%{y:.0f}</b> Active Bald Eagle Nests<extra></extra>',
                     name="Active Bald Eagle Nests")
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -487,6 +492,8 @@ def plot_bald_eagle_summer(df, draft=False):
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
+                        legend_title_text=None, #Remove legend title
                         legend=dict(
                         title=""),
                         xaxis = dict(
@@ -528,7 +535,8 @@ def plot_goshawk_data(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Active %{customdata} Nesting Territories<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Active %{customdata} Nesting Territories<extra></extra>',
+                    name='Goshawk Nesting Territories')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -547,6 +555,8 @@ def plot_goshawk_data(df, draft=False):
         template=template,
         hovermode="x unified",
         showlegend=True,
+        dragmode=False,
+        legend_title_text=None, #Remove legend title
         legend=dict(
             title=""  # Set legend title to an empty string
         ),
@@ -590,7 +600,8 @@ def plot_falcon_data(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Active %{customdata} Nest Sites<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Active <b>%{customdata}</b> Nest Sites<extra></extra>'
+                    name='Peregrine Falcon Nests')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -633,6 +644,8 @@ def plot_falcon_data(df, draft=False):
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
+                        legend_title_text=None, #Remove legend title
                         legend=dict(
                         title=""),
                         xaxis = dict(
@@ -676,7 +689,8 @@ def plot_osprey_data(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='%{y:.0f} Active %{customdata} Nests<extra></extra>')
+                    hovertemplate='<b>%{y:.0f}</b> Active <b>%{customdata}</b> Nests<extra></extra>',
+                    name='Osprey Nests')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -720,6 +734,8 @@ def plot_osprey_data(df, draft=False):
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
+                        legend_title_text=None, #Remove legend title
                         legend=dict(
                         title=""
                         ),
@@ -778,13 +794,15 @@ def plot_waterfowl_data(df, draft=False):
     fig.update_traces(showlegend=True, 
                       name="Average Rating for All Sites", 
                       line_width=2,
-                      hovertemplate='Average Rating: %{y:.2f}<extra></extra>')
+                      hovertemplate='Average Rating: <b>%{y:.2f}</b><extra></extra>')
     #Set the range of the x-axis
     fig.update_layout(title="Waterfowl Population Sites - Human Activity Rating",
                         font_family=font,
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
+                        dragmode=False,
+                        legend_title_text=None, #Remove legend title
                         legend=dict(
                         title=""
                         ),
