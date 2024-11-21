@@ -64,7 +64,7 @@ def plot_TDraba(df, draft=False):
         y=[Threshold_Value] * len(df['Year']),  # Create a constant line
         x=df['Year'],
         name= "Threshold",
-        hovertemplate='Threshold :<br>%{y:.2f}<extra></extra>',
+        hovertemplate='Threshold : %{y:.0f}<extra></extra>',
         mode='markers',
         marker_symbol='line-ew',
         marker_line_color="midnightblue", 
@@ -110,7 +110,21 @@ def plot_CDraba(df, draft=False):
                   template=template,  # Example template, replace with your template variable
                   showlegend=False,
                   hovermode="x unified")
-
+    # create threshold line
+    Threshold_Value= 2
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df['Year']),  # Create a constant line
+        x=df['Year'],
+        name= "Threshold",
+        hovertemplate='Threshold : %{y:.0f}<extra></extra>',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 200,   
+    ))
 # export chart
     if draft == True:
         fig.write_html(
@@ -148,7 +162,21 @@ def plot_lewisia(df, draft=False):
                   template=template,  # Example template, replace with your template variable
                   showlegend=False,
                   hovermode="x unified")
-
+# create threshold line
+    Threshold_Value= 2
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df['year']),  # Create a constant line
+        x=df['year'],
+        name= "Threshold",
+        hovertemplate='Threshold : %{y:.0f}<extra></extra>',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 200,   
+    ))
 # export chart
     if draft == True:
         fig.write_html(
