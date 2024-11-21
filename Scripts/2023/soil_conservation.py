@@ -308,12 +308,18 @@ def plot_soil_conservation(df, landcap = None, draft=True):
         #)
   
 def plot_SEZ_Score_Totals(df, draft=True):
-    fig = px.scatter(df, x='Threshold_Year', y='Index_Percent', 
+    fig = px.bar(df, x='Threshold_Year', y='Index_Percent', 
                      title='SEZ Condition Index Scores')
+    Threshold_Value=88
     fig.update_layout(
         xaxis_title='Year',
         yaxis_title='Percent of Total Possible Points',
         yaxis=dict(ticksuffix='%', range=[0, 100]),
+        xaxis=dict(
+            title='Year',
+            tickmode='array',  # Ensure only available years are shown
+            tickvals=df['Threshold_Year'].unique(),  # Use unique years from the data
+        ),
         showlegend=False,
         template=template,
         font_family=font,
@@ -344,5 +350,94 @@ def plot_SEZ_Score_Totals(df, draft=True):
             config=config,
             file= out_chart / f"Final/SoilConservation_SEZ_Score_Totals.html",
             div_id=f"SoilConservation_SEZ_Score_Totals",
+            full_html=False,
+        )
+
+def plot_BasinwideSEZ_scores(df, draft=True):
+    BasinwideScore= df[['Acres', 'SEZ_ID','Assessment_Unit_Name','Threshold Year', 'Final_Percent', 'SEZ_Type']]
+
+    # Calculate SEZ_Quality
+    BasinwideScore['SEZ_Quality'] = BasinwideScore['Final_Percent'] * 100
+
+    # Calculate SEZ_Condition Index
+    BasinwideScore[:, 'SEZ_Condition_Index'] = BasinwideScore['Acres'] * BasinwideScore['SEZ_Quality']
+    # Group by 'Threshold Year' and calculate the sums for each year
+    grouped = BasinwideScore.groupby('Threshold Year').agg(
+    total_sez_ci=('SEZ_Condition_Index', 'sum'),
+    total_acres=('Acres', 'sum')
+    )
+
+    # Calculate the final number for each year
+    grouped['final_number'] = grouped['total_sez_ci'] / grouped['total_acres']
+    # Calculate the sums
+    total_sez_ci = BasinwideScore['SEZ_Condition_Index'].sum()
+    total_acres = BasinwideScore['Acres'].sum()
+
+    # Calculate the final number
+    final_number = total_sez_ci / total_acres
+
+
+    #print(f"Total SEZ Condition Index: {total_sez_ci}")
+    #print(f"Total Acres: {total_acres}")
+    #print(f"Final Number: {final_number}")
+
+    # Create a new DataFrame with Threshold Year and final number
+    final_data = BasinwideScore[['Threshold Year']].drop_duplicates().copy()
+    final_data['Acre-weighted average SEZ quality'] = final_number
+
+    
+    Threshold_Value = 88
+    # setup plot
+    fig = px.box(df, x = 'Threshold Year', y= 'SEZ Quality')
+                   
+    fig.update_traces(hovertemplate='SEZ Quality:<br>%{y:.2f}')
+
+    # set layout
+    fig.update_layout(title='Regional SEZ Quality',
+                    font_family=font,
+                    template=template,
+                    legend_title_text='',
+                    showlegend=False,
+                    hovermode="x unified",
+                    xaxis = dict(
+                        tickmode = 'linear',
+                        dtick = df["Threshold Year"].unique(),
+                        #dtick = 2,
+                        #range= [2019, 2024],
+                        title_text='Year'
+                    ),
+                    yaxis = dict(
+                        tickmode = 'linear',
+                        tick0 = 0,
+                        dtick = 25,
+                        range=[0, 100],
+                        title_text='Acre-weighted SEZ Quality'
+                    )
+                 )
+
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df),  # Create a constant line at 88
+        #x=df['Year'],
+        x=[2019,2024],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold :<br>%{y:.2f}<extra></extra>'
+    ))
+    # show figure
+    fig.show()
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Draft/SoilConservation_BasinwideSEZScores.html",
+            div_id=f"SoilConservatin_BasinwideSEZScores",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Final/SoilConservation_BasinwideSEZScores.html",
+            div_id=f"SoilConservation_BasinwideSEZScores",
             full_html=False,
         )

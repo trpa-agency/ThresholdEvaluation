@@ -600,7 +600,7 @@ def plot_falcon_data(df, draft=False):
 
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
-                    hovertemplate='<b>%{y:.0f}</b> Active <b>%{customdata}</b> Nest Sites<extra></extra>'
+                    hovertemplate='<b>%{y:.0f}</b> Active <b>%{customdata}</b> Nest Sites<extra></extra>',
                     name='Peregrine Falcon Nests')
 
     # create threshold line
