@@ -186,7 +186,7 @@ def plot_lewisia(df, draft=False):
                 x=0.95,
             ),
                   hovermode="x unified")
-# create threshold line
+    # create threshold line
     Threshold_Value= 2
     # create threshold line
     fig.add_trace(go.Scatter(
