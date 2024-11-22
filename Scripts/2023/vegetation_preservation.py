@@ -57,7 +57,15 @@ def plot_TDraba(df, draft=False):
                   xaxis=dict(type='category'),
                   font_family=font,  # Example font, replace with your font variable
                   template=template,  # Example template, replace with your template variable
-                  showlegend=False,
+                  showlegend=True,
+                  legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            ),
                   hovermode="x unified")
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -108,7 +116,15 @@ def plot_CDraba(df, draft=False):
                   xaxis=dict(type='category'),
                   font_family=font,  # Example font, replace with your font variable
                   template=template,  # Example template, replace with your template variable
-                  showlegend=False,
+                  showlegend=True,
+                  legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            ),
                   hovermode="x unified")
     # create threshold line
     Threshold_Value= 2
@@ -160,7 +176,15 @@ def plot_lewisia(df, draft=False):
                   xaxis=dict(type='category'),
                   font_family=font,  # Example font, replace with your font variable
                   template=template,  # Example template, replace with your template variable
-                  showlegend=False,
+                  showlegend=True,
+                  legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            ),
                   hovermode="x unified")
 # create threshold line
     Threshold_Value= 2
