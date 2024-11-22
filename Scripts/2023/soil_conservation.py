@@ -306,52 +306,6 @@ def plot_soil_conservation(df, landcap = None, draft=True):
         #    div_id=f"SoilConservation_SEZ_Scores",
          #   full_html=False,
         #)
-  
-def plot_SEZ_Score_Totals(df, draft=True):
-    fig = px.bar(df, x='Threshold_Year', y='Index_Percent', 
-                     title='SEZ Condition Index Scores')
-    Threshold_Value=88
-    fig.update_layout(
-        xaxis_title='Year',
-        yaxis_title='Percent of Total Possible Points',
-        yaxis=dict(ticksuffix='%', range=[0, 100]),
-        xaxis=dict(
-            title='Year',
-            tickmode='array',  # Ensure only available years are shown
-            tickvals=df['Threshold_Year'].unique(),  # Use unique years from the data
-        ),
-        showlegend=False,
-        template=template,
-        font_family=font,
-        # change marker size
-        
-    )
-    #fig.update_traces(marker=dict(size=12))
-    # add a line at 88% to show the threshold
-    # fig.add_shape(
-    #     dict(
-    #         type='line',
-    #         x0=2019,
-    #         x1=2023,
-    #         y0=88,
-    #         y1=88,
-    #         line=dict(color='red', width=2),
-    #     )
-    # )
-    if draft == True:
-        fig.write_html(
-            config=config,
-            file= out_chart / f"Draft/SoilConservation_SEZ_Score_Totals.html",
-            div_id=f"SoilConservatin_SEZ_Score_Totals",
-            full_html=False,
-        )
-    elif draft == False:
-        fig.write_html(
-            config=config,
-            file= out_chart / f"Final/SoilConservation_SEZ_Score_Totals.html",
-            div_id=f"SoilConservation_SEZ_Score_Totals",
-            full_html=False,
-        )
 
 def plot_BasinwideSEZ_scores(df, draft=False):
     #BasinwideScore= df[['Acres', 'SEZ_ID','Assessment_Unit_Name','Threshold Year', 'Final_Percent', 'SEZ_Type']]
