@@ -20,7 +20,7 @@ def get_sez_data_sql():
     # get BMP Status data as dataframe from BMP SQL Database
     with engine.begin() as conn:
         # create dataframe from sql query
-        dfSEZ  = pd.read_sql('SELECT Threshold_Year, Final_Points_Possible, Final_Total_Points FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
+        dfSEZ  = pd.read_sql('SELECT Threshold_Year, Final_Percent, Final_Points_Possible, Final_Total_Points, Acres FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
     return dfSEZ
 def get_soil_conservation_data_sql():
     # make sql database connection with pyodbc
@@ -354,54 +354,51 @@ def plot_SEZ_Score_Totals(df, draft=True):
         )
 
 def plot_BasinwideSEZ_scores(df, draft=True):
-    BasinwideScore= df[['Acres', 'SEZ_ID','Assessment_Unit_Name','Threshold Year', 'Final_Percent', 'SEZ_Type']]
+    #BasinwideScore= df[['Acres', 'SEZ_ID','Assessment_Unit_Name','Threshold Year', 'Final_Percent', 'SEZ_Type']]
 
     # Calculate SEZ_Quality
-    BasinwideScore['SEZ_Quality'] = BasinwideScore['Final_Percent'] * 100
+    df['SEZ_Quality'] = df['Final_Percent']
 
     # Calculate SEZ_Condition Index
-    BasinwideScore[:, 'SEZ_Condition_Index'] = BasinwideScore['Acres'] * BasinwideScore['SEZ_Quality']
+    df['SEZ_Condition_Index'] = df['Acres'] * df['SEZ_Quality']
     # Group by 'Threshold Year' and calculate the sums for each year
-    grouped = BasinwideScore.groupby('Threshold Year').agg(
+    grouped = df.groupby('Threshold_Year').agg(
     total_sez_ci=('SEZ_Condition_Index', 'sum'),
     total_acres=('Acres', 'sum')
     )
 
     # Calculate the final number for each year
-    grouped['final_number'] = grouped['total_sez_ci'] / grouped['total_acres']
-    # Calculate the sums
-    total_sez_ci = BasinwideScore['SEZ_Condition_Index'].sum()
-    total_acres = BasinwideScore['Acres'].sum()
-
-    # Calculate the final number
-    final_number = total_sez_ci / total_acres
-
-
-    #print(f"Total SEZ Condition Index: {total_sez_ci}")
-    #print(f"Total Acres: {total_acres}")
-    #print(f"Final Number: {final_number}")
-
-    # Create a new DataFrame with Threshold Year and final number
-    final_data = BasinwideScore[['Threshold Year']].drop_duplicates().copy()
-    final_data['Acre-weighted average SEZ quality'] = final_number
-
-    
+    grouped['BasinwideSEZ_Quality'] = grouped['total_sez_ci'] / grouped['total_acres']
+    # Reset index to convert 'Threshold_Year' from index to column
+    grouped = grouped.reset_index()
+    #Set Threshold Value
     Threshold_Value = 88
     # setup plot
-    fig = px.box(df, x = 'Threshold Year', y= 'SEZ Quality')
+    fig = px.bar(grouped, x = 'Threshold_Year', y= 'BasinwideSEZ_Quality', color_discrete_sequence=['rgba(119, 129, 92, 0.5)'])
                    
-    fig.update_traces(hovertemplate='SEZ Quality:<br>%{y:.2f}')
+    fig.update_traces( marker=dict(
+            line=dict(color='#77815c', width=2)  # Proper string format for color
+        ),
+        hovertemplate='SEZ Quality:<br><b>%{y:.2f}</b>')
 
     # set layout
     fig.update_layout(title='Regional SEZ Quality',
                     font_family=font,
                     template=template,
                     legend_title_text='',
-                    showlegend=False,
+                    showlegend=True,
+                    legend=dict(
+                    orientation="h",
+                    entrywidth=180,
+                    yanchor="bottom",
+                    y=1.05,
+                    xanchor="right",
+                    x=0.95,
+                    ),
                     hovermode="x unified",
                     xaxis = dict(
                         tickmode = 'linear',
-                        dtick = df["Threshold Year"].unique(),
+                        dtick = grouped["Threshold_Year"].unique(),
                         #dtick = 2,
                         #range= [2019, 2024],
                         title_text='Year'
@@ -418,12 +415,12 @@ def plot_BasinwideSEZ_scores(df, draft=True):
     # create threshold line
     fig.add_trace(go.Scatter(
         y=[Threshold_Value] * len(df),  # Create a constant line at 88
-        #x=df['Year'],
-        x=[2019,2024],
+        x=df['Threshold_Year'],
+        #x=[2019,2024],
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold :<br>%{y:.2f}<extra></extra>'
+        hovertemplate='Threshold :<br>%{y:.0f}<extra></extra>'
     ))
     # show figure
     fig.show()
