@@ -353,7 +353,7 @@ def plot_SEZ_Score_Totals(df, draft=True):
             full_html=False,
         )
 
-def plot_BasinwideSEZ_scores(df, draft=True):
+def plot_BasinwideSEZ_scores(df, draft=False):
     #BasinwideScore= df[['Acres', 'SEZ_ID','Assessment_Unit_Name','Threshold Year', 'Final_Percent', 'SEZ_Type']]
 
     # Calculate SEZ_Quality
