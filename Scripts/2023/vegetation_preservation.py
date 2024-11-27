@@ -258,7 +258,7 @@ def plot_TYC(df, draft= False):
         y=df['Lake_Level'],
         x=df['Year'],
         name= "Lake Elevation (ft)",
-        line=dict(color='rgba(255,255,255,0)'),#color='#679ab8', width=2, opacity=0),
+        line=dict(color='rgba(103, 154, 184,.6)'),#color='#679ab8', width=2, opacity=0),
         fill='tonexty',  # Fills under the line only
         fillcolor='rgba(103, 154, 184, 0.2)',  # Sets the fill color and opacity  
         mode= 'lines',
@@ -266,6 +266,7 @@ def plot_TYC(df, draft= False):
         legendgroup = 'background'
         ), 
         secondary_y=True)
+    
    
     #Add Yellow Cress Data as bar chart
     # Bar chart for Occupied Sites
@@ -274,8 +275,9 @@ def plot_TYC(df, draft= False):
     y=df['Occupied_Sites'],
     name="Occupied Sites",
     marker=dict(color='#ffffbf', line=dict(color="#8a7121", width=1.5)),
-    opacity=1,
-    hovertemplate='<b>%{y:,.0f}</b> sites had Tahoe Yellow Cress<extra></extra>'
+    #opacity=1,
+    hovertemplate='<b>%{y:,.0f}</b> sites had Tahoe Yellow Cress<extra></extra>',
+    legendgroup='foreground'
     ), secondary_y=False)
     
     #fig.add_trace(go.Bar(name="Occupied Site", x=df['Year'], y=df['Occupied_Sites']))
@@ -301,7 +303,7 @@ def plot_TYC(df, draft= False):
     # set layout
     fig.update_layout(title='Tahoe Yellow Cress',
                     font_family=font,
-                    template= template,
+                    template= 'plotly_white',
                     showlegend=True,
                     dragmode=False,
                     hovermode="x unified",
