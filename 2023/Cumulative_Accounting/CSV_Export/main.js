@@ -23,9 +23,9 @@ function onBtnExport() {
   gridApi.exportDataAsCsv();
 }
 
-function onBtnUpdate() {
-  document.querySelector("#csvResult").value = gridApi.getDataAsCsv();
-}
+// function onBtnUpdate() {
+//   document.querySelector("#csvResult").value = gridApi.getDataAsCsv();
+// }
 
 // setup the grid after the page has finished loading
 document.addEventListener("DOMContentLoaded", function () {

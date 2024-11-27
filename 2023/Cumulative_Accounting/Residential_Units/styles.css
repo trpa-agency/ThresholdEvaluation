@@ -5,3 +5,26 @@
     --ag-header-cell-hover-background-color: #279bdc;
     --ag-header-cell-moving-background-color: #279bdc;
 }
+/* style button blue with white font and rounded corners */
+.button-blue {
+    background-color: #337ab7;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-style: bold;
+    margin: 4px 2px;
+    cursor: pointer;
+} /* end of .button-blue */
+
+.button-blue:hover {
+    background-color: #279bdc;
+}
+
+.button-blue:active {
+    background-color: #1a5a8a;
+}
