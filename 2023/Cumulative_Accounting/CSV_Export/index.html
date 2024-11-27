@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>JavaScript Example - Csv Export - Csv Export</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style media="only screen">
+      :root,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      html {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0;
+        overflow: auto;
+        font-family: -apple-system, "system-ui", "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+      }
+
+      body {
+        padding: 16px;
+        overflow: auto;
+        background-color: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <style>
+      button {
+        display: inline-block;
+        font-weight: bold;
+      }
+    </style>
+    <div style="display: flex; flex-direction: column; height: 100%">
+      <div style="margin: 10px 0">
+        <!-- <button onclick="onBtnUpdate()">Show CSV export content text</button> -->
+        <button onclick="onBtnExport()">Download CSV export file</button>
+      </div>
+      <div
+        style="
+          flex: 1 1 0;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          gap: 20px;
+        "
+      >
+        <div id="gridContainer" style="flex: 1">
+          <div
+            id="myGrid"
+            style="height: 100%; display: block; flex: 1"
+            class="ag-theme-alpine"
+          ></div>
+        <!-- </div>
+        <textarea
+          id="csvResult"
+          style="flex: 1"
+          placeholder="Click the Show CSV export content button to view exported CSV here"
+        ></textarea> -->
+      </div>
+    </div>
+    <script>
+      (function () {
+        const appLocation = "";
+
+        window.__basePath = appLocation;
+      })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/dist/ag-grid-community.js?t=1731498691359"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
