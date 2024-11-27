@@ -253,57 +253,80 @@ def plot_TYC(df, draft= False):
     # Create figure with secondary y-axis
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-    fig.add_trace(go.Bar(name="Occupied Site",x=df['Year'], y=df['Occupied_Sites']))
+     # create lake level line
+    fig.add_trace(go.Scatter(
+        y=df['Lake_Level'],
+        x=df['Year'],
+        name= "Lake Elevation (ft)",
+        line=dict(color='rgba(255,255,255,0)'),#color='#679ab8', width=2, opacity=0),
+        fill='tonexty',  # Fills under the line only
+        fillcolor='rgba(103, 154, 184, 0.2)',  # Sets the fill color and opacity  
+        mode= 'lines',
+        hovertemplate='Lake Level was %{y:,.0f}ft<extra></extra>',
+        legendgroup = 'background'
+        ), 
+        secondary_y=True)
+   
+    #Add Yellow Cress Data as bar chart
+    # Bar chart for Occupied Sites
+    fig.add_trace(go.Bar(
+    x=df['Year'],
+    y=df['Occupied_Sites'],
+    name="Occupied Sites",
+    marker=dict(color='#ffffbf', line=dict(color="#8a7121", width=1.5)),
+    opacity=1,
+    hovertemplate='<b>%{y:,.0f}</b> sites had Tahoe Yellow Cress<extra></extra>'
+    ), secondary_y=False)
+    
+    #fig.add_trace(go.Bar(name="Occupied Site", x=df['Year'], y=df['Occupied_Sites']))
 
-    fig.update_traces(marker_color='#ffffbf', 
-                  marker_line_color="#8a7121",
-                  marker_line_width=1.5, 
-                  opacity=0.6,
-                  hovertemplate='<b>%{y:,.0f}</b> occupied sites<extra></extra>'
-                 )
+    #fig.update_traces(marker_color='#ffffbf', 
+     #             marker_line_color="#8a7121",
+      #            marker_line_width=1.5, 
+       #           opacity=0.6,
+        #          hovertemplate='<b>%{y:,.0f}</b> occupied sites<extra></extra>',
+         #         legendgroup='foreground'
+          #       )
     fig.add_trace(go.Scatter(
         x=df['Year'],
         y=threshold_values,
         mode='lines',
         name='Threshold',
-        line=dict(color='#333333'),
+        line=dict(color='#333333', dash='dash', width=2),
         hovertemplate='Threshold: %{y}<extra></extra>'
     ))
-
-    # create lake level line
-    fig.add_trace(go.Scatter(
-        y=df['Lake_Level'],
-        x=df['Year'],
-        name= "Lake Elevation (ft)",
-        line=dict(dash= 'dash', color='#679ab8', width=2),
-        mode='lines',
-        hovertemplate='Lake Level <b>%{y:,.0f}ft</b><extra></extra>'),
-        secondary_y=True)
-
-    # Set y-axes titles
-    fig.update_yaxes(secondary_y=False)
-    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d",secondary_y=True)
+   
+    
 
     # set layout
     fig.update_layout(title='Tahoe Yellow Cress',
                     font_family=font,
-                    template=template,
-                    showlegend=False,
+                    template= template,
+                    showlegend=True,
+                    dragmode=False,
                     hovermode="x unified",
                     xaxis = dict(
                         tickmode = 'linear',
                         tick0 = 1978,
                         dtick = 5,
-                        title_text='Year'
+                        title_text='Year',
+                        showgrid=False
                     ),
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
                         dtick = 5,
                         range=[0, 50],
-                        title_text='# Occupied Sites'
+                        title_text='# Occupied Sites',
+                        showgrid=False
                     )
                  )
+   
+    # Set y-axes titles
+    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d", 
+    range=[df['Lake_Level'].min() - 5, df['Lake_Level'].max() + 5],  # Adjust for better view
+    secondary_y=True)
+    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d",secondary_y=True)
     # export chart
     if draft == True:
         fig.write_html(
