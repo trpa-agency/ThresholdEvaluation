@@ -3,34 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Development</title>
+    <title>Residential Units</title>
     <link
       rel="stylesheet"
       href="https://unpkg.com/ag-grid-community/styles/ag-grid.css"
     />
     <link
       rel="stylesheet"
-      href="https://unpkg.com/ag-grid-community/styles/ag-theme-alpine.css"
+      href="https://unpkg.com/ag-grid-community/styles/ag-theme-quartz.css"
     />
     <style>
-      .ag-theme-alpine {
+      .ag-theme-quartz {
         height: 500px;
         width: 100%;
         margin: 20px auto;
       }
     </style>
+      <style>
+      .ag-header-group-cell.ag-column-first {
+          background-color: #2244CC66;
+          color: white;
+      }
+    </style>
   </head>
   <body>
-    <!-- <h1 style="text-align: center;">Development Rights</h1> -->
-    <div id="myGrid" class="ag-theme-alpine"></div>
-
+    <div id="myGrid" class="ag-theme-quartz"></div>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
     <script>
       // Column Definitions
       const columnDefs = [
-        { field: "Jurisdiction", headerName: "Jurisdiction", flex: 2 },
-        { field: "EstimatedExisting", headerName: "Residential Units", flex: 1 },
-        { field: "BankedExisting", headerName: "Banked Residential Units", flex: 1 },
+        { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 1 },
+        { field: "EstimatedExisting", headerName: "Residential Units",cellDataType: 'numeric', flex: 1, 
+                                      valueFormatter: (params) => {
+                                    return params.value.toLocaleString(); // Format with commas
+                                  }},
+        { field: "BankedExisting", headerName: "Banked Residential Units", flex: 1},
       ];
 
       // Fetch data from the API
@@ -67,5 +74,6 @@
           console.error("Error fetching data:", error);
         });
     </script>
+    <link rel="stylesheet" href="styles.css" />
   </body>
 </html>
