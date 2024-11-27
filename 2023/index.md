@@ -150,16 +150,16 @@
 ***Roadway and Shoreline Units***
   * Scenic Quality Ratings for Roadway Travel Units (Scenic Resources)
     * [Map](Scenic\Map\Final\Scenic_Roadway.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Roadway_Attainment.html)
   * Travel Route Ratings for Roadway Travel Units
     * [Map](Scenic\Map\Final\Scenic_Roadway.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Roadway_Rating.html)
   * Scenic Quality Ratings for Shoreline Travel Units (Scenic Resources)
     * [Map](Scenic\Map\Final\Scenic_Shoreline.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Shoreline_Attainment.html)
   * Travel Route Ratings for Shoreline Travel Units
     * [Map](Scenic\Map\Final\Scenic_Shoreline.html)
-    * ...
+    * [Chart](Scenic\Chart\Final\Scenic_Shoreline_Rating.html)
     
 > ## Soil Conservation
 >
@@ -208,7 +208,8 @@
 >
 ***Common Vegetation***
   * Vegetation Community Richness
-    * ...
+    * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_Abundance.html)
   * Relative Abundance of Red Fir Forest In Seral Stages Other Than Mature
     * [Map](Vegetation\Map\Final\Vegetation_Abundance.html)
     * [Chart](Vegetation\Chart\Final\Vegetation_RedFir.html)
@@ -238,8 +239,8 @@
 >
 ***Late Seral/Old Growth Ecosystems***
   * Total Old Growth
-    * [Map](Vegetation\Map\Final\TotalOldGrowth.html)
-    * [Chart](Vegetation\Chart\Final\Total_Old_Growth.html)
+    * [Map](Vegetation\Map\Final\SeralStage.html)
+    * [Chart](Vegetation\Chart\Final\Vegetation_SeralStage.html)
   * Sub-Alpine Zone
     * [Map](Vegetation\Map\Final\SeralStage.html)
     * [Chart](Vegetation\Chart\Final\Vegetation_Seral_Subalpine.html)

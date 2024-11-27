@@ -501,20 +501,29 @@ def plot_periphyton(df, draft=True):
                         'Tahoe City': '#DAA520',
                         'Zephyr Pt.': '#708090'                                
                             }
+    #color_discrete_map = {'Incline West': '#016c59', #forest green
+       #                 'Pineland': '#9CBA83',  #olivina
+        #                'Rubicon Pt.': '#67a9cf', #gray blue
+         #               'Sugar Pine Pt.': '#CEC198', #yuma
+          #              'Tahoe City': '#66c2a4', #mint green
+           #             'Zephyr Pt.': '#d9f0a3'  #ellow green                              
+            #                }
 
     # setup plot
-    fig = px.line(df, x = 'Year', y= 'Chl', color='site',
+    fig = px.scatter(df, x = 'Year', y= 'Chl', color='site',
                     color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>%{y:.2f}')
+    fig.update_traces(hovertemplate='<br>%{y:.2f}', marker=dict(size=10))
 
 
     # set layout
-    fig.update_layout(title="Nearshore Attached Algae - Average Chlorophyll",
+    fig.update_layout(title="Nearshore Attached Algae",
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        legend_title="",
                         hovermode="x unified",
+                        dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
                             tick0 = 1985,
@@ -523,9 +532,9 @@ def plot_periphyton(df, draft=True):
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
+                            dtick = 10,
                             range=[0, 110],
-                            title_text='Average Chl'
+                            title_text='Average Chlorophyll'
                         )
                     
                     )
@@ -748,20 +757,36 @@ def get_ais_infestation_data_sql():
     return df_plot
 
 def plot_ais_infestation(df, draft=True):
+    # # reorder categories
+    # df['Infestation_Status'] = pd.Categorical(df['Infestation_Status'], categories=['Planning','Control', 'Surveillance'], ordered=True)
     # setup plot
     color_map = {'Control':"#a37774", 'Surveillance':"#5c6d70", 'Planning':"#015B3D"}
-    fig = px.bar(df, x='Year', y='percentage', color='Infestation_Status', barmode='stack', title='AIS site status percentage',
-             labels={ 'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, color_discrete_map=color_map,
-        template="plotly_white",opacity=0.9)
-
+    fig = px.bar(df, x='Year', y='percentage', 
+                 color='Infestation_Status', 
+                 barmode='stack', 
+                 title='AIS Site Status by Year',
+                 labels={'Infestation_Status': 'Status', 'percentage':'Percentage of Sites'}, 
+                 color_discrete_map=color_map,
+                 template="plotly_white", 
+                 opacity=0.9,
+                 custom_data=['Infestation_Status','count','total'],
+                 category_orders={'Infestation_Status':['Planning','Control','Surveillance']}
+               )
+    # update hovertemplate
     fig.update_traces(
-        hovertemplate='<b>Year: %{x}</b><br>Status: %{fullData.name}<br>Percentage: %{y:.0f}%<extra></extra>'
+        hovertemplate="<br>".join([
+            "<b>%{y:.0f}%</b> of infestation sites were in",
+            "<b>%{customdata[0]}</b> status, or",
+            "<b>%{customdata[1]:,.0f} of the %{customdata[2]:,.0f}</b> total sites<br>"
+        ])+ "<extra></extra>",
     )
     # set layout
     fig.update_layout(
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        hovermode="x unified",
+
                         xaxis = dict(
                             tickmode = 'linear',
                             tick0 = 2018,
@@ -777,6 +802,7 @@ def plot_ais_infestation(df, draft=True):
                         )
                     
                     )
+    fig.show()
     if draft == True:
         fig.write_html(
             config=config,
@@ -795,28 +821,32 @@ def plot_ais_infestation(df, draft=True):
 def plot_tahoe_keys(draft=True):
     # setup plot
     data = {
-    'Year': [2020, 2020, 2020],
+    'Year': ["2020", "2020", "2020"],
     'Species': ['Eurasian Watermilfoil', 'Coontail', 'Curlyleaf Pondweed'],
     'Square_Feet': [131729, 181720, 188664]
     }
     df = pd.DataFrame(data)
+    threshold = df['Square_Feet'].sum()*0.25
     color_map = {'Eurasian Watermilfoil':"#a37774", 'Coontail':"#5c6d70", 'Curlyleaf Pondweed':"#015B3D"}
-    fig = px.bar(df, x='Species', y='Square_Feet', color='Species', title='Volume of Aquatic Invasive Species',
+    fig = px.bar(df, x='Year', y='Square_Feet', color='Species', title='Volume of Aquatic Invasive Species',
+                 barmode='stack',
                 labels={ 'Species': 'Species', 'Square_Feet':'Square Feet'}, color_discrete_map=color_map,
             template="plotly_white",opacity=0.9)
 
-    
+    # add threshold line
+    fig.add_hline(y=threshold, line_dash="dot", line_color="black", 
+                  annotation_text="Threshold Target", annotation_position="bottom right")
     # set layout
     fig.update_layout(
                         font_family=font,
                         template=template,
                         showlegend=True,
                         xaxis = dict(
-                            title_text='Species'
+                            title_text='Year'
                         ),
                         yaxis = dict(
                             title_text='Cubic Yards',
-                            range=[0, 200000]
+                            range=[0, 500000]
                         )
 
                     

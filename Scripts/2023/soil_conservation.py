@@ -20,7 +20,7 @@ def get_sez_data_sql():
     # get BMP Status data as dataframe from BMP SQL Database
     with engine.begin() as conn:
         # create dataframe from sql query
-        dfSEZ  = pd.read_sql('SELECT Threshold_Year, Final_Points_Possible, Final_Total_Points FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
+        dfSEZ  = pd.read_sql('SELECT Threshold_Year, Final_Percent, Final_Points_Possible, Final_Total_Points, Acres FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
     return dfSEZ
 def get_soil_conservation_data_sql():
     # make sql database connection with pyodbc
@@ -252,67 +252,74 @@ def plot_soil_conservation(df, landcap = None, draft=True):
             div_id=f"SoilConservation_{landcap}",
             full_html=False,
         )
-def plot_SEZ_scores(df,draft=True):
+#def plot_SEZ_scores(df,draft=True):
     
     # Calculate total acres per year
-    total_acres_per_year = df.groupby('Threshold_Year')['Acres'].sum().reset_index()
-    total_acres_per_year.rename(columns={'Acres': 'Total_Acres'}, inplace=True)
+ #   total_acres_per_year = df.groupby('Threshold_Year')['Acres'].sum().reset_index()
+  #  total_acres_per_year.rename(columns={'Acres': 'Total_Acres'}, inplace=True)
     # Calculate acres per Final_Rating per year
-    acres_per_rating = df.groupby(['Threshold_Year', 'Final_Rating'])['Acres'].sum().reset_index()
+   # acres_per_rating = df.groupby(['Threshold_Year', 'Final_Rating'])['Acres'].sum().reset_index()
     # Merge total acres with acres per rating
-    merged_df = pd.merge(acres_per_rating, total_acres_per_year, on='Threshold_Year')
+    #merged_df = pd.merge(acres_per_rating, total_acres_per_year, on='Threshold_Year')
     # Calculate percentage
-    merged_df['Percentage'] = (merged_df['Acres'] / merged_df['Total_Acres']) * 100
+    #merged_df['Percentage'] = (merged_df['Acres'] / merged_df['Total_Acres']) * 100
     # Pivot the data
-    pivot_df = merged_df.pivot(index='Threshold_Year', columns='Final_Rating', values='Percentage').reset_index()
+    #pivot_df = merged_df.pivot(index='Threshold_Year', columns='Final_Rating', values='Percentage').reset_index()
     # Fill NaN with 0 (in case any ratings are missing for a year)
-    pivot_df.fillna(0, inplace=True)
+    #pivot_df.fillna(0, inplace=True)
     
     # Create the figure
-    fig = go.Figure()
+    #fig = go.Figure()
     # List of ratings
-    ratings = ['D', 'C', 'B', 'A']
-    colors = {'D': '#963b3c', 'C': '#C28025', 'B': '#D4b746', 'A': '#3e8c43'}
+    #ratings = ['D', 'C', 'B', 'A']
+    #colors = {'D': '#963b3c', 'C': '#C28025', 'B': '#D4b746', 'A': '#3e8c43'}
+   
     #Addbarfor each rating
-    for rating in ratings:
-        fig.add_trace(go.Bar(
-            x=pivot_df['Threshold_Year'],
-            y=pivot_df[rating],
-            name=f'Rating {rating}',
-            marker_color=colors[rating]  # Assign color here
-        ))
+    #for rating in ratings:
+     #   fig.add_trace(go.Bar(
+      #      x=pivot_df['Threshold_Year'],
+       #     y=pivot_df[rating],
+        #    name=f'Rating {rating}',
+         #   marker_color=colors[rating]  # Assign color here
+        #))
 
 # Update layout to stack the bars
-    fig.update_layout(
-        barmode='stack',
-        title='Percentage of Acres by Final Rating for Each Year',
-        xaxis_title='Year',
-        yaxis_title='Percentage of Acres',
-        yaxis=dict(ticksuffix='%'),
-        legend_title='Final Rating'
-    )
-    if draft == True:
-        fig.write_html(
-            config=config,
-            file= out_chart / f"Draft/SoilConservation_SEZ_Scores.html",
-            div_id=f"SoilConservatin_SEZ_Scores",
-            full_html=False,
-        )
-    elif draft == False:
-        fig.write_html(
-            config=config,
-            file= out_chart / f"Final/SoilConservation_SEZ_Scores.html",
-            div_id=f"SoilConservation_SEZ_Scores",
-            full_html=False,
-        )
+    #fig.update_layout(
+     #   barmode='stack',
+      #  title='Regional SEZ Condition Index Per Year',
+       # xaxis_title='Year',
+        #yaxis_title='Percentage of Acres',
+        #yaxis=dict(ticksuffix='%'),
+        #legend_title='Final Rating'
+    #)
+    #if draft == True:
+     #   fig.write_html(
+      #      config=config,
+       #     file= out_chart / f"Draft/SoilConservation_SEZ_Scores.html",
+        #    div_id=f"SoilConservatin_SEZ_Scores",
+      #      full_html=False,
+       # )
+    #elif draft == False:
+     #   fig.write_html(
+      #      config=config,
+       #     file= out_chart / f"Final/SoilConservation_SEZ_Scores.html",
+        #    div_id=f"SoilConservation_SEZ_Scores",
+         #   full_html=False,
+        #)
   
 def plot_SEZ_Score_Totals(df, draft=True):
-    fig = px.scatter(df, x='Threshold_Year', y='Index_Percent', 
+    fig = px.bar(df, x='Threshold_Year', y='Index_Percent', 
                      title='SEZ Condition Index Scores')
+    Threshold_Value=88
     fig.update_layout(
         xaxis_title='Year',
         yaxis_title='Percent of Total Possible Points',
         yaxis=dict(ticksuffix='%', range=[0, 100]),
+        xaxis=dict(
+            title='Year',
+            tickmode='array',  # Ensure only available years are shown
+            tickvals=df['Threshold_Year'].unique(),  # Use unique years from the data
+        ),
         showlegend=False,
         template=template,
         font_family=font,
@@ -343,5 +350,91 @@ def plot_SEZ_Score_Totals(df, draft=True):
             config=config,
             file= out_chart / f"Final/SoilConservation_SEZ_Score_Totals.html",
             div_id=f"SoilConservation_SEZ_Score_Totals",
+            full_html=False,
+        )
+
+def plot_BasinwideSEZ_scores(df, draft=False):
+    #BasinwideScore= df[['Acres', 'SEZ_ID','Assessment_Unit_Name','Threshold Year', 'Final_Percent', 'SEZ_Type']]
+
+    # Calculate SEZ_Quality
+    df['SEZ_Quality'] = df['Final_Percent']
+
+    # Calculate SEZ_Condition Index
+    df['SEZ_Condition_Index'] = df['Acres'] * df['SEZ_Quality']
+    # Group by 'Threshold Year' and calculate the sums for each year
+    grouped = df.groupby('Threshold_Year').agg(
+    total_sez_ci=('SEZ_Condition_Index', 'sum'),
+    total_acres=('Acres', 'sum')
+    )
+
+    # Calculate the final number for each year
+    grouped['BasinwideSEZ_Quality'] = grouped['total_sez_ci'] / grouped['total_acres']
+    # Reset index to convert 'Threshold_Year' from index to column
+    grouped = grouped.reset_index()
+    #Set Threshold Value
+    Threshold_Value = 88
+    # setup plot
+    fig = px.bar(grouped, x = 'Threshold_Year', y= 'BasinwideSEZ_Quality', color_discrete_sequence=['rgba(119, 129, 92, 0.5)'])
+                   
+    fig.update_traces( marker=dict(
+            line=dict(color='#77815c', width=2)  # Proper string format for color
+        ),
+        hovertemplate='SEZ Quality:<br><b>%{y:.2f}</b>')
+
+    # set layout
+    fig.update_layout(title='Regional SEZ Quality',
+                    font_family=font,
+                    template=template,
+                    legend_title_text='',
+                    showlegend=True,
+                    legend=dict(
+                    orientation="h",
+                    entrywidth=180,
+                    yanchor="bottom",
+                    y=1.05,
+                    xanchor="right",
+                    x=0.95,
+                    ),
+                    hovermode="x unified",
+                    xaxis = dict(
+                        tickmode = 'linear',
+                        dtick = grouped["Threshold_Year"].unique(),
+                        #dtick = 2,
+                        #range= [2019, 2024],
+                        title_text='Year'
+                    ),
+                    yaxis = dict(
+                        tickmode = 'linear',
+                        tick0 = 0,
+                        dtick = 25,
+                        range=[0, 100],
+                        title_text='Acre-weighted SEZ Quality'
+                    )
+                 )
+
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df),  # Create a constant line at 88
+        x=df['Threshold_Year'],
+        #x=[2019,2024],
+        name= "Threshold",
+        line=dict(color='#333333', width=3),
+        mode='lines',
+        hovertemplate='Threshold :<br>%{y:.0f}<extra></extra>'
+    ))
+    # show figure
+    fig.show()
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Draft/SoilConservation_BasinwideSEZScores.html",
+            div_id=f"SoilConservatin_BasinwideSEZScores",
+            full_html=False,
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / f"Final/SoilConservation_BasinwideSEZScores.html",
+            div_id=f"SoilConservation_BasinwideSEZScores",
             full_html=False,
         )

@@ -30,9 +30,10 @@ def get_lewisia_xslx():
     return df
 
 #-------------
-#Plot Sensitive Plants
+# Plot Sensitive Plants
 #----------------
 def plot_TDraba(df, draft=False):
+    Threshold_Value= 5
     #Tahoe Draba data
     fig = px.bar(df, x='Year', y='subpopulations', title='Tahoe Draba Subpopulations', color_discrete_sequence=['rgba(31, 119, 180, 0.5)'])
         
@@ -45,13 +46,40 @@ def plot_TDraba(df, draft=False):
     )
 
     # Ensure that all years are displayed, even if there is no data for some
-    fig.update_layout(yaxis_title='Subpopulations',
+    fig.update_layout(
+                yaxis_title='Subpopulations',
+                yaxis=dict(
+                range=[0, 50],  # Adjust the range to stay above 0 and slightly above the max value
+                tickmode='linear',
+                tick0=0,  
+                dtick=10   
+                ),
                   xaxis=dict(type='category'),
-                  font_family='Arial',  # Example font, replace with your font variable
-                  template='plotly_white',  # Example template, replace with your template variable
-                  showlegend=False,
+                  font_family=font,  # Example font, replace with your font variable
+                  template=template,  # Example template, replace with your template variable
+                  showlegend=True,
+                  legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            ),
                   hovermode="x unified")
-
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df['Year']),  # Create a constant line
+        x=df['Year'],
+        name= "Threshold",
+        hovertemplate='Threshold : %{y:.0f}<extra></extra>',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 200,   
+    ))
     # export chart
     if draft == True:
         fig.write_html(
@@ -77,7 +105,7 @@ def plot_CDraba(df, draft=False):
     # Customize hover template for cleaner display
     fig.update_traces(
         marker=dict(
-            line=dict(color='#1f77b4', width=2)  # Proper string format for color
+            line=dict(color='#8A7121', width=2)  # Proper string format for color
         ),
         hovertemplate='<b>Subpopulations:</b> %{y}<extra></extra>'
     )
@@ -86,11 +114,33 @@ def plot_CDraba(df, draft=False):
     fig.update_layout(yaxis_title='Subpopulations',
                       xaxis_title='Year',
                   xaxis=dict(type='category'),
-                  font_family='Arial',  # Example font, replace with your font variable
-                  template='plotly_white',  # Example template, replace with your template variable
-                  showlegend=False,
+                  font_family=font,  # Example font, replace with your font variable
+                  template=template,  # Example template, replace with your template variable
+                  showlegend=True,
+                  legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            ),
                   hovermode="x unified")
-
+    # create threshold line
+    Threshold_Value= 2
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df['Year']),  # Create a constant line
+        x=df['Year'],
+        name= "Threshold",
+        hovertemplate='Threshold : %{y:.0f}<extra></extra>',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 200,   
+    ))
 # export chart
     if draft == True:
         fig.write_html(
@@ -124,11 +174,33 @@ def plot_lewisia(df, draft=False):
     # Ensure that all years are displayed, even if there is no data for some
     fig.update_layout(yaxis_title='Subpopulations',
                   xaxis=dict(type='category'),
-                  font_family='Arial',  # Example font, replace with your font variable
-                  template='plotly_white',  # Example template, replace with your template variable
-                  showlegend=False,
+                  font_family=font,  # Example font, replace with your font variable
+                  template=template,  # Example template, replace with your template variable
+                  showlegend=True,
+                  legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+            ),
                   hovermode="x unified")
-
+    # create threshold line
+    Threshold_Value= 2
+    # create threshold line
+    fig.add_trace(go.Scatter(
+        y=[Threshold_Value] * len(df['year']),  # Create a constant line
+        x=df['year'],
+        name= "Threshold",
+        hovertemplate='Threshold : %{y:.0f}<extra></extra>',
+        mode='markers',
+        marker_symbol='line-ew',
+        marker_line_color="midnightblue", 
+        marker_color="lightskyblue", 
+        marker_line_width=2, 
+        marker_size = 200,   
+    ))
 # export chart
     if draft == True:
         fig.write_html(
@@ -149,7 +221,7 @@ def plot_lewisia(df, draft=False):
 #--------------------------------------------------------------------------------         
 # get tahoe yellowcress  data
 def get_TYC_data_sql():
-    # make sql database connection with pyodbc
+    # make sql database connection
     engine = get_conn('sde_tabular')
     # get dataframe from BMP SQL Database
     with engine.begin() as conn:
@@ -164,8 +236,8 @@ def plot_TYC(df, draft= False):
     df = df[df['Year'] != 2021]
     # Define thresholds based on lake level conditions
     thresholds = {
-        'low': {'condition': lambda x: x <= 6224, 'value': 32},
-        'mid': {'condition': lambda x: 6224 < x < 6227, 'value': 26},
+        'low': {'condition': lambda x: x < 6225, 'value': 36},
+        'mid': {'condition': lambda x: 6225 <= x < 6227, 'value': 26},
         'high': {'condition': lambda x: x >= 6227, 'value': 20}
     }
 
@@ -278,6 +350,8 @@ def get_ecobject_caldor_identity_data():
     df = df[df['Development'] =='Undeveloped']
     # # drop nan values
     df = df[df['TRPA_VegType'] != '']
+    # set SeralStage = N/A to Not Classified
+    df['SeralStage'] = df['SeralStage'].replace('N/A', 'Not Classified')
     return df
 
 # get new veg change analysis data
@@ -301,48 +375,82 @@ def get_2019_vegtypesummary_data():
     return df
 
 # plot Vegetation Type
-def plot_veg():
-    # get data
-    df = get_ecobject_2010_data()
-    # create figure
-    fig = go.Figure()
-    # add trace
-    fig.add_trace(go.Bar(
-        x=df['Year'],
-        y=df['Total_Acres'],
-        name='Total Acres',
-        marker_color='#b3e2cd',
-        hovertemplate='<b>%{y:,.0f}</b> acres<extra></extra>'
-    ))
-    # set layout
-    fig.update_layout(
-        title='Vegetation Type',
-        font_family=font,
-        template=template,
-        showlegend=False,
-        hovermode="x unified",
-        xaxis = dict(
-            tickmode = 'linear',
-            tick0 = 1978,
-            dtick = 5,
-            title_text='Year'
-        ),
-        yaxis = dict(
-            tickmode = 'linear',
-            tick0 = 0,
-            dtick = 100,
-            title_text='Total Acres'
-        )
-    )
-    # export chart
-    fig.write_html(
-        config=config,
-        file= out_chart / "Final/Vegetation_Type.html",
-        # include_plotlyjs="directory",
-        div_id="Vegetation_Type",
-        full_html=False
+def plot_veg_abundance(df, draft=True):
+    # dfVegSum = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_VegetationTypeSummary", conn)
+    colors = ['#9ed7c2','#cdf57a','#b4d79e', 
+            '#ff0000', '#a5f57a','#00a820','#df73ff', 
+            '#3e72b0','#2f3f56', '#a8a800']
+
+    # df= df.loc[(df['Development']=='Undeveloped')&(df['QMD']<11)]
+    df= df.loc[(df['Development']=='Undeveloped')]
+
+    table = pd.pivot_table(df, values=['Acres'], index=['TRPA_VegType'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+    df['TRPA_VegType'].replace('', np.nan, inplace=True)
+    df = df.dropna(subset=['TRPA_VegType'])
+
+    df['TotalAcres']= 171438.19
+    df['VegPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="TRPA_VegType", y='VegPercent',  color='TRPA_VegType', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.1f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br>of undisturbed vegetation"
+        ])
     )
 
+
+    # set layout
+    fig.update_layout(title="Vegetation Type % Abundance",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        barmode = 'overlay',
+                        xaxis = dict(
+                            tickmode = 'linear',
+                            title_text='Vegetation Type'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            ticksuffix='%',
+                            range=[0, 60],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    fig.show()
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Abundance.html",
+            div_id="Vegetation_Abundance",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Abundance.html",
+            div_id="Vegetation_Abundance",
+            full_html=False
+        )
+        
 # get forest fuels treatment data
 def get_data_forest_fuel_sql():
     # make sql database connection with pyodbc
@@ -723,7 +831,7 @@ def plot_yellowpine(df, draft=True):
             full_html=False
         )
 
-def plot_veg_composition(df, draft=True):
+def plot_veg_composition_canopy(df, draft=True):
     colors = ['#448970','#BEFFE8','#448970','#BEFFE8','#448970','#BEFFE8','grey']
 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralStage'],
@@ -761,7 +869,157 @@ def plot_veg_composition(df, draft=True):
                         xaxis = dict(
                             categoryorder= 'array',
                             categoryarray= ['Early Seral Closed', 'Early Seral Open', 
-                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'N/A'],
+                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'Not Classified'],
+                            tickmode = 'linear',
+                            title_text='Seral Stage'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 10,
+                            range=[0, 50],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_Composition_Canopy.html",
+            div_id="Vegetation_Composition",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_Composition_Canopy.html",
+            div_id="Vegetation_Composition Canopy",
+            full_html=False
+        )
+
+# plot seral stage
+def plot_seral_stage(df, draft=True):
+    colors = ['#BEFFE8','#448970','#66CDAB','grey']
+
+    df['SeralClass'] = ''
+
+    df.loc[df['SeralStage'] =='N/A', 'SeralClass'] = 'N/A'
+    df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
+    df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
+    df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral'
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
+
+    table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+
+    df['TotalAcres']= 171438.19
+    df['SeralPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="SeralClass", y='SeralPercent',  color='SeralClass', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.2f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br> of undisturbed vegetation"
+        ])
+    )
+    # set layout
+    fig.update_layout(title="Seral Stage",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            categoryorder= 'array',
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
+                            tickmode = 'linear',
+                            title_text='Seral Stage'
+                        ),
+                        yaxis = dict(
+                            tickmode = 'linear',
+                            tick0 = 0,
+                            dtick = 50,
+                            range=[0, 100],
+                            title_text='% of undisturbed vegetation'
+                        )
+                    )
+
+    fig.show()
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Vegetation_SeralStage.html",
+            div_id="Vegetation_SeralStage",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Vegetation_SeralStage.html",
+            div_id="Vegetation_SeralStage",
+            full_html=False
+        )
+
+
+def plot_veg_composition(df, draft=True):
+    colors = ['#448970','#BEFFE8','#448970','grey']
+
+    table = pd.pivot_table(df, values=['Acres'], index=['SeralStage'],
+                            aggfunc=np.sum)
+
+    flattened = pd.DataFrame(table.to_records())
+
+    flattened.columns = [hdr.replace("('Acres', '", '').replace("')", "") \
+                        for hdr in flattened.columns]
+
+    df = flattened
+
+    # combine early open and early closed, mid open and mid closed, late open and late closed
+    df['SeralStage'] = df.loc[:, 'SeralStage'].replace({'Early Seral Closed':'Early Seral',
+                                                        'Early Seral Open':'Early Seral',
+                                                        'Mid Seral Open':'Mid Seral',
+                                                        'Mid Seral Closed':'Mid Seral',
+                                                        'Late Seral Open':'Late Seral',
+                                                        'Late Seral Closed':'Late Seral'})
+ 
+    df['TotalAcres']= 171438.19
+    df['SeralPercent'] = (df['Acres']/df['TotalAcres'])*100
+
+    # setup chart
+    fig = px.bar(df, x="SeralStage", y='SeralPercent',  color='SeralStage', color_discrete_sequence=colors,
+                custom_data=['Acres','TotalAcres'])
+
+    fig.update_traces(
+        name='',
+    #     hoverinfo = "y",  
+        hovertemplate="<br>".join([
+            "<b>%{y:.2f}%</b>",
+            "or <b>%{customdata[0]:,.0f}</b> acres<br>of the %{customdata[1]:,.0f} total acres<br> of undisturbed vegetation"
+        ])
+    )
+    # set layout
+    fig.update_layout(title="Stand Composition and Age - Seral Stage by Canopy Classification",
+                        font_family=font,
+                        template=template,
+                        legend_title_text='',
+                        showlegend=False,
+                        hovermode="x unified",
+                        xaxis = dict(
+                            categoryorder= 'array',
+                            categoryarray= ['Early Seral Closed', 'Early Seral Open', 
+                                            'Mid Seral Closed', 'Mid Seral Open','Late Seral Closed','Late Seral Open', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -788,7 +1046,6 @@ def plot_veg_composition(df, draft=True):
             div_id="Vegetation_Composition",
             full_html=False
         )
-
 # plot deciduous forest abundance
 def plot_deciduous(df, draft=True):
     colors = ['lightslategray',] * 10
@@ -834,8 +1091,6 @@ def plot_deciduous(df, draft=True):
                         hovermode="x unified",
                         barmode = 'overlay',
                         xaxis = dict(
-    #                         categoryorder= 'array',
-    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
                             tickmode = 'linear',
                             title_text='Vegetation Type'
                         ),
@@ -985,8 +1240,6 @@ def plot_shrub(df, draft=True):
                         hovermode="x unified",
                         barmode = 'overlay',
                         xaxis = dict(
-    #                         categoryorder= 'array',
-    #                         categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
                             tickmode = 'linear',
                             title_text='Vegetation Type'
                         ),
@@ -1027,7 +1280,7 @@ def plot_seral_subalpine(df,draft=True):
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
     df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
-
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
 
@@ -1062,7 +1315,7 @@ def plot_seral_subalpine(df,draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -1101,6 +1354,7 @@ def plot_seral_upper_montane(df,draft=True):
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
     df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
@@ -1136,7 +1390,7 @@ def plot_seral_upper_montane(df,draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),
@@ -1176,7 +1430,7 @@ def plot_seral_montane(df,draft=True):
     df.loc[(df['SeralStage']=='Early Seral Closed')|(df['SeralStage']=='Early Seral Open'), 'SeralClass'] = 'Early Seral' 
     df.loc[(df['SeralStage']=='Mid Seral Closed')|(df['SeralStage']=='Mid Seral Open'), 'SeralClass'] = 'Mid Seral' 
     df.loc[(df['SeralStage']=='Late Seral Closed')|(df['SeralStage']=='Late Seral Open'), 'SeralClass'] = 'Late Seral' 
-
+    df.loc[df['SeralStage'] =='Not Classified', 'SeralClass'] = 'Not Classified' 
     table = pd.pivot_table(df, values=['Acres'], index=['SeralClass'],
                             aggfunc=np.sum)
 
@@ -1211,7 +1465,7 @@ def plot_seral_montane(df,draft=True):
                         hovermode="x unified",
                         xaxis = dict(
                             categoryorder= 'array',
-                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'N/A'],
+                            categoryarray= ['Early Seral', 'Mid Seral', 'Late Seral', 'Not Classified'],
                             tickmode = 'linear',
                             title_text='Seral Stage'
                         ),

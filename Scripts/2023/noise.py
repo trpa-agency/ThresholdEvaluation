@@ -35,7 +35,7 @@ def plot_hotelmotel(df, draft = False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -43,20 +43,21 @@ def plot_hotelmotel(df, draft = False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='Hotel/Motel Areas Noise',
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        dragmode=False,
                         hovermode="x unified",
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
+                            dtick = 2,
+                            range=[50, 62],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -83,7 +84,7 @@ def plot_commercial(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -91,20 +92,21 @@ def plot_commercial(df, draft=True):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
-    fig.update_layout(title='Commercial Area Noise',
+    fig.update_layout(title='Commercial Areas Noise',
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        dragmode=False,
                         hovermode="x unified",
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
                             dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
+                            range=[45, 65],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -131,7 +133,7 @@ def plot_highdensityresidential(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -139,7 +141,7 @@ def plot_highdensityresidential(df, draft=True):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='High Density Residential Areas Noise',
@@ -147,12 +149,13 @@ def plot_highdensityresidential(df, draft=True):
                         template=template,
                         showlegend=True,
                         hovermode="x unified",
+                        dragmode=False,
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
                             dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
+                            range=[40, 60],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -179,7 +182,7 @@ def plot_industrial(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -188,20 +191,21 @@ def plot_industrial(df, draft=True):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='Industrial Areas Noise',
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        dragmode=False,
                         hovermode="x unified",
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
+                            dtick = 2,
+                            range=[50, 70],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -228,7 +232,7 @@ def plot_lowdensity(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -236,7 +240,7 @@ def plot_lowdensity(df, draft=True):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='Low Density Residential Areas Noise',
@@ -244,12 +248,13 @@ def plot_lowdensity(df, draft=True):
                         template=template,
                         showlegend=True,
                         hovermode="x unified",
+                        dragmode=False,
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[40, 60],
-                            title_text='Value (average decibels)'
+                            dtick = 2,
+                            range=[40, 55],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -276,7 +281,7 @@ def plot_rural(df, draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -284,7 +289,7 @@ def plot_rural(df, draft=False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='Rural Outdoor Recreation Areas Noise',
@@ -292,12 +297,13 @@ def plot_rural(df, draft=False):
                         template=template,
                         showlegend=True,
                         hovermode="x unified",
+                        dragmode=False,
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
+                            dtick = 2,
+                            range=[45, 55],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -316,7 +322,7 @@ def plot_rural(df, draft=False):
             full_html=False
         )
 
-# plot outdoor recreation noise
+# plot urban outdoor recreation noise
 def plot_rec(df,draft=False):
     # get urban outdoor rec area records
     df = df.loc[df['Category'] == 'Urban Outdoor Recreation Areas']
@@ -324,7 +330,7 @@ def plot_rec(df,draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -332,7 +338,7 @@ def plot_rec(df,draft=False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='Urban Outdoor Recreation Areas Noise',
@@ -340,12 +346,13 @@ def plot_rec(df,draft=False):
                         template=template,
                         showlegend=True,
                         hovermode="x unified",
+                        dragmode=False,
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
+                            dtick = 2,
+                            range=[40, 60],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -372,7 +379,7 @@ def plot_wilderness(df, draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
@@ -380,7 +387,7 @@ def plot_wilderness(df, draft=False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
     # update layout
     fig.update_layout(title='Wilderness and Roadless Areas Noise',
@@ -388,12 +395,13 @@ def plot_wilderness(df, draft=False):
                         template=template,
                         showlegend=True,
                         hovermode="x unified",
+                        dragmode=False,
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[30, 70],
-                            title_text='Value (average decibels)'
+                            dtick = 2,
+                            range=[35, 50],
+                            title_text='Average Decibels'
                         )  
                     )
     # generate figure
@@ -412,13 +420,13 @@ def plot_wilderness(df, draft=False):
             full_html=False
         )
     
-# plot watercraft noise
+# plot watercraft noise/shoreline
 def plot_watercraft(df, draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
 
     # update popup
-    fig.update_traces(hovertemplate='%{y:.2f} exceedances per day<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> average exceedances per day<extra></extra>')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -427,20 +435,23 @@ def plot_watercraft(df, draft=False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} exceedances per day<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} average exceedances per day<extra></extra>'
     ))
     # update layout
     fig.update_layout(title= 'Shoreline Noise',
                         font_family=font,
                         template=template,
                         showlegend=True,
+                        dragmode=False,
                         hovermode="x unified",
+                        xaxis = dict(type = 'category'
+                        ),
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 0.1,
-                            range=[-0.1, 1],
-                            title_text='Average Exceedances per Day across all sites'
+                            dtick = 0.05,
+                            range=[0, 0.65],
+                            title_text='Average Exceedances Per Day'
                         )  
                     )
     # generate figure
@@ -460,22 +471,13 @@ def plot_watercraft(df, draft=False):
         )
 
 # plot wildlife noise
-def plot_wildlife(draft=False):
-
-    #Read excel file data
-    base_dir = r"F:\Research and Analysis\Threshold reporting\ThresholdData\Noise"
-    file_name = "ThresholdData_PlanAreaNoise.xlsx"
-    file_path = os.path.join(base_dir, file_name)
-    dfCriticalNoise = pd.read_excel(file_path)
-
-    df = dfCriticalNoise[dfCriticalNoise['Category'] == 'Critical Wildlife Habitat']
-
+def plot_wildlife(df, draft=False):
+    df = df.loc[df['Category'] == 'Critical Wildlife Habitat']
+    df = df.sort_values(by='Year')
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
-
     # update popup
-    fig.update_traces(hovertemplate='%{y:.0f} decibels<extra></extra>')
-
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
     # create threshold line
     fig.add_trace(go.Scatter(
         y= df['Threshold_Value'],
@@ -483,27 +485,40 @@ def plot_wildlife(draft=False):
         name= "Threshold",
         line=dict(color='#333333', width=3),
         mode='lines',
-        hovertemplate='Threshold:<br>%{y:.0f} decibels<extra></extra>'
+        hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
-
-
     # update layout
     fig.update_layout(title='Critical Wildlife Habitat',
                         font_family=font,
                         template=template,
                         showlegend=True,
                         hovermode="x unified",
+                        dragmode=False,
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
                             dtick = 5,
-                            range=[40, 80],
-                            title_text='Value (average decibels)'
-                        )  
+                            range=[40, 60],
+                            title_text='Average Decibels'),
+                        xaxis=dict(
+                            type='category',  # Use 'category' for non-continuous years
+                            tickmode='linear',
+                            title_text='Year'
+                            )
                     )
-                    
-
-
     # generate figure
-    fig.show()
-    fig.write_html(os.path.join(draftworkspace, "Critical_Wildlife.html"))
+    if draft == True:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Draft/Noise_CriticalWildlife.html",
+            div_id="Critical_Wildlife",
+            full_html=False
+        )
+    elif draft == False:
+        fig.write_html(
+            config=config,
+            file= out_chart / "Final/Noise_CriticalWildlife.html",
+            div_id="Critical_Wildlife",
+            full_html=False
+        )                
+    
