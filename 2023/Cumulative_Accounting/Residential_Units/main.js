@@ -32,18 +32,28 @@ fetch(
       rowData: rowData, // Use the fetched data
       suppressExcelExport: true,
       popupParent: document.body,
+      onGridReady: (params) => {
+        // Save the grid API reference for later use
+        window.gridAPI = params.api; // Make API globally available if needed
+      },
     };
 
     // Initialize the grid
     const gridDiv = document.querySelector("#myGrid");
     agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
+
   })
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
   
   function onBtnExport() {
-    gridApi.exportDataAsCsv();
+    if (window.gridAPI) {
+      window.gridAPI.exportDataAsCsv();
+    } else {
+      console.error("Grid API is not initialized.");
+    }
+
   }
 
 
