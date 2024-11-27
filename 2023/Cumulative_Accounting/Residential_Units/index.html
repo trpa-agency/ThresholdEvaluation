@@ -19,56 +19,23 @@
         margin: 10px auto;
       }
     </style>
-      <style>
-      .ag-header-group-cell.ag-column-first {
-          background-color: #2244CC66;
-          color: white;
-      }
-    </style>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div id="myGrid" class="ag-theme-quartz"></div>
-    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <div style="display: flex; flex-direction: column; height: 100%">
+      <div>
+        <button onclick="onBtnExport()" class="button-blue">Download CSV</button>
+      </div>
+    </div>
     <script>
-      // Column Definitions
-      const columnDefs = [
-        { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 1 },
-        { field: "EstimatedExisting", headerName: "Residential Units",cellDataType: 'numeric', flex: 1, 
-                                      valueFormatter: (params) => {
-                                    return params.value.toLocaleString(); // Format with commas
-                                  }},
-        { field: "BankedExisting", headerName: "Banked Residential Units", flex: 1},
-      ];
+      (function () {
+        const appLocation = "";
 
-      // Fetch data from the API
-      fetch(
-        "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/61/query?where=1%3D1&outFields=EstimatedExisting,BankedExisting,Jurisdiction&outSR=&f=json"
-        )
-        .then((response) => response.json())
-        .then((data) => {
-          // Map the results to the format needed for the grid
-          const rowData = data.features.map((feature) => ({
-                              Jurisdiction: feature.attributes.Jurisdiction,
-                              EstimatedExisting: feature.attributes.EstimatedExisting,
-                              BankedExisting: feature.attributes.BankedExisting,
-          }));
-
-          console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-
-          // Grid Options with the fetched data as rowData
-          const gridOptions = {
-            columnDefs: columnDefs,
-            rowData: rowData, // Use the fetched data
-          };
-
-          // Initialize the grid
-          const gridDiv = document.querySelector("#myGrid");
-          agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
+        window.__basePath = appLocation;
+      })();
     </script>
-    <link rel="stylesheet" href="styles.css" />
   </body>
 </html>
