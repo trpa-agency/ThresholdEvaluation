@@ -265,7 +265,7 @@ def plot_TYC(df, draft= False):
         hovertemplate='Lake Level was %{y:,.0f}ft<extra></extra>',
         legendgroup = 'background'
         ), 
-        secondary_y=True)
+        secondary_y=False)
     
    
     #Add Yellow Cress Data as bar chart
@@ -278,7 +278,7 @@ def plot_TYC(df, draft= False):
     #opacity=1,
     hovertemplate='<b>%{y:,.0f}</b> sites had Tahoe Yellow Cress<extra></extra>',
     legendgroup='foreground'
-    ), secondary_y=False)
+    ), secondary_y=True)
     
     #fig.add_trace(go.Bar(name="Occupied Site", x=df['Year'], y=df['Occupied_Sites']))
 
@@ -296,7 +296,7 @@ def plot_TYC(df, draft= False):
         name='Threshold',
         line=dict(color='#333333', dash='dash', width=2),
         hovertemplate='Threshold: %{y}<extra></extra>'
-    ))
+    ), secondary_y=True)
    
     
 
@@ -327,9 +327,12 @@ def plot_TYC(df, draft= False):
     # Set y-axes titles
     fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d", 
     range=[df['Lake_Level'].min() - 5, df['Lake_Level'].max() + 5],  # Adjust for better view
-    secondary_y=True)
-    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d",secondary_y=True)
+    secondary_y=False)
+    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d",secondary_y=False)
     # export chart
+    fig.update_layout(dict(yaxis2={'anchor': 'x', 'overlaying': 'y', 'side': 'left'},
+                  yaxis={'anchor': 'x', 'domain': [0.0, 1.0], 'side':'right'}))
+
     if draft == True:
         fig.write_html(
             config=config,
