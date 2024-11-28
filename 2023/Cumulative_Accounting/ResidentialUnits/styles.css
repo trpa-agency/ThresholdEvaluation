@@ -1,10 +1,17 @@
+/* the grid div that contains the grid */
 .ag-theme-quartz {
+    /* font-family: 'Calibri', sans-serif; */
+    height: 340px;
+    width: 100%;
+    margin: 10px auto;
+    --ag-borders: none;
     --ag-header-height: 36px;
     --ag-header-foreground-color: white;
     --ag-header-background-color: #337ab7;
     --ag-header-cell-hover-background-color: #279bdc;
     --ag-header-cell-moving-background-color: #279bdc;
 }
+
 /* style button blue with white font and rounded corners */
 .button-blue {
     background-color: #337ab7;
@@ -16,7 +23,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    font-style: bold;
+    font-weight: bold;
     margin: 4px 2px;
     cursor: pointer;
 } /* end of .button-blue */
