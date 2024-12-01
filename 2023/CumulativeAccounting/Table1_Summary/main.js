@@ -1,6 +1,6 @@
-
 let gridOptions;
 let gridAPI;
+
 // Column Definitions
 const columnDefs = [
   { field: "Type", headerName: "Type", cellDataType: 'text', flex: 1 },
@@ -29,12 +29,11 @@ fetch(
                         Type: feature.attributes.Type,
                         Existing: feature.attributes.Existing,
                         Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Banked,
+                        Remaining: feature.attributes.Remaining
     }));
-
     console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-
-    // Grid Options with the fetched data as rowData
+    
+  // Grid Options with the fetched data as rowData
   gridOptions = {
       columnDefs: columnDefs,
       rowData: rowData, // Use the fetched data
@@ -45,23 +44,19 @@ fetch(
         window.gridAPI = params.api; // Make API globally available if needed
       },
     };
-
     // Initialize the grid
     const gridDiv = document.querySelector("#myGrid");
     agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-
   })
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
-  
   function onBtnExport() {
     if (window.gridAPI) {
       window.gridAPI.exportDataAsCsv();
     } else {
       console.error("Grid API is not initialized.");
     }
-
   }
 
 
