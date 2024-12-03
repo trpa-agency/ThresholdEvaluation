@@ -51,7 +51,17 @@ def get_airquality_data_sql():
         df = pd.read_sql("SELECT * FROM sde_tabular.SDE.ThresholdEvaluation_AirQuality", conn)
     return df
 
-# plot PM 2.5 annual data
+# plot PM 2.5 annual data These colors highlight Lake Tahoe CC and SOLA which our trendline is based off of
+PM_discrete_map= {'Cave Rock': '#cab2d6', #lavendar#33a02c',
+                      'DL Bliss State Park': '#b2df8a', #mint'#1f78b4'blue close to threhsold blue, 
+                      'Incline Village/Crystal Bay': '#c1854b', #(earthy brown),
+                      'Kings Beach': '#B0B0B0', #medium gray'#cab2d6', #lavendar
+                      'Lake Tahoe CC': '#337ab7', #Threshold darker blue
+                      'SOLA': '#337ab7', #Threshold darker blue, 
+                      'South Lake Tahoe Sandy Way': '#337ab7', #Threshold darker blue
+                      'Stateline TRPA': '#87CEEB', #sky blue
+                      'Tahoe City': '#fdbf6f' #peach                    
+                        }
 def plot_pm2_5_annual(df, draft= False):
     # set indicator
     indicator = 'PM2.5 - ANNUAL AVG.'
@@ -60,10 +70,25 @@ def plot_pm2_5_annual(df, draft= False):
 
     # correct threshold value errors
     df['Threshold Value'] = 9
+# Define the desired order
+    site_order = [
+        'Lake Tahoe CC'
+        'South Lake Tahoe Sandy Way',
+        'SOLA',
+        'Cave Rock',
+        'DL Bliss State Park',
+        'Incline Village/Crystal Bay',
+        'Kings Beach',
+        'Stateline TRPA',
+        'Tahoe City'
+    ]
 
+    # Reorder the Site column
+    df['Site'] = pd.Categorical(df['Site'], categories=site_order, ordered=True)
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site',
-                    color_discrete_map = color_discrete_map)
+                    color_discrete_map = PM_discrete_map,
+                    category_orders={"Site": site_order})
 
     fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
@@ -72,12 +97,12 @@ def plot_pm2_5_annual(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
-    # Using boolean indexing with case-insensitive comparison
+    # Using boolean indexing with case-insensitive comparison includes SOLA and LTCC sites for trend
     dfTrend = df[df['Include_in_Trend_Analysis'].str.lower() == 'yes']
 
     # create trendline
@@ -97,7 +122,7 @@ def plot_pm2_5_annual(df, draft= False):
     slope = df.loc[df['Indicator'] == indicator, 'Beta']
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                     customdata=slope, hovertemplate='Trend: %{customdata:.2f}<extra></extra>')
 
     # add to figure
@@ -119,8 +144,8 @@ def plot_pm2_5_annual(df, draft= False):
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[0, 15],
+                            dtick = 2,
+                            range=[0, 12],
                             title_text='Parts per Million'
                         )
                     
@@ -157,14 +182,14 @@ def plot_pm2_5_24hour(df, draft= False):
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', 
                  color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
+    fig.update_traces(hovertemplate='<br>3-Year Mean: <b>%{y:.2f}</b> ppm')
 
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
@@ -185,7 +210,7 @@ def plot_pm2_5_24hour(df, draft= False):
     beta = fit_results.params[1]
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
@@ -238,6 +263,22 @@ def plot_pm2_5_24hour(df, draft= False):
 
 # plot PM pm annual  data
 def plot_pm10_annual(df, draft= False):
+    PM_discrete_map= {'Cave Rock': '#33a02c',
+                      'DL Bliss State Park': '#b2df8a', 
+                      'Incline Village/Crystal Bay': '#c1854b', #(earthy brown),
+                      'Kings Beach': '#e31a1c',
+                      'Lake Tahoe Basin': '#ff7f00',
+                      'Lake Tahoe CC': '#fdbf6f', #peach,
+                      'LTCC': '#ff7f00',
+                      'SOLA': '#a6cee3', 
+                      'South Lake Tahoe port': '#b2df8a', 
+                      'South Lake Tahoe Sandy Way': '#337ab7', #Threshold darker blue
+                      'South Lake Tahoe Tahoe Blvd': '#b2df8a',
+                      'Stateline Harveys':'#cab2d6',
+                      'Stateline Horizon': '#cab2d6',
+                      'Stateline TRPA': '#cab2d6',
+                      'Tahoe City': '#fdbf6f'                    
+                        }
     # set indicator
     indicator = 'PM10 - ANNUAL AVG.'
 
@@ -245,11 +286,24 @@ def plot_pm10_annual(df, draft= False):
     df = df.loc[df['Indicator'] == indicator]
     # correct threshold value errors- CA 
     df['Threshold Value'] = 20
+    # Define the desired order
+    site_order = ['South Lake Tahoe Sandy Way',
+                  'Stateline Horizon',
+                  'Stateline TRPA',
+                  'SOLA',
+                  'Cave Rock',
+                  'DL Bliss State Park',
+                  'Incline Village/Crystal Bay',
+                'Lake Tahoe CC'
+    ]
 
+    # Reorder the Site column
+    df['Site'] = pd.Categorical(df['Site'], categories=site_order, ordered=True)
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site',
-                 color_discrete_map = color_discrete_map)
+                 color_discrete_map = PM_discrete_map,
+                 category_orders={"Site": site_order})
 
     fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
@@ -258,7 +312,7 @@ def plot_pm10_annual(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
@@ -281,7 +335,7 @@ def plot_pm10_annual(df, draft= False):
     # Extract the trendline trace
     trendline = fig2.data[1]
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
@@ -346,7 +400,7 @@ def plot_pm10_24hr(df, draft= False):
                  color_discrete_map = color_discrete_map)
          
 
-    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
+    fig.update_traces(hovertemplate='<br> 3-Year Average: <b>%{y:.2f}</b> ppm')
 
 
     # create threshold line
@@ -354,7 +408,7 @@ def plot_pm10_24hr(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
@@ -374,7 +428,7 @@ def plot_pm10_24hr(df, draft= False):
     beta = fit_results.params[1]
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
@@ -422,7 +476,22 @@ def plot_pm10_24hr(df, draft= False):
 #---------------------------
 #O3 1- Hour High
 #----------------------------
-
+O3_discrete_map={'Cave Rock': '#337ab7', #Threshold darker blue
+                      'DL Bliss State Park': '#279bdc', #Threshold light blue 
+                      'Incline Village/Crystal Bay': '#c1854b', #(earthy brown),
+                      'Kings Beach': '#cab2d6', #lavendar
+                      'Lake Tahoe Basin': '#6c9c7b', #medium pine green,
+                      'Lake Tahoe CC': '#b2df8a', #mint
+                      'LTCC': '#b2df8a', #mint,
+                      'SOLA': '#b2df8a', #mint
+                      'South Lake Tahoe Airport': '#b2df8a', #mint
+                      'South Lake Tahoe Sandy Way': '#b2df8a', #mint
+                      'South Lake Tahoe Tahoe Blvd': '#b2df8a', #mint
+                      'Stateline Harveys':'#87CEEB', #sky blue
+                      'Stateline Horizon': '#87CEEB', #sky blue
+                      'Stateline TRPA': '#87CEEB', #sky blue
+                      'Tahoe City': '#fdbf6f', #peach#'#fb9a99', #pink                    
+                        }
 # plot 03 1hour data
 def plot_o3_1hour_high(df, draft= False):        
 
@@ -435,7 +504,7 @@ def plot_o3_1hour_high(df, draft= False):
 
 
     # setup plot
-    fig = px.scatter(df, x = 'Year', y= 'Value', color='Site') 
+    fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', color_discrete_map = O3_discrete_map) 
                 
     fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
@@ -445,7 +514,7 @@ def plot_o3_1hour_high(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.2f} ppm<extra></extra>'
     ))
@@ -464,7 +533,7 @@ def plot_o3_1hour_high(df, draft= False):
     beta = fit_results.params[1]
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                  hovertemplate=f'Trend: {beta:.4f}<extra></extra>')
 
     # add to figure
@@ -513,6 +582,23 @@ def plot_o3_1hour_high(df, draft= False):
 #---------------------------
 # CO 8- Hour Average
 #----------------------------
+# set colors
+CO_discrete_map = {   'South Lake Tahoe Tahoe Blvd': '#b2df8a', #mint          
+                      'South Lake Tahoe Sandy Way': '#b2df8a', #mint
+                      #'South Lake Tahoe Tahoe Blvd': '#279bdc', #Threshold lighter blue         
+                      #'South Lake Tahoe Sandy Way': '#279bdc', #Threshold lighter blue#'#6495ED', # cornflower Light Sky Blue
+                      #'South Lake Tahoe Sandy Way': '#808080' , #medium gray
+                      #'South Lake Tahoe Tahoe Blvd': '#808080' , #medium gray
+                      #'Stateline Harveys':'#cab2d6', #lavendar
+                      #'Stateline Horizon': '#cab2d6', #lavendar
+                      'Stateline Harveys':'#87CEEB', #sky blue
+                      'Stateline Horizon': '#87CEEB', #sky blue
+                      #'Stateline Harveys':'#B0B0B0', #medium gray
+                      #'Stateline Horizon': '#B0B0B0', #medium gray
+                      'Stateline TRPA': '#337ab7', #Threshold darker blue
+                      #'Stateline TRPA': '#279bdc', #Threshold lighter blue
+                      'Tahoe City': '#D3D3D3', #light gray#6495ED', # cornflower#              
+                        }
 # plot CO 8hour data
 def plot_co_8hour_avg(df, draft= False):
     # Set indicator
@@ -527,8 +613,21 @@ def plot_co_8hour_avg(df, draft= False):
     # Filter the data for years 2013-2023 for the trendline
     df_trendline = df[(df['Year'] >= 2013) & (df['Year'] <= 2023)]
 
+    # Define the desired order
+    site_order = [
+        'Stateline TRPA',
+        'Stateline Harveys',
+        'Stateline Horizon',
+        'South Lake Tahoe Sandy Way',
+        'South Lake Tahoe Tahoe Blvd',
+        'Tahoe City'
+    ]
+
+    # Reorder the Site column
+    df['Site'] = pd.Categorical(df['Site'], categories=site_order, ordered=True)
     # Setup main plot
-    fig = px.scatter(df, x='Year', y='Value', color='Site')
+    fig = px.scatter(df, x='Year', y='Value', color='Site', color_discrete_map= CO_discrete_map,category_orders={"Site": site_order}  # Ensure the legend order
+    )
     fig.update_traces(hovertemplate='<b>%{y:.2f}</b> ppm')
 
     # Create threshold line
@@ -536,7 +635,7 @@ def plot_co_8hour_avg(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name="Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
     ))
@@ -548,7 +647,7 @@ def plot_co_8hour_avg(df, draft= False):
     # Create trendline using the full data
     fig_full_trendline = px.scatter(df, x='Year', y='Value', 
                                 color_discrete_map=color_discrete_map,
-                                trendline='ols', trendline_color_override='#000080')
+                                trendline='ols', trendline_color_override='#808080') #B0B0B0') #medium gray
 
     # Set up trendline trace
     trendline_full = fig_full_trendline.data[1]
@@ -560,7 +659,7 @@ def plot_co_8hour_avg(df, draft= False):
     beta_full = fit_results_full.params[1]
 
     # Update trendline with slope information
-    trendline_full.update(showlegend=True, name="Trend (All)", line_width=3,  
+    trendline_full.update(showlegend=True, name="Trend (All)", line_width=2,  
                       hovertemplate=f'Trend (All): {beta_full:.2f}<extra></extra>')
 
     # Add trendline to the main figure
@@ -582,7 +681,7 @@ def plot_co_8hour_avg(df, draft= False):
     # Get beta value
     beta_filtered = fit_results_filtered.params[1]
 
-    trendline_filtered.update(showlegend=True, name="Trend (Stateline TRPA)", line_width=3,
+    trendline_filtered.update(showlegend=True, name="Trend (Stateline TRPA)", line_width=2,
                           hovertemplate=f'Trend (Stateline TRPA): {beta_filtered:.2f}<extra></extra>')
 
     # Add trendline to the main figure
@@ -647,12 +746,15 @@ def plot_50_Bliss_vis(df, draft= False):
     df['Threshold Value'] = 25
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', 
-                 color_discrete_map=color_discrete_map,
+                 #color_discrete_map=color_discrete_map,
                  hover_data={'Year':False, # remove year from hover data
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.1f}</b> Mm-1')
+    fig.update_traces(hovertemplate='3-Year Mean: <b>%{y:.1f}</b> Mm-1',
+                      name= '3-Year Mean',
+                      marker=dict(color='#337ab7'),
+                      showlegend=True) #Threshold darker blue)))
 
 
     # create threshold line
@@ -660,7 +762,7 @@ def plot_50_Bliss_vis(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} Mm-1<extra></extra>'
     ))
@@ -680,7 +782,7 @@ def plot_50_Bliss_vis(df, draft= False):
     # get beta value
     beta = fit_results.params[1]
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                   hovertemplate=f'Trend: {beta:.1f}<extra></extra>')
 
     # add to figure
@@ -702,8 +804,8 @@ def plot_50_Bliss_vis(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 5,
-                        range=[0, 40],
+                        dtick = 2,
+                        range=[15, 26],
                         title_text='Light Extinction (Mm-1)'
                     )
                  )
@@ -746,7 +848,9 @@ def plot_90_Bliss_vis(df, draft= False):
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
+    fig.update_traces(hovertemplate='3-Year Mean: <b>%{y:.2f}</b> Mm-1',name= '3-Year Mean',
+                      marker=dict(color='#337ab7'),
+                      showlegend=True)
 
 
     # create threshold line
@@ -754,7 +858,7 @@ def plot_90_Bliss_vis(df, draft= False):
         y=df['Threshold Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:d} Mm-1<extra></extra>'
     ))
@@ -773,7 +877,7 @@ def plot_90_Bliss_vis(df, draft= False):
     beta = fit_results.params[1]
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                  hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
@@ -796,7 +900,7 @@ def plot_90_Bliss_vis(df, draft= False):
                         tickmode = 'linear',
                         tick0 = 0,
                         dtick = 5,
-                        range=[0, 60],
+                        range=[20, 60],
                         title_text='Light Extinction (Mm-1)'
                     )
                  )
@@ -822,7 +926,8 @@ def plot_90_Bliss_vis(df, draft= False):
 #---------------------------
 # SubRegional Visibility 50th Percentile SLT
 #----------------------------
-
+colors={'LTCC': '#337ab7', #Threshold darker blue,
+        'SOLA': '#87CEEB'}#'#a6cee3' also a nice blue...}
 # plot 03 1hour data
 def plot_50_SLT_vis(df, draft= False):
      #limit rows to indicator
@@ -832,12 +937,12 @@ def plot_50_SLT_vis(df, draft= False):
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', 
-                 color_discrete_map=color_discrete_map, color='Site',
+                 color_discrete_map=colors, color='Site',
                  hover_data={'Year':True, # remove year from hover data
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <b>%{y:.2f}</b> Mm-1')
+    fig.update_traces(hovertemplate='3-Year Mean: <b>%{y:.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -845,7 +950,7 @@ def plot_50_SLT_vis(df, draft= False):
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:,.0f} Mm-1<extra></extra>'
     ))
@@ -872,7 +977,7 @@ def plot_50_SLT_vis(df, draft= False):
     slope = dfTrend['Beta']
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                      customdata=slope, hovertemplate='Trend: %{customdata:,.2f} Mm-1<extra></extra>')
     # add to figure
     fig.add_trace(trendline)
@@ -894,7 +999,7 @@ def plot_50_SLT_vis(df, draft= False):
                         tickmode = 'linear',
                         tick0 = 0,
                         dtick = 5,
-                        range=[0, 60],
+                        range=[20, 60],
                         title_text='Light Extinction (Mm-1)'
                     )
                  )
@@ -919,7 +1024,8 @@ def plot_50_SLT_vis(df, draft= False):
 #---------------------------
 # SubRegional Visibility 90th Percentile SLT
 #----------------------------
-
+colors={'LTCC': '#337ab7', #Threshold darker blue,
+        'SOLA': '#87CEEB'}#'#a6cee3' also a nice blue...}
 # plot 90th percentiledata
 def plot_90_SLT_vis(df, draft= False):
     # limit rows to indicator
@@ -929,12 +1035,12 @@ def plot_90_SLT_vis(df, draft= False):
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', 
-                 color_discrete_map=color_discrete_map,
+                 color_discrete_map=colors,
                  hover_data={'Year':True,
                              'Value':':.2f'
                              })
 
-    fig.update_traces(hovertemplate='3-year mean: <b>%{y:,.2f}</b> Mm-1')
+    fig.update_traces(hovertemplate='3-Year Mean: <b>%{y:,.2f}</b> Mm-1')
 
 
     # create threshold line
@@ -942,7 +1048,7 @@ def plot_90_SLT_vis(df, draft= False):
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:,.0f} Mm-1<extra></extra>'
     ))
@@ -968,7 +1074,7 @@ def plot_90_SLT_vis(df, draft= False):
     slope = dfTrend['Beta']
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                      customdata=slope, hovertemplate='Trend: %{customdata:,.2f} Mm-1<extra></extra>')
 
     # add to figure
@@ -989,8 +1095,8 @@ def plot_90_SLT_vis(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 25,
-                        range=[0, 200],
+                        dtick = 20,
+                        range=[0, 180],
                         title_text='Light Extinction (Mm-1)'
                     )
                  )
@@ -1023,7 +1129,8 @@ def plot_NOx(df, draft= False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
 
-    fig.update_traces(hovertemplate='<b>%{y: .2f}</b> tons per day<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y: .2f}</b> tons per day<extra></extra>',
+                      marker=dict(color='#337ab7')) #Threshold darker blue
 
 
     # create threshold line
@@ -1031,7 +1138,7 @@ def plot_NOx(df, draft= False):
         y=df['Threshold'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} <extra></extra>'
     ))
@@ -1051,7 +1158,7 @@ def plot_NOx(df, draft= False):
     trendline = fig2.data[1]
     
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                   hovertemplate=f'Trend: {beta:.2f}<extra></extra>')
 
     # add to figure
@@ -1110,7 +1217,8 @@ def plot_winter_traffic(df, draft= False):
                              'Value':':,.0f'}
                              )
 
-    fig.update_traces(hovertemplate='Traffic Count: <b>%{y:,.0f}</b> cars')
+    fig.update_traces(hovertemplate='Traffic Count: <b>%{y:,.0f}</b> cars',
+                      marker=dict(color='#337ab7'))
 
 
     # create threshold line
@@ -1118,9 +1226,9 @@ def plot_winter_traffic(df, draft= False):
         y=df['Threshold'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
-    hovertemplate='Threshold :%{y:,.0f} cars<extra></extra>'
+    hovertemplate='Threshold: %{y:,.0f} cars<extra></extra>'
     ))
 
     # set layout
@@ -1181,7 +1289,8 @@ def plot_midlake_dissolved_nitrogen(df, draft=False):
     #                             }
                     )
 
-    fig.update_traces(hovertemplate='Dissolved Nitrogen: <b>%{y:,.0f}</b> g ha-1 yr-1')
+    fig.update_traces(hovertemplate='Dissolved Nitrogen: <b>%{y:,.0f}</b> g ha-1 yr-1',
+                      marker=dict(color='#337ab7'))
 
     df['Threshold']=1
 
@@ -1190,7 +1299,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=False):
         y=df['Threshold'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold : %{y} <extra></extra>'
     ))
@@ -1214,7 +1323,7 @@ def plot_midlake_dissolved_nitrogen(df, draft=False):
     slope = df['Beta']
 
     # update trendline
-    trendline.update(showlegend=True, name="Trend", line_width=3, 
+    trendline.update(showlegend=True, name="Trend", line_width=2, 
                      customdata=slope, hovertemplate='Trend: %{customdata:,.2f} g/ha/year<extra></extra>')
 
     # add to figure

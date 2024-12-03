@@ -273,22 +273,13 @@ def plot_TYC(df, draft= False):
     fig.add_trace(go.Bar(
     x=df['Year'],
     y=df['Occupied_Sites'],
-    name="Occupied Sites",
+    name="Total Occupied Sites",
     marker=dict(color='#ffffbf', line=dict(color="#8a7121", width=1.5)),
-    #opacity=1,
+    #opacity=.6,
     hovertemplate='<b>%{y:,.0f}</b> sites had Tahoe Yellow Cress<extra></extra>',
     legendgroup='foreground'
     ), secondary_y=True)
     
-    #fig.add_trace(go.Bar(name="Occupied Site", x=df['Year'], y=df['Occupied_Sites']))
-
-    #fig.update_traces(marker_color='#ffffbf', 
-     #             marker_line_color="#8a7121",
-      #            marker_line_width=1.5, 
-       #           opacity=0.6,
-        #          hovertemplate='<b>%{y:,.0f}</b> occupied sites<extra></extra>',
-         #         legendgroup='foreground'
-          #       )
     fig.add_trace(go.Scatter(
         x=df['Year'],
         y=threshold_values,
@@ -298,12 +289,10 @@ def plot_TYC(df, draft= False):
         hovertemplate='Threshold: %{y}<extra></extra>'
     ), secondary_y=True)
    
-    
-
     # set layout
     fig.update_layout(title='Tahoe Yellow Cress',
                     font_family=font,
-                    template= 'plotly_white',
+                    template= template,
                     showlegend=True,
                     dragmode=False,
                     hovermode="x unified",
@@ -319,16 +308,25 @@ def plot_TYC(df, draft= False):
                         tick0 = 0,
                         dtick = 5,
                         range=[0, 50],
-                        title_text='# Occupied Sites',
+                        title_text='Total Occupied Sites',
                         showgrid=False
                     )
                  )
    
     # Set y-axes titles
-    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d", 
-    range=[df['Lake_Level'].min() - 5, df['Lake_Level'].max() + 5],  # Adjust for better view
+    fig.update_yaxes(title_text="Lake Elevation (ft)", tickformat=",d",dtick= 2, 
+    range=[df['Lake_Level'].min() - 5, df['Lake_Level'].max() + 5],
+    showgrid=False, 
     secondary_y=False)
-    fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d",secondary_y=False)
+    # Set layout for the primary (left) y-axis
+    fig.update_yaxes(
+        title_text="Total Occupied Sites",  # Left Y-axis title
+        tickformat=",d",
+        range=[0, 45],  # Adjust range for Occupied Sites
+        showgrid=False,
+        secondary_y=True  # Ensure this is the secondary y-axis (bar chart)
+        )
+    #fig.update_yaxes(title_text="Lake Level (ft)", tickformat=",d",secondary_y=False)
     # export chart
     fig.update_layout(dict(yaxis2={'anchor': 'x', 'overlaying': 'y', 'side': 'left'},
                   yaxis={'anchor': 'x', 'domain': [0.0, 1.0], 'side':'right'}))
