@@ -733,7 +733,7 @@ def plot_osprey_data(df, draft=False):
     fig.add_trace(trendline)
 
     # set layout
-    fig.update_layout(font=font,
+    fig.update_layout(font_family=font,
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
