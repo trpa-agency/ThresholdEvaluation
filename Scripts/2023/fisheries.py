@@ -44,34 +44,53 @@ def plot_fishhab(df,  draft=False):
 
     # add threhold line chart
     # fig.add_trace(go.Scatter(x=df['Condition'], y=[1000, 1000], mode='lines', name='Threshold', line=dict(color='red', width=2)))
-    fig.update_xaxes(title= 'Habitat',tickfont=dict(family='Calibri', size=14))
+    fig.update_xaxes(title= 'Condition',tickfont=dict(family='Calibri', size=14))
     fig.update_yaxes(title= 'Acres',  tickfont=dict(family='Calibri', size=14))
     fig.update_xaxes(
         tickvals=["Marginal", "Excellent Habitat"],
+        ticktext=["Marginal Habitat", "Excellent Habitat"]  # New labels
     )
-    fig.update_traces(hovertemplate='%{x}<br>%{y:,.0f} acres<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:,.0f}</b> acres<br> of %{x}<extra></extra>',
+                      opacity=0.6,
+                    showlegend=False)
     fig.update_layout(font=dict(family=font, size=14))
-        # create threshold line
+    
+    # create threshold line
+      
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
         x=df['Condition'],
-        line=dict(color='#333333', width=3),
+        name='Threshold',
+        showlegend=True,
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='markers',
+        marker=dict(size=6, color='#333333'),
         marker_symbol='line-ew',
-        marker_line_color="midnightblue", 
-        marker_color="lightskyblue", 
+        #marker_line_color="midnightblue", 
+        #marker_color="lightskyblue", 
         marker_line_width=2, 
         marker_size = 240,
         customdata=df['Threshold Value'],
-        hovertemplate='Threshold target<br>of %{y:,.0f} acres<extra></extra>'
+        hovertemplate='Threshold target<br>of %{y:,.0f} acres of Excellent Habitat<extra></extra>',
+        #showlegend=True
     ))
+
     # set layout
     fig.update_layout(title="Fish Habitat - Nearshore Lake Tahoe",
                         xaxis_type='category',
                         font_family=font,
                         template=template,
-                        showlegend=False,
-                        hovermode="x unified"                    
+                        showlegend=True,
+                        hovermode="x unified",
+                        legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+                title=None
+            ),                    
                     )
     if draft == True:
         fig.write_html(
