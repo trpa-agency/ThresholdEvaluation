@@ -112,22 +112,46 @@ def summarize_landcap_by_parcel(year):
     arcpy.management.Delete('parcels')
     arcpy.Delete_management("memory")
 
+def summarize_landcap_by_parcel_bailey(year):
+    query = f'"YEAR" = {year}'
+    # get paths
+    parcelPath  = Path(sdeBase) / 'SDE.Parcels/SDE.Parcel_History_Attributed'
+    landcapPath = Path(sdeBase) / 'SDE.Soils/SDE.land_capability_Bailey_Soils'
+    # get parcels where the year is 2023
+    parcels = arcpy.management.MakeFeatureLayer(str(parcelPath), 'parcels', query) 
+    landcap = arcpy.management.MakeFeatureLayer(str(landcapPath), 'landcap')
+    # summarize within
+    arcpy.analysis.SummarizeWithin(
+        in_polygons=parcels,
+        in_sum_features=landcap,
+        out_feature_class=fr'C:\\GIS\\Scratch.gdb\\Summarize_ParcelLandCapabalities_Bailey_{year}',
+        keep_all_polygons="KEEP_ALL",
+        sum_fields=None,
+        sum_shape="ADD_SHAPE_SUM",
+        shape_unit="ACRES",
+        group_field="CAPABILITY",
+        add_min_maj="ADD_MIN_MAJ",
+        add_group_percent="ADD_PERCENT",
+        out_group_table=r"C:\GIS\Scratch.gdb\Land_Capab_Summary1"
+    )
+    arcpy.management.Delete('parcels')
+    arcpy.Delete_management("memory")
 
 def get_summary(year):
     # get land cap summary as dataframe
     # parcel development layer polygons
-    path = fr'C:\GIS\Scratch.gdb\Summarize_ParcelLandCapabalities_{year}'
+    path = fr'C:\GIS\Scratch.gdb\Summarize_ParcelLandCapabalities_Bailey_{year}'
     # query 2022 rows
     sdf = pd.DataFrame.spatial.from_featureclass(path)
     sdf.spatial.sr = sr
     # create new field for Land Capability Category as empty string
     sdf['Category'] = ''
     # set values to 'SEZ' if Majority_Land_Capab = '1B'
-    sdf.loc[sdf['Majority_Land_Capab'] == '1B', 'Category'] = 'SEZ'
+    sdf.loc[sdf['Majority_CAPABILITY'] == '1B', 'Category'] = 'SEZ'
     # set values to 'Sensitive' if Majority_Land_Capab = '1C', 1A, 2, 3
-    sdf.loc[sdf['Majority_Land_Capab'].isin(['1C', '1A', '2', '3']), 'Category'] = 'Sensitive'
+    sdf.loc[sdf['Majority_CAPABILITY'].isin(['1C', '1A', '2', '3']), 'Category'] = 'Sensitive'
     # set values to 'Non-Sensitive' if Majority_Land_Capab = '4', 5' or '6' 7
-    sdf.loc[sdf['Majority_Land_Capab'].isin(['4', '5', '6', '7']), 'Category'] = 'Non-Sensitive'
+    sdf.loc[sdf['Majority_CAPABILITY'].isin(['4', '5', '6', '7']), 'Category'] = 'Non-Sensitive'
     # filter out WITHIN_TRPA_BOUNDARY = 0
     sdf = sdf.loc[sdf['WITHIN_TRPA_BNDY'] == 1]
     # melt by category and sum Residential_Units, TouristAccommodation_Units, and CommercialFloorArea_SqFt
