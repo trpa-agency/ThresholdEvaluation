@@ -35,13 +35,13 @@ def plot_hotelmotel(df, draft = False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -84,13 +84,13 @@ def plot_commercial(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>',marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -133,13 +133,13 @@ def plot_highdensityresidential(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -153,7 +153,7 @@ def plot_highdensityresidential(df, draft=True):
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
+                            dtick = 2,
                             range=[40, 60],
                             title_text='Average Decibels'
                         )  
@@ -182,14 +182,14 @@ def plot_industrial(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
 
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -232,13 +232,13 @@ def plot_lowdensity(df, draft=True):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -281,13 +281,13 @@ def plot_rural(df, draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -330,13 +330,13 @@ def plot_rec(df,draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -379,13 +379,13 @@ def plot_wilderness(df, draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -426,14 +426,14 @@ def plot_watercraft(df, draft=False):
     fig = px.scatter(df, x = 'Year', y= 'Value')
 
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> average exceedances per day<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.2f}</b> average exceedances per day<extra></extra>', marker=dict(color='#337ab7'), )
 
     # create threshold line
     fig.add_trace(go.Scatter(
         y=df['Threshold_Value'],
         x=df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} average exceedances per day<extra></extra>'
     ))
@@ -451,9 +451,9 @@ def plot_watercraft(df, draft=False):
                             tick0 = 0,
                             dtick = 0.05,
                             range=[0, 0.65],
-                            title_text='Average Exceedances Per Day'
-                        )  
-                    )
+                            title_text='Average Exceedances per Day'
+                        )
+                        )
     # generate figure
     if draft == True:
         fig.write_html(
@@ -477,13 +477,13 @@ def plot_wildlife(df, draft=False):
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value')
     # update popup
-    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:.0f}</b> decibels<extra></extra>', marker=dict(color='#337ab7'))
     # create threshold line
     fig.add_trace(go.Scatter(
         y= df['Threshold_Value'],
         x= df['Year'],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold: %{y:.0f} decibels<extra></extra>'
     ))
@@ -504,7 +504,7 @@ def plot_wildlife(df, draft=False):
                             type='category',  # Use 'category' for non-continuous years
                             tickmode='linear',
                             title_text='Year'
-                            )
+                            )                  
                     )
     # generate figure
     if draft == True:

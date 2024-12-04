@@ -73,12 +73,12 @@ def plot_TDraba(df, draft=False):
         x=df['Year'],
         name= "Threshold",
         hovertemplate='Threshold : %{y:.0f}<extra></extra>',
-        mode='markers',
-        marker_symbol='line-ew',
-        marker_line_color="midnightblue", 
-        marker_color="lightskyblue", 
-        marker_line_width=2, 
-        marker_size = 200,   
+        mode='lines',
+        line=dict(
+        color='#333333',
+        width=2,
+        dash='dash'  # Apply dashed line style
+    )   
     ))
     # export chart
     if draft == True:
@@ -134,13 +134,13 @@ def plot_CDraba(df, draft=False):
         x=df['Year'],
         name= "Threshold",
         hovertemplate='Threshold : %{y:.0f}<extra></extra>',
-        mode='markers',
-        marker_symbol='line-ew',
-        marker_line_color="midnightblue", 
-        marker_color="lightskyblue", 
-        marker_line_width=2, 
-        marker_size = 200,   
-    ))
+        mode='lines',
+        line=dict(
+        color='#333333',
+        width=2,
+        dash='dash'  # Apply dashed line style
+    )
+))
 # export chart
     if draft == True:
         fig.write_html(
@@ -194,12 +194,12 @@ def plot_lewisia(df, draft=False):
         x=df['year'],
         name= "Threshold",
         hovertemplate='Threshold : %{y:.0f}<extra></extra>',
-        mode='markers',
-        marker_symbol='line-ew',
-        marker_line_color="midnightblue", 
-        marker_color="lightskyblue", 
-        marker_line_width=2, 
-        marker_size = 200,   
+        mode='lines',
+        line=dict(
+        color='#333333',
+        width=2,
+        dash='dash'  # Apply dashed line style
+    )  
     ))
 # export chart
     if draft == True:
