@@ -11,8 +11,8 @@ config   = {"displayModeBar": False}
 #get SEZ Data
 def get_SEZ_data_web():
     SEZ_url = "https://maps.trpa.org/server/rest/services/SEZ_Assessment_Unit/FeatureServer/0"
-    dfSEZ = get_fs_data_spatial(SEZ_url)
-    return dfSEZ
+    df = get_fs_data_spatial(SEZ_url)
+    return df
 # get soil conservation data
 def get_sez_data_sql():
     # make sql database connection with pyodbc
@@ -20,8 +20,8 @@ def get_sez_data_sql():
     # get BMP Status data as dataframe from BMP SQL Database
     with engine.begin() as conn:
         # create dataframe from sql query
-        dfSEZ  = pd.read_sql('SELECT Threshold_Year, Final_Percent, Final_Points_Possible, Final_Total_Points, Acres FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
-    return dfSEZ
+        df  = pd.read_sql('SELECT Threshold_Year, Final_Percent, Final_Points_Possible, Final_Total_Points, Acres FROM sde.SDE.SEZ_Assessment_Unit_evw', conn)
+    return df
 def get_soil_conservation_data_sql():
     # make sql database connection with pyodbc
     engine = get_conn('sde_tabular')
@@ -330,7 +330,9 @@ def plot_BasinwideSEZ_scores(df, draft=False):
     # setup plot
     fig = px.bar(grouped, x = 'Threshold_Year', y= 'BasinwideSEZ_Quality', color_discrete_sequence=['rgba(119, 129, 92, 0.5)'])
                    
-    fig.update_traces( marker=dict(
+    fig.update_traces(texttemplate='%{y:.2f}',  # Format the text labels
+        textposition='inside',  # Position the labels inside 
+        marker=dict(
             line=dict(color='#77815c', width=2)  # Proper string format for color
         ),
         hovertemplate='SEZ Quality:<br><b>%{y:.2f}</b>')
@@ -341,14 +343,14 @@ def plot_BasinwideSEZ_scores(df, draft=False):
                     template=template,
                     legend_title_text='',
                     showlegend=True,
-                    legend=dict(
-                    orientation="h",
-                    entrywidth=180,
-                    yanchor="bottom",
-                    y=1.05,
-                    xanchor="right",
-                    x=0.95,
-                    ),
+                    #legend=dict(
+                    #orientation="h",
+                    #entrywidth=180,
+                    #yanchor="bottom",
+                    #y=1.05,
+                    #xanchor="right",
+                    #x=0.95,
+                    #),
                     hovermode="x unified",
                     xaxis = dict(
                         tickmode = 'linear',
@@ -372,7 +374,7 @@ def plot_BasinwideSEZ_scores(df, draft=False):
         x=df['Threshold_Year'],
         #x=[2019,2024],
         name= "Threshold",
-        line=dict(color='#333333', width=3),
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
         hovertemplate='Threshold :<br>%{y:.0f}<extra></extra>'
     ))

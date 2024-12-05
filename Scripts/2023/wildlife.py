@@ -410,7 +410,7 @@ def plot_bald_eagle_winter(df, draft=False):
                         dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
-                            dtick = 5
+                            dtick = 1
                         ),
                         yaxis = dict(
                             tickmode = 'linear',
@@ -500,7 +500,7 @@ def plot_bald_eagle_summer(df, draft=False):
                         title=""),
                         xaxis = dict(
                             tickmode = 'linear',
-                            dtick = 5
+                            dtick = 1
                         ),
                         yaxis = dict(
                             tickmode = 'linear',
@@ -566,7 +566,7 @@ def plot_goshawk_data(df, draft=False):
         xaxis=dict(
             tickmode='linear',
             tick0= 1997,
-            dtick=4
+            dtick=1
         ),
         yaxis=dict(
             tickmode='linear',
@@ -643,7 +643,7 @@ def plot_falcon_data(df, draft=False):
     # add to figure
     fig.add_trace(trendline)
     # set layout
-    fig.update_layout(title=' Peregrine Falcon Nesting',
+    fig.update_layout(title='Peregrine Falcon Nesting',
                         font_family=font,
                         template=template,
                         hovermode="x unified",
@@ -655,7 +655,7 @@ def plot_falcon_data(df, draft=False):
                         xaxis = dict(
                             tickmode = 'linear',
                             tick0=2008,
-                            dtick = 2
+                            dtick = 1
                         ),
                         yaxis = dict(
                             tickmode = 'linear',
@@ -694,7 +694,7 @@ def plot_osprey_data(df, draft=False):
     # update popup
     fig.update_traces(customdata=df['Wildlife_Species'],
                     hovertemplate='<b>%{y:.0f}</b> Active <b>%{customdata}</b> Nests<extra></extra>',
-                    marker=dict(color='#337ab7'))
+                    marker=dict(color='#337ab7'),name='Osprey Nesting')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -733,8 +733,7 @@ def plot_osprey_data(df, draft=False):
     fig.add_trace(trendline)
 
     # set layout
-    fig.update_layout(title='Osprey Nesting',
-                        font_family=font,
+    fig.update_layout(font_family=font,
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
@@ -745,7 +744,7 @@ def plot_osprey_data(df, draft=False):
                         ),
                         xaxis = dict(
                             tickmode = 'linear',
-                            dtick = 5
+                            dtick = 1
                         ),
                         yaxis = dict(
                             tickmode = 'linear',
@@ -793,24 +792,20 @@ def get_waterfowl_data_web():
 # plot waterfowl data
 def plot_waterfowl_data(df, draft=False):
     # Set up plot
-    fig = px.line(df, x='Year', y='Human Activity Rating')
+    fig = px.line(df, x='Year', y='Human Activity Rating', title="Human Activity in Waterfowl Population Sites")
     # Update traces to show legend
     fig.update_traces(showlegend=True, 
                       name="Average Rating for All Sites", 
-                      line_width=2,
                       hovertemplate='Average Rating: <b>%{y:.2f}</b><extra></extra>',
-                      marker=dict(color='#337ab7'))
+                      line=dict(color='#337ab7', width=3)
+                      )
     #Set the range of the x-axis
-    fig.update_layout(title="Waterfowl Population Sites - Human Activity Rating",
-                        font_family=font,
+    fig.update_layout(font_family=font,
                         template=template,
                         hovermode="x unified",
                         showlegend=True,
                         dragmode=False,
                         legend_title_text=None, #Remove legend title
-                        legend=dict(
-                        title=""
-                        ),
                         xaxis = dict(
                             tickmode = 'linear',
                             dtick = 1
@@ -818,11 +813,19 @@ def plot_waterfowl_data(df, draft=False):
                         yaxis = dict(
                             tickmode = 'linear',
                             tick0 = 0,
-                            dtick = 5,
-                            range=[0, 4.5],
-                            title_text='Number of Active Nests'
-                        ) 
-            )
+                            dtick = 0.5,
+                            range=[0, 4],
+                            title_text='Human Disturbance Rating'
+                        ),
+                        legend=dict( 
+                        orientation="h", 
+                        entrywidth=180, 
+                        yanchor="bottom", 
+                        y=1.05, 
+                        xanchor="right", 
+                        x=0.95 
+                        )  
+                        )
     # export chart
     if draft == True:
         fig.write_html(

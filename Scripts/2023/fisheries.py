@@ -44,34 +44,53 @@ def plot_fishhab(df,  draft=False):
 
     # add threhold line chart
     # fig.add_trace(go.Scatter(x=df['Condition'], y=[1000, 1000], mode='lines', name='Threshold', line=dict(color='red', width=2)))
-    fig.update_xaxes(title= 'Habitat',tickfont=dict(family='Calibri', size=14))
+    fig.update_xaxes(title= 'Condition',tickfont=dict(family='Calibri', size=14))
     fig.update_yaxes(title= 'Acres',  tickfont=dict(family='Calibri', size=14))
     fig.update_xaxes(
         tickvals=["Marginal", "Excellent Habitat"],
+        ticktext=["Marginal Habitat", "Excellent Habitat"]  # New labels
     )
-    fig.update_traces(hovertemplate='%{x}<br>%{y:,.0f} acres<extra></extra>')
+    fig.update_traces(hovertemplate='<b>%{y:,.0f}</b> acres<br> of %{x}<extra></extra>',
+                      opacity=0.6,
+                    showlegend=False)
     fig.update_layout(font=dict(family=font, size=14))
-        # create threshold line
+    
+    # create threshold line
+      
     fig.add_trace(go.Scatter(
         y=df['Threshold Value'],
         x=df['Condition'],
-        line=dict(color='#333333', width=3),
+        name='Threshold',
+        showlegend=True,
+        line=dict(color='#333333', width=2, dash='dash'),
         mode='markers',
+        marker=dict(size=6, color='#333333'),
         marker_symbol='line-ew',
-        marker_line_color="midnightblue", 
-        marker_color="lightskyblue", 
+        #marker_line_color="midnightblue", 
+        #marker_color="lightskyblue", 
         marker_line_width=2, 
         marker_size = 240,
         customdata=df['Threshold Value'],
-        hovertemplate='Threshold target<br>of %{y:,.0f} acres<extra></extra>'
+        hovertemplate='Threshold target<br>of %{y:,.0f} acres of Excellent Habitat<extra></extra>',
+        #showlegend=True
     ))
+
     # set layout
     fig.update_layout(title="Fish Habitat - Nearshore Lake Tahoe",
                         xaxis_type='category',
                         font_family=font,
                         template=template,
-                        showlegend=False,
-                        hovermode="x unified"                    
+                        showlegend=True,
+                        hovermode="x unified",
+                        legend=dict(
+                orientation="h",
+                entrywidth=180,
+                yanchor="bottom",
+                y=1.05,
+                xanchor="right",
+                x=0.95,
+                title=None
+            ),                    
                     )
     if draft == True:
         fig.write_html(
@@ -117,11 +136,11 @@ def plot_avgCSCI(df,  draft=False):
     df_trend_b = df[df['Trend_Panel'] == 'B']
     # Add traces for Test A and Test B
     fig.add_trace(go.Scatter(x=df_trend_a['Year'], y=df_trend_a['Value'], mode='markers',
-                          marker=dict(color='blue'), name='Trend Panel A',
-                         hovertemplate='<b>%{y:.2f}</b> Average CSCI score for all 24 sites in <b>Trend Panel A</b><extra></extra>'))
+                          marker=dict(color='#87CEEB'), name='Trend Panel A',
+                         hovertemplate='Trend Panel A: <b>%{y:.2f}</b> Averaged CSCI<extra></extra>'))
     fig.add_trace(go.Scatter(x=df_trend_b['Year'], y=df_trend_b['Value'], mode='markers',
-                         marker=dict(color='orange'), name='Trend Panel B',
-                         hovertemplate='%{y:.2f} Average CSCI score for all 24 sites in <b>Trend Panel B</b><extra></extra>'))
+                         marker=dict(color='#337ab7'), name='Trend Panel B',
+                         hovertemplate='Trend Panel B: <b>%{y:.2f}</b> Averaged CSCI</b><extra></extra>'))
     # update layout
     fig.update_layout(title='Stream Bioassessment',
                   xaxis_title= 'Year',
