@@ -136,11 +136,11 @@ def plot_avgCSCI(df,  draft=False):
     df_trend_b = df[df['Trend_Panel'] == 'B']
     # Add traces for Test A and Test B
     fig.add_trace(go.Scatter(x=df_trend_a['Year'], y=df_trend_a['Value'], mode='markers',
-                          marker=dict(color='blue'), name='Trend Panel A',
-                         hovertemplate='<b>%{y:.2f}</b> Average CSCI score for all 24 sites in <b>Trend Panel A</b><extra></extra>'))
+                          marker=dict(color='#87CEEB'), name='Trend Panel A',
+                         hovertemplate='Trend Panel A: <b>%{y:.2f}</b> Averaged CSCI<extra></extra>'))
     fig.add_trace(go.Scatter(x=df_trend_b['Year'], y=df_trend_b['Value'], mode='markers',
-                         marker=dict(color='orange'), name='Trend Panel B',
-                         hovertemplate='%{y:.2f} Average CSCI score for all 24 sites in <b>Trend Panel B</b><extra></extra>'))
+                         marker=dict(color='#337ab7'), name='Trend Panel B',
+                         hovertemplate='Trend Panel B: <b>%{y:.2f}</b> Averaged CSCI</b><extra></extra>'))
     # update layout
     fig.update_layout(title='Stream Bioassessment',
                   xaxis_title= 'Year',
