@@ -12,27 +12,27 @@ const columnDefs = [
   const rowData = [
     {
       developmentRight: "Coverage (sq. ft.)",
-      remoteAreas: "- 169,079",
-      areasWithinQuarterMile: "+ 19,697",
-      townCenters: "+ 149,382"
+      remoteAreas: "-169,079",
+      areasWithinQuarterMile: "+19,697",
+      townCenters: "+149,382"
     },
     {
       developmentRight: "Commercial Floor Area (CFA) (sq. ft.)",
-      remoteAreas: "+ 0",
-      areasWithinQuarterMile: "- 16,791",
-      townCenters: "+ 16,791"
+      remoteAreas: "+0",
+      areasWithinQuarterMile: "-16,791",
+      townCenters: "+16,791"
     },
     {
       developmentRight: "Residential Units (SFRRU/MFRUU/RDR)",
-      remoteAreas: "- 47",
-      areasWithinQuarterMile: "+ 23",
-      townCenters: "+ 24"
+      remoteAreas: "-47",
+      areasWithinQuarterMile: "+23",
+      townCenters: "+24"
     },
     {
       developmentRight: "Tourist Accommodation Units (TAU)",
-      remoteAreas: "- 12",
-      areasWithinQuarterMile: "- 21",
-      townCenters: "+ 33"
+      remoteAreas: "-12",
+      areasWithinQuarterMile: "-21",
+      townCenters: "+33"
     }
   ];
   
@@ -40,11 +40,11 @@ const columnDefs = [
   const gridOptions = {
     columnDefs: columnDefs,
     rowData: rowData,
-    pagination: true,
+    // pagination: true,
     domLayout: 'autoHeight',
     defaultColDef: {
       sortable: true,
-      filter: true,
+      // filter: true,
       resizable: true
     }
   };

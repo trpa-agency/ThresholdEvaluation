@@ -12,9 +12,9 @@ const columnDefs = [
   const rowData = [
     {
       developmentRight: "Net Change from Conversions",
-      commercialFloorArea: "- 30,583",
-      touristAccommodationUnits: "- 65",
-      residentialUnits: "+ 157"
+      commercialFloorArea: "-30,583",
+      touristAccommodationUnits: "-65",
+      residentialUnits: "+157"
     }
   ];
   

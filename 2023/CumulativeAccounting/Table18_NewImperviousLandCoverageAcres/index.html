@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New impervious land coverage acres by evaluation period</title>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/ag-grid-community/styles/ag-grid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/ag-grid-community/styles/ag-theme-quartz.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="myGrid" class="ag-theme-quartz"></div>
+    <div style="display: flex; flex-direction: column; height: 100%">
+      <div>
+        <button onclick="onBtnExport()" class="button-blue">Download CSV</button>
+      </div>
+    </div>
+    <script>
+      (function () {
+        const appLocation = "";
+
+        window.__basePath = appLocation;
+      })();
+    </script>
+  </body>
+</html>
