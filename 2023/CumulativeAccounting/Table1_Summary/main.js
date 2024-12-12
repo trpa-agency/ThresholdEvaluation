@@ -47,6 +47,7 @@ fetch(
   gridOptions = {
       columnDefs: columnDefs,
       rowData: rowData, // Use the fetched data
+      theme: 'legacy',
       suppressExcelExport: true,
       popupParent: document.body,
       onGridReady: (params) => {

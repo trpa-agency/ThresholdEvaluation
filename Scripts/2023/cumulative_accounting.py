@@ -16,77 +16,6 @@ config = {"displayModeBar": False}
 template = 'plotly_white'
 font     = 'Calibri'
 
-
-def get_allocations():
-    # Get the allocations data
-    # make sql database connection with pyodbc
-    engine = get_conn('sde_tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_Allocations", conn)
-    return df
-
-def get_applications():
-    # Get the applications data
-    # make sql database connection with pyodbc
-    engine = get_conn('tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_Applications", conn)
-    return df
-
-def get_banked_development():
-    # Get the banked data
-    # make sql database connection with pyodbc
-    engine = get_conn('tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_BankedDevelopment", conn)
-    return df
-
-def get_capital_expenditures():
-    # Get the capital expenditures data
-    # make sql database connection with pyodbc
-    engine = get_conn('tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_CapitalExpenditures", conn)
-    return df
-
-def get_cfa_accouting():
-    # Get the CFA accounting data
-    # make sql database connection with pyodbc
-    engine = get_conn('tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_CFA_Accounting", conn)
-    return df
-
-def get_cfa_allocations():
-    # Get the CFA allocations data
-    # make sql database connection with pyodbc
-    engine = get_conn('tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_CFA_Allocations", conn)
-    return df
-
-def get_paot_data():
-    # Get the PAOT data
-    # make sql database connection with pyodbc
-    engine = get_conn('tabular')
-    # get dataframe from BMP SQL Database
-    with engine.begin() as conn:
-        # create dataframe from sql query
-        df = pd.read_sql("SELECT * FROM SDE.ThresholdEvaluation_CumulativeAccounting_PAOTAllocations", conn)
-    return df
-
 def summarize_landcap_by_parcel(year):
     query = f'"YEAR" = {year}'
     # get paths
@@ -147,7 +76,7 @@ def get_summary(year):
     # create new field for Land Capability Category as empty string
     sdf['Category'] = ''
     # set values to 'SEZ' if Majority_Land_Capab = '1B'
-    sdf.loc[sdf['Majority_CAPABILITY'] == '1B', 'Category'] = 'SEZ'
+    sdf.loc[sdf['Majority_CAPABILITY'].isin(['1B','WB']), 'Category'] = 'SEZ'
     # set values to 'Sensitive' if Majority_Land_Capab = '1C', 1A, 2, 3
     sdf.loc[sdf['Majority_CAPABILITY'].isin(['1C', '1A', '2', '3']), 'Category'] = 'Sensitive'
     # set values to 'Non-Sensitive' if Majority_Land_Capab = '4', 5' or '6' 7
@@ -159,20 +88,6 @@ def get_summary(year):
     df = df.groupby(['Category', 'DevelopmentType'], dropna=False).sum().reset_index()
     return df, sdf
 
-def make_table(df):
-    # drop Category is None
-    df = df.loc[df['Category'] != '']
-    # Create the styled HTML table
-    html_table = GT(df).tab_header(title="Table 1. ").tab_spanner(
-        label="", columns=['Category', 'DevelopmentType', 'Value']).tab_stub(
-            rowname_col='DevelopmentType', groupname_col='Category').tab_style(
-                style=style.fill(color="aliceblue"), locations=loc.body()).as_raw_html()
-    # savel as html
-    out_table = out_chart / 'existingdevelopment_table.html'
-    # Output the HTML as .html saved on local drive
-    with open(out_table, 'w') as f:
-        f.write(html_table)
-    
 # get the data
 def get_old_dev_cap():
     engine = get_conn('sde_tabular')

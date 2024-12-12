@@ -40,7 +40,7 @@ const columnDefs = [
   const gridOptions = {
     columnDefs: columnDefs,
     rowData: rowData,
-    // pagination: true,
+    theme: 'legacy',
     domLayout: 'autoHeight',
     defaultColDef: {
       sortable: true,
