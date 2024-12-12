@@ -301,9 +301,9 @@ def plot_total_phosphorus(df, draft= True):
         )
 
 def plot_suspended_sediment(df, draft= True):
-    df.rename(columns={'WaterYear': 'Water Year', 'FSP': 'Suspended Sediment (mg/L)'}, inplace=True)
+    df.rename(columns={'WaterYear': 'Water Year', 'SSC': 'Suspended Sediment (mg/L)'}, inplace=True)
     fig = px.scatter(x=df['Water Year'], y=df['Suspended Sediment (mg/L)'], color_discrete_sequence=["#023f64"])
-    fig.update_traces(marker=dict(size=8))
+    fig.update_traces(marker=dict(size=8), hovertemplate='<b>%{y:.2f}</b> mg/L of suspended sediment')
     fig.update_layout(
         yaxis=dict(title="Suspended Sediment (mg/L)"),
         xaxis=dict(title="Year", showgrid=False),
@@ -324,6 +324,8 @@ def plot_suspended_sediment(df, draft= True):
             # xref="container",
             # yref="container"
         ),
+        font_family=font,
+        
     )  
     if draft == True:
         fig.write_html(
