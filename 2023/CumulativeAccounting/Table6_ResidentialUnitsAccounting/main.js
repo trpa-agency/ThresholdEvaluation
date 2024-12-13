@@ -4,42 +4,49 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
+  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 1 },
+  { field: "EstimatedExisting", headerName: "Estimated Total Existing Residential Units ",cellDataType: 'numeric', flex: 1, 
+      valueFormatter: (params) => {
+      return params.value.toLocaleString(); 
+  }},
+  { field: "BankedExisting", headerName: "Banked Existing Residential Units",cellDataType: 'numeric', flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
+  { field: "RemainingAllocations_ReleasedLo", headerName: "Remaining Unused Allocations Released to Local Jurisdictions",cellDataType: 'numeric', flex: 2, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
-    valueGetter: (params) => {
-      return params.data.Existing + params.data.Banked + params.data.Remaining;
-    },
+  { field: "RemainingAllocations_Unreleased", headerName: "Remaining Unreleased Residential Allocations",cellDataType: 'numeric', flex: 1,
     valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
-  }}
+  }},
+  { field: "ResidentialBonusUnits", headerName: "Remaining Bonus Units",cellDataType: 'numeric', flex: 1,
+    valueFormatter: (params) => {
+      return params.value.toLocaleString(); // Format with commas
+  }},
+  { field: "TotalDevelopmentPotential", headerName: "Total",cellDataType: 'numeric', flex: 1,
+    valueFormatter: (params) => {
+      return params.value.toLocaleString(); // Format with commas
+  }},
+
 ];
 
 // Fetch data from the API
 fetch(
-  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/66/query?where=Reported%20%3D%20%272023%20TVAL%27&outFields=*&outSR=4326&f=json"
+  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/61/query?where=Reported%20%3D%20'2023%20TVAL'&outFields=*&returnGeometry=false&outSR=&f=json"
   )
   .then((response) => response.json())
   .then((data) => {
     // Map the results to the format needed for the grid
     const rowData = data.features.map((feature) => ({
-                        Type: feature.attributes.Type,
-                        Existing: feature.attributes.Existing,
-                        Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Remaining,
-                        Total: feature.attributes.Total
+                        Jurisdiction: feature.attributes.Jurisdiction,
+                        EstimatedExisting: feature.attributes.EstimatedExisting,
+                        BankedExisting: feature.attributes.BankedExisting,
+                        RemainingAllocations_ReleasedLo: feature.attributes.RemainingAllocations_ReleasedLo,
+                        RemainingAllocations_Unreleased: feature.attributes.RemainingAllocations_Unreleased,
+                        ResidentialBonusUnits: feature.attributes.ResidentialBonusUnits,
+                        TotalDevelopmentPotential: feature.attributes.TotalDevelopmentPotential
     }));
     console.log("Data fetched:", rowData); // Log the data to ensure it is correct
     
