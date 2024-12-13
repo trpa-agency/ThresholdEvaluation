@@ -1,0 +1,13 @@
+Category,DevelopmentType,Value
+,CommercialFloorArea_SqFt,0.0
+,Residential_Units,0.0
+,TouristAccommodation_Units,0.0
+Non-Sensitive,CommercialFloorArea_SqFt,4460041.0
+Non-Sensitive,Residential_Units,34656.0
+Non-Sensitive,TouristAccommodation_Units,8336.0
+SEZ,CommercialFloorArea_SqFt,1146088.0
+SEZ,Residential_Units,4418.0
+SEZ,TouristAccommodation_Units,1710.0
+Sensitive,CommercialFloorArea_SqFt,934040.0
+Sensitive,Residential_Units,9312.0
+Sensitive,TouristAccommodation_Units,1034.0

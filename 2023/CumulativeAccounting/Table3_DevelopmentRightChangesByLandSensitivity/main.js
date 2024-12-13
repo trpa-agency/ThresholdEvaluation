@@ -1,4 +1,7 @@
 // Import ag-Grid library
+import { Grid } from 'ag-grid-community';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 // get the grid to put the data into
 let gridOptions;
 let gridAPI;
@@ -39,27 +42,27 @@ const rowData = [
 
   // Grid Options with the fetched data as rowData
   gridOptions = {
-    columnDefs: columnDefs,
-    rowData: rowData, // Use the fetched data
-    suppressExcelExport: true,
-    popupParent: document.body,
-    onGridReady: (params) => {
-      // Save the grid API reference for later use
-      window.gridAPI = params.api; // Make API globally available if needed
-    },
-  };
-  // Initialize the grid
-  const gridDiv = document.querySelector("#myGrid");
-  agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-  
+      columnDefs: columnDefs,
+      rowData: rowData, // Use the fetched data
+      theme:"legacy",
+      suppressExcelExport: true,
+      popupParent: document.body,
+      onGridReady: (params) => {
+        // Save the grid API reference for later use
+        window.gridAPI = params.api; // Make API globally available if needed
+      },
+    };
+
+  // Once the document is fully loaded, initialize the grid
+  document.addEventListener('DOMContentLoaded', function() {
+    const gridDiv = document.querySelector('#myGrid');
+    new agGrid.Grid(gridDiv, gridOptions);
+  });
+
   function onBtnExport() {
     if (window.gridAPI) {
       window.gridAPI.exportDataAsCsv();
     } else {
       console.error("Grid API is not initialized.");
     }
-  }
-
-
-  
-  
+  }  

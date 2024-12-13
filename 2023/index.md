@@ -18,7 +18,7 @@
   * [Table 6](CumulativeAccounting\Table6_ResidentialUnitsAccounting) Residential Unit Accounting 
   * [Table 7](CumulativeAccounting\Table7_ExistingResidentialUnitsByLandCapabilityLandUseDistrict) Existing Residential Units by Land Capability and Land Use District 
   * [Table 8](CumulativeAccounting\Table8_ResidentialAllocationsToJurisdiction) Residential Allocations by Jurisdiction 
-  * [Table 9](CumulativeAccounting\Table9_RemainingResidentialAllocationsToJurisdictions) Remaingin Residential Allocations by Jurisdiction 
+  * [Table 9](CumulativeAccounting\Table9_RemainingResidentialAllocationsToJurisdictions) Remaining Residential Allocations by Jurisdiction 
   * [Table 10](CumulativeAccounting\Table10_ResidentialBonusUnitAccounting) Residential Bonus Unit Accounting 
   * [Table 11](CumulativeAccounting\Table11_CommercialFloorAreaAccounting) Commercial Floor Area Accounting 
   * [Table 12](CumulativeAccounting\Table12_ExistingCommercialFloorAreaByLandCapabilityLandUseDistrict) Existing Commercial Floor Area by Land Capability and Land Use District 

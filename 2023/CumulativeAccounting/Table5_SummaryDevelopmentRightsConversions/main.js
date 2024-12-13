@@ -1,11 +1,11 @@
-// main.js
+let gridAppi;
 
 // Column definitions for the AG Grid
 const columnDefs = [
-    { headerName: "Development Right", field: "developmentRight" },
-    { headerName: "Commercial Floor Area (sq. ft.)", field: "commercialFloorArea" },
-    { headerName: "Tourist Accommodation Units", field: "touristAccommodationUnits" },
-    { headerName: "Residential Units", field: "residentialUnits" }
+    { headerName: "Development Right", field: "developmentRight", flex: 1 },
+    { headerName: "Commercial Floor Area (sq. ft.)", field: "commercialFloorArea", flex: 2 },
+    { headerName: "Tourist Accommodation Units", field: "touristAccommodationUnits", flex: 2 },
+    { headerName: "Residential Units", field: "residentialUnits", flex: 2 }
   ];
   
   // Row data for the AG Grid
@@ -17,23 +17,29 @@ const columnDefs = [
       residentialUnits: "+157"
     }
   ];
-  
-  // Grid options for AG Grid
-  const gridOptions = {
+   // Grid Options with the fetched data as rowData
+   gridOptions = {
     columnDefs: columnDefs,
-    rowData: rowData,
-    pagination: true,
-    domLayout: 'autoHeight',
-    defaultColDef: {
-      sortable: true,
-      filter: true,
-      resizable: true
-    }
+    rowData: rowData, // Use the fetched data
+    theme:"legacy",
+    suppressExcelExport: true,
+    popupParent: document.body,
+    onGridReady: (params) => {
+      // Save the grid API reference for later use
+      window.gridAPI = params.api; // Make API globally available if needed
+    },
   };
-  
-  // Once the document is fully loaded, initialize the grid
-  document.addEventListener('DOMContentLoaded', function() {
-    const gridDiv = document.querySelector('#myGrid');
-    new agGrid.Grid(gridDiv, gridOptions);
-  });
-  
+
+function onBtnExport() {
+  if (window.gridAPI) {
+    window.gridAPI.exportDataAsCsv();
+  } else {
+    console.error("Grid API is not initialized.");
+  }
+}
+
+// setup the grid after the page has finished loading
+document.addEventListener("DOMContentLoaded", function () {
+  var gridDiv = document.querySelector("#myGrid");
+  gridApi = agGrid.createGrid(gridDiv, gridOptions);
+});
