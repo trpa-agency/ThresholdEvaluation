@@ -1,11 +1,19 @@
-// main.js
-
 // Column definitions for the AG Grid
 const columnDefs = [
-    { headerName: "Development Right", field: "developmentRight" },
-    { headerName: "Remote Areas", field: "remoteAreas" },
-    { headerName: "Areas within 1/4 mile of a Town Center", field: "areasWithinQuarterMile" },
-    { headerName: "Town Centers", field: "townCenters" }
+    { headerName: "Development Right", field: "developmentRight", flex: 1 },
+    { headerName: "Remote Areas", field: "remoteAreas", cellDataType: 'numeric', flex: 1, 
+      valueFormatter: (params) => {
+      return params.value.toLocaleString(); // Format with commas
+        }},
+    { headerName: "Areas within 1/4 mile of a Town Center", 
+      field: "areasWithinQuarterMile", cellDataType: 'numeric', flex: 1, 
+      valueFormatter: (params) => {
+      return params.value.toLocaleString(); // Format with commas
+        }},
+    { headerName: "Town Centers", field: "townCenters", cellDataType: 'numeric', flex: 1, 
+      valueFormatter: (params) => {
+      return params.value.toLocaleString(); // Format with commas
+        }},
   ];
   
   // Row data for the AG Grid
@@ -45,14 +53,23 @@ const columnDefs = [
     defaultColDef: {
       sortable: true,
       // filter: true,
-      resizable: true
+      resizable: true},
+    onGridReady: (params) => {
+        // Save the grid API reference for later use
+        window.gridAPI = params.api; // Make API globally available if needed
+      },
+    };
+
+    function onBtnExport() {
+      if (window.gridAPI) {
+        window.gridAPI.exportDataAsCsv();
+      } else {
+        console.error("Grid API is not initialized.");
+      }
     }
-  };
-  
-  // Once the document is fully loaded, initialize the grid
-  document.addEventListener('DOMContentLoaded', function() {
-    const gridDiv = document.querySelector('#myGrid');
-    new agGrid.Grid(gridDiv, gridOptions);
-  });
-  
-  
+
+    // setup the grid after the page has finished loading
+    document.addEventListener("DOMContentLoaded", function () {
+      var gridDiv = document.querySelector("#myGrid");
+      gridApi = agGrid.createGrid(gridDiv, gridOptions);
+    });

@@ -1,16 +1,22 @@
 // Import ag-Grid library
-import { Grid } from 'ag-grid-community';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
 // get the grid to put the data into
 let gridOptions;
 let gridAPI;
 
 const columnDefs = [
-  { headerName: "Development Right", field: "Development Right" },
-  { headerName: "Stream Environment Zones", field: "Stream Environment Zones" },
-  { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas" },
-  { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas" }
+  { headerName: "Development Right", field: "Development Right", flex: 1},
+  { headerName: "Stream Environment Zones", field: "Stream Environment Zones", cellDataType: 'numeric', flex: 1, 
+    valueFormatter: (params) => {
+    return params.value.toLocaleString(); // Format with commas
+      }},
+  { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas", cellDataType: 'numeric', flex: 1, 
+    valueFormatter: (params) => {
+    return params.value.toLocaleString(); // Format with commas
+      }},
+  { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas", cellDataType: 'numeric', flex: 1, 
+    valueFormatter: (params) => {
+    return params.value.toLocaleString(); // Format with commas
+      }}
 ];
 
 const rowData = [
@@ -53,16 +59,16 @@ const rowData = [
       },
     };
 
-  // Once the document is fully loaded, initialize the grid
-  document.addEventListener('DOMContentLoaded', function() {
-    const gridDiv = document.querySelector('#myGrid');
-    new agGrid.Grid(gridDiv, gridOptions);
-  });
-
-  function onBtnExport() {
-    if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
-    } else {
-      console.error("Grid API is not initialized.");
+    function onBtnExport() {
+      if (window.gridAPI) {
+        window.gridAPI.exportDataAsCsv();
+      } else {
+        console.error("Grid API is not initialized.");
+      }
     }
-  }  
+
+    // setup the grid after the page has finished loading
+    document.addEventListener("DOMContentLoaded", function () {
+      var gridDiv = document.querySelector("#myGrid");
+      gridApi = agGrid.createGrid(gridDiv, gridOptions);
+    });

@@ -20,16 +20,16 @@ const columnDefs = [
    // Grid Options with the fetched data as rowData
    gridOptions = {
     columnDefs: columnDefs,
-    rowData: rowData, // Use the fetched data
+    rowData: rowData,
     theme:"legacy",
     suppressExcelExport: true,
     popupParent: document.body,
     onGridReady: (params) => {
       // Save the grid API reference for later use
-      window.gridAPI = params.api; // Make API globally available if needed
+      window.gridAPI = params.api; // Make API globally available
     },
   };
-
+// build button action
 function onBtnExport() {
   if (window.gridAPI) {
     window.gridAPI.exportDataAsCsv();
@@ -37,7 +37,6 @@ function onBtnExport() {
     console.error("Grid API is not initialized.");
   }
 }
-
 // setup the grid after the page has finished loading
 document.addEventListener("DOMContentLoaded", function () {
   var gridDiv = document.querySelector("#myGrid");

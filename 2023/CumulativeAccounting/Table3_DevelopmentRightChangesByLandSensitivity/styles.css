@@ -1,7 +1,7 @@
 /* the grid div that contains the grid */
 .ag-theme-quartz {
     /* font-family: 'Calibri', sans-serif; */
-    height: 250px;
+    height: 210px;
     width: 100%;
     margin: 10px auto;
     --ag-borders: none;
