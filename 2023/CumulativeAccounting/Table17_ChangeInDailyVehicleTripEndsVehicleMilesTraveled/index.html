@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Change in Daily Vehicle Trip Ends and Vehicle Miles Traveled 2018-2022</title>
-    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
-    <script src="main.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/ag-grid-community/styles/ag-grid.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/ag-grid-community/styles/ag-theme-quartz.css"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div id="myGrid" class="ag-theme-quartz"></div>
-    <div style="display: flex; flex-direction: column; height: 100%">
-      <div>
-        <button onclick="onBtnExport()" class="button-blue">Download CSV</button>
-      </div>
-    </div>
-    <script>
-      (function () {
-        const appLocation = "";
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DVTE and VMT Grid</title>
+  <!-- Link AG Grid stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-quartz.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    #myGridDVTE, #myGridVMT {
+      height: 250px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
 
-        window.__basePath = appLocation;
-      })();
-    </script>
-  </body>
+  <!-- DVTE Table -->
+  <div id="myGridDVTE" class="ag-theme-quartz"></div>
+
+  <!-- VMT Table -->
+  <div id="myGridVMT" class="ag-theme-quartz"></div>
+
+  <div style="display: flex; flex-direction: column; height: 100%">
+    <div>
+      <button onclick="onBtnExport()" class="button-blue">Download CSV</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+  <script src="main.js"></script>
+
+
+</body>
 </html>

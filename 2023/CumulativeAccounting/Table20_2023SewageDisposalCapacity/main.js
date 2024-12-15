@@ -1,74 +1,51 @@
 // get the grid to put the data into
 let gridOptions;
 let gridAPI;
-
 // Column Definitions
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
-    valueGetter: (params) => {
-      return params.data.Existing + params.data.Banked + params.data.Remaining;
-    },
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }}
+  { headerName: "Sewer District", field: "sewerDistrict", flex: 1 },
+  { headerName: "Peak Sewer Flow (MGD)", field: "peakSewerFlow", flex: 1 },
+  { headerName: "Average 2023 Peak Sewer Flow (MGD)", field: "average2023PeakFlow", flex: 1 },
+  { headerName: "Capacity (MGD)", field: "capacity", flex: 1 },
+  { headerName: "Reserve from Peak Flow (MGD)", field: "reserveFromPeakFlow", flex: 1 },
 ];
 
-// Fetch data from the API
-fetch(
-  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/66/query?where=Reported%20%3D%20%272023%20TVAL%27&outFields=*&outSR=4326&f=json"
-  )
-  .then((response) => response.json())
-  .then((data) => {
-    // Map the results to the format needed for the grid
-    const rowData = data.features.map((feature) => ({
-                        Type: feature.attributes.Type,
-                        Existing: feature.attributes.Existing,
-                        Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Remaining,
-                        Total: feature.attributes.Total
-    }));
-    console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-    
-  // Grid Options with the fetched data as rowData
-  gridOptions = {
-      columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
-      suppressExcelExport: true,
-      popupParent: document.body,
-      onGridReady: (params) => {
-        // Save the grid API reference for later use
-        window.gridAPI = params.api; // Make API globally available if needed
-      },
-    };
-    // Initialize the grid
-    const gridDiv = document.querySelector("#myGrid");
-    agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-  });
-  function onBtnExport() {
-    if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
-    } else {
-      console.error("Grid API is not initialized.");
-    }
+// Row Data
+const rowData = [
+  { sewerDistrict: "North Tahoe PUD", peakSewerFlow: 1.7, average2023PeakFlow: 1.6, capacity: 6.0, reserveFromPeakFlow: 4.3 },
+  { sewerDistrict: "Tahoe City PUD", peakSewerFlow: 2.3, average2023PeakFlow: 2.0, capacity: 7.8, reserveFromPeakFlow: 5.5 },
+  { sewerDistrict: "South Tahoe PUD", peakSewerFlow: 3.5, average2023PeakFlow: 3.5, capacity: 7.7, reserveFromPeakFlow: 4.2 },
+  { sewerDistrict: "Incline Village GID", peakSewerFlow: 1.4, average2023PeakFlow: 1.0, capacity: 3.0, reserveFromPeakFlow: 1.7 },
+  { sewerDistrict: "Douglas County Lake Tahoe Sewer Authority*", peakSewerFlow: 1.7, average2023PeakFlow: 1.2, capacity: 3.8, reserveFromPeakFlow: 2.1 },
+];
+// Grid Options with the fetched data as rowData
+gridOptions = {
+  columnDefs: columnDefs,
+  rowData: rowData, // Use the fetched data
+  theme:"legacy",
+  suppressExcelExport: true,
+  defaultColDef: {
+    flex: 1,
+    minWidth: 10,
+    resizable: true
+  },
+  popupParent: document.body,
+  onGridReady: (params) => {
+    // Save the grid API reference for later use
+    window.gridAPI = params.api; // Make API globally available if needed
+  },
+};
+
+function onBtnExport() {
+  if (window.gridAPI) {
+    window.gridAPI.exportDataAsCsv();
+  } else {
+    console.error("Grid API is not initialized.");
   }
+}
 
-
-  
-  
+// setup the grid after the page has finished loading
+document.addEventListener("DOMContentLoaded", function () {
+  var gridDiv = document.querySelector("#myGrid");
+  gridApi = agGrid.createGrid(gridDiv, gridOptions);
+});

@@ -1,74 +1,64 @@
-// get the grid to put the data into
-let gridOptions;
+// Get the grid to put the data into
 let gridAPI;
+let gridOptions;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
-    valueGetter: (params) => {
-      return params.data.Existing + params.data.Banked + params.data.Remaining;
-    },
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }}
+  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "2012", headerName: "2012", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2013", headerName: "2013", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2014", headerName: "2014", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2015", headerName: "2015", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2016", headerName: "2016", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2017", headerName: "2017", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2018", headerName: "2018", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2019", headerName: "2019", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2020", headerName: "2020", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2021", headerName: "2021", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2022", headerName: "2022", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2023", headerName: "2023", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 ];
 
-// Fetch data from the API
-fetch(
-  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/66/query?where=Reported%20%3D%20%272023%20TVAL%27&outFields=*&outSR=4326&f=json"
-  )
-  .then((response) => response.json())
-  .then((data) => {
-    // Map the results to the format needed for the grid
-    const rowData = data.features.map((feature) => ({
-                        Type: feature.attributes.Type,
-                        Existing: feature.attributes.Existing,
-                        Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Remaining,
-                        Total: feature.attributes.Total
-    }));
-    console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-    
-  // Grid Options with the fetched data as rowData
-  gridOptions = {
-      columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
-      suppressExcelExport: true,
-      popupParent: document.body,
-      onGridReady: (params) => {
-        // Save the grid API reference for later use
-        window.gridAPI = params.api; // Make API globally available if needed
-      },
-    };
-    // Initialize the grid
-    const gridDiv = document.querySelector("#myGrid");
-    agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-  });
-  function onBtnExport() {
-    if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
-    } else {
-      console.error("Grid API is not initialized.");
-    }
+// Row Data
+const rowData = [
+  { Jurisdiction: "City of South Lake Tahoe", 2012: 0, 2013: 8847, 2014: 0, 2015: 11429, 2016: 6443, 2017: 0, 2018: 2510, 2019: 2220, 2020: 0, 2021: 2379, 2022: 3941, 2023: 1972 },
+  { Jurisdiction: "Douglas County", 2012: 0, 2013: 0, 2014: 2730, 2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0 },
+  { Jurisdiction: "El Dorado County", 2012: 2500, 2013: 255, 2014: 0, 2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0 },
+  { Jurisdiction: "Placer County", 2012: 0, 2013: 5104, 2014: 0, 2015: 4375, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 418, 2022: 1044, 2023: 0 },
+  { Jurisdiction: "Washoe County", 2012: 0, 2013: 0, 2014: 0, 2015: -8000, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 2974, 2021: 5226, 2022: 0, 2023: 0 },
+  { Jurisdiction: "Carson County", 2012: 0, 2013: 0, 2014: 0, 2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0 },
+  { Jurisdiction: "TRPA Incentive Pool", 2012: 0, 2013: 0, 2014: 0, 2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0 },
+  { Jurisdiction: "Total", 2012: 2500, 2013: 14206, 2014: 2730, 2015: 7804, 2016: 6443, 2017: 0, 2018: 2510, 2019: 2220, 2020: 5353, 2021: 9585, 2022: 3016, 2023: 0 },
+];
+
+// Grid Options with the fetched data as rowData
+gridOptions = {
+  columnDefs: columnDefs,
+  rowData: rowData, // Use the fetched data
+  theme:"legacy",
+  suppressExcelExport: true,
+  defaultColDef: {
+    flex: 1,
+    minWidth: 10,
+    resizable: true
+  },
+  popupParent: document.body,
+  onGridReady: (params) => {
+    // Save the grid API reference for later use
+    window.gridAPI = params.api; // Make API globally available if needed
+  },
+};
+
+function onBtnExport() {
+  if (window.gridAPI) {
+    window.gridAPI.exportDataAsCsv();
+  } else {
+    console.error("Grid API is not initialized.");
   }
+}
 
-
-  
-  
+// setup the grid after the page has finished loading
+document.addEventListener("DOMContentLoaded", function () {
+  var gridDiv = document.querySelector("#myGrid");
+  gridApi = agGrid.createGrid(gridDiv, gridOptions);
+});

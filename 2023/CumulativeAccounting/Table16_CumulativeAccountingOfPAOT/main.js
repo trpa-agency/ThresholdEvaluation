@@ -1,74 +1,52 @@
-// get the grid to put the data into
-let gridOptions;
+// Get the grid to put the data into
 let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
-    valueGetter: (params) => {
-      return params.data.Existing + params.data.Banked + params.data.Remaining;
-    },
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }}
+  { field: "PAOTCategory", headerName: "PAOT Categories", cellDataType: 'text'},
+  { field: "RegionalPlanAllocations", headerName: "Regional Plan Allocations", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "AssignedAsOf2019Evaluation", headerName: "Assigned as of 2019 Evaluation", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "Assigned2020To2023", headerName: "Assigned 2020 to 2023", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "PAOTsRemaining", headerName: "PAOTs Remaining", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "PercentOfAllPAOTsAssigned", headerName: "Percent of All PAOTs Assigned", cellDataType: 'text', valueFormatter: (params) => params.value ? params.value : '0%' },
 ];
 
-// Fetch data from the API
-fetch(
-  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/66/query?where=Reported%20%3D%20%272023%20TVAL%27&outFields=*&outSR=4326&f=json"
-  )
-  .then((response) => response.json())
-  .then((data) => {
-    // Map the results to the format needed for the grid
-    const rowData = data.features.map((feature) => ({
-                        Type: feature.attributes.Type,
-                        Existing: feature.attributes.Existing,
-                        Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Remaining,
-                        Total: feature.attributes.Total
-    }));
-    console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-    
-  // Grid Options with the fetched data as rowData
-  gridOptions = {
-      columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
-      suppressExcelExport: true,
-      popupParent: document.body,
-      onGridReady: (params) => {
-        // Save the grid API reference for later use
-        window.gridAPI = params.api; // Make API globally available if needed
-      },
-    };
-    // Initialize the grid
-    const gridDiv = document.querySelector("#myGrid");
-    agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-  });
-  function onBtnExport() {
-    if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
-    } else {
-      console.error("Grid API is not initialized.");
-    }
+// Row Data
+const rowData = [
+  { PAOTCategory: "Summer Day Use", RegionalPlanAllocations: 6761, AssignedAsOf2019Evaluation: 1814, Assigned2020To2023: 521, PAOTsRemaining: 4426, PercentOfAllPAOTsAssigned: "34.5%" },
+  { PAOTCategory: "Winter Day Use", RegionalPlanAllocations: 12400, AssignedAsOf2019Evaluation: 5435, Assigned2020To2023: 0, PAOTsRemaining: 6965, PercentOfAllPAOTsAssigned: "43.8%" },
+  { PAOTCategory: "Summer Overnight", RegionalPlanAllocations: 6114, AssignedAsOf2019Evaluation: 394, Assigned2020To2023: 0, PAOTsRemaining: 5720, PercentOfAllPAOTsAssigned: "6.4%" },
+  { PAOTCategory: "Total", RegionalPlanAllocations: 25275, AssignedAsOf2019Evaluation: 7643, Assigned2020To2023: 521, PAOTsRemaining: 17111, PercentOfAllPAOTsAssigned: "32.3%" },
+];
+
+// Grid Options with the fetched data as rowData
+gridOptions = {
+  columnDefs: columnDefs,
+  rowData: rowData, // Use the fetched data
+  theme:"legacy",
+  suppressExcelExport: true,
+  defaultColDef: {
+    flex: 1,
+    minWidth: 10,
+    resizable: true
+  },
+  popupParent: document.body,
+  onGridReady: (params) => {
+    // Save the grid API reference for later use
+    window.gridAPI = params.api; // Make API globally available if needed
+  },
+};
+
+function onBtnExport() {
+  if (window.gridAPI) {
+    window.gridAPI.exportDataAsCsv();
+  } else {
+    console.error("Grid API is not initialized.");
   }
+}
 
-
-  
-  
+// setup the grid after the page has finished loading
+document.addEventListener("DOMContentLoaded", function () {
+  var gridDiv = document.querySelector("#myGrid");
+  gridApi = agGrid.createGrid(gridDiv, gridOptions);
+});
