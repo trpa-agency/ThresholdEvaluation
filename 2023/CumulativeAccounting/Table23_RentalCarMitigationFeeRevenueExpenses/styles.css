@@ -1,7 +1,7 @@
 /* the grid div that contains the grid */
 .ag-theme-quartz {
     /* font-family: 'Calibri', sans-serif; */
-    height: 180px;
+    height: 125px;
     width: 100%;
     margin: 10px auto;
     --ag-borders: none;
@@ -35,3 +35,8 @@
 .button-blue:active {
     background-color: #1a5a8a;
 }
+
+.total-column {
+    font-weight: bold;
+    color: #337ab7;
+  }

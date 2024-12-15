@@ -1,74 +1,95 @@
-// get the grid to put the data into
-let gridOptions;
-let gridAPI;
+// Get the grid to put the data into
+let gridAPIDVTE, gridAPIVMT;
 
-// Column Definitions
-const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
-    valueGetter: (params) => {
-      return params.data.Existing + params.data.Banked + params.data.Remaining;
-    },
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }}
+// Column Definitions for DVTE
+const columnDefsDVTE = [
+  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "DVTE_2018", headerName: "2018 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2019", headerName: "2019 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2020", headerName: "2020 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2021", headerName: "2021 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2022", headerName: "2022 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_Total", headerName: "Total (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
 ];
 
-// Fetch data from the API
-fetch(
-  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/66/query?where=Reported%20%3D%20%272023%20TVAL%27&outFields=*&outSR=4326&f=json"
-  )
-  .then((response) => response.json())
-  .then((data) => {
-    // Map the results to the format needed for the grid
-    const rowData = data.features.map((feature) => ({
-                        Type: feature.attributes.Type,
-                        Existing: feature.attributes.Existing,
-                        Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Remaining,
-                        Total: feature.attributes.Total
-    }));
-    console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-    
-  // Grid Options with the fetched data as rowData
-  gridOptions = {
-      columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
-      suppressExcelExport: true,
-      popupParent: document.body,
-      onGridReady: (params) => {
-        // Save the grid API reference for later use
-        window.gridAPI = params.api; // Make API globally available if needed
-      },
-    };
-    // Initialize the grid
-    const gridDiv = document.querySelector("#myGrid");
-    agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-  });
-  function onBtnExport() {
-    if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
-    } else {
-      console.error("Grid API is not initialized.");
-    }
+// Column Definitions for VMT
+const columnDefsVMT = [
+  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "VMT_2018", headerName: "2018 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2019", headerName: "2019 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2020", headerName: "2020 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2021", headerName: "2021 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2022", headerName: "2022 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_Total", headerName: "Total (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
+];
+
+// Row Data
+const rowData = [
+  {
+    Jurisdiction: "Douglas County",
+    DVTE_2018: -2400, DVTE_2019: 3500, DVTE_2020: -4600, DVTE_2021: 6550, DVTE_2022: -8350, DVTE_Total: -5300,
+    VMT_2018: 62352, VMT_2019: 38781, VMT_2020: -19682, VMT_2021: 221677, VMT_2022: -17665, VMT_Total: -24802
+  },
+  {
+    Jurisdiction: "Washoe County",
+    DVTE_2018: 1300, DVTE_2019: -300, DVTE_2020: -1750, DVTE_2021: 1350, DVTE_2022: 500, DVTE_Total: 1100,
+    VMT_2018: -33774, VMT_2019: -3324, VMT_2020: -7488, VMT_2021: 45689, VMT_2022: 1058, VMT_Total: 5148
+  },
+  {
+    Jurisdiction: "El Dorado County",
+    DVTE_2018: 4450, DVTE_2019: 0, DVTE_2020: -22000, DVTE_2021: -7150, DVTE_2022: -22400, DVTE_Total: -47100,
+    VMT_2018: -115611, VMT_2019: 0, VMT_2020: -94132, VMT_2021: -241983, VMT_2022: -47388, VMT_Total: -220408
+  },
+  {
+    Jurisdiction: "Placer County",
+    DVTE_2018: -100, DVTE_2019: 0, DVTE_2020: -5900, DVTE_2021: -1500, DVTE_2022: -3800, DVTE_Total: -11300,
+    VMT_2018: 2598, VMT_2019: 0, VMT_2020: -25244, VMT_2021: -50766, VMT_2022: -8039, VMT_Total: -52879
+  },
+  {
+    Jurisdiction: "Annual ∆",
+    DVTE_2018: 3250, DVTE_2019: 3200, DVTE_2020: -34250, DVTE_2021: -750, DVTE_2022: -34050, DVTE_Total: -62600,
+    VMT_2018: -84435, VMT_2019: 35457, VMT_2020: -146546, VMT_2021: -25383, VMT_2022: -72034, VMT_Total: -292941
   }
+];
 
+// Grid Options for DVTE
+const gridOptionsDVTE = {
+  columnDefs: columnDefsDVTE,
+  rowData: rowData,
+  suppressExcelExport: true,
+  popupParent: document.body,
+  theme: "legacy",
+  onGridReady: (params) => {
+    gridAPIDVTE = params.api; // Make API globally available if needed
+  },
+};
 
-  
-  
+// Grid Options for VMT
+const gridOptionsVMT = {
+  columnDefs: columnDefsVMT,
+  rowData: rowData,
+  suppressExcelExport: true,
+  theme: "legacy",
+  popupParent: document.body,
+  onGridReady: (params) => {
+    gridAPIVMT = params.api; // Make API globally available if needed
+  },
+};
+
+// Initialize the DVTE Grid
+const gridDivDVTE = document.querySelector("#myGridDVTE");
+agGrid.createGrid(gridDivDVTE, gridOptionsDVTE); // This initializes the grid with DVTE data
+
+// Initialize the VMT Grid
+const gridDivVMT = document.querySelector("#myGridVMT");
+agGrid.createGrid(gridDivVMT, gridOptionsVMT); // This initializes the grid with VMT data
+
+// Export Data as CSV
+function onBtnExport() {
+  if (gridAPIDVTE) {
+    gridAPIDVTE.exportDataAsCsv({fileName: 'DVTE_Data.csv'});
+  }
+  if (gridAPIVMT) {
+    gridAPIVMT.exportDataAsCsv({fileName: 'VMT_Data.csv'});
+  }
+}

@@ -1,59 +1,78 @@
-// get the grid to put the data into
-let gridOptions;
+// Get the grid to put the data into
 let gridAPI;
+let gridOptions = {
+  columnDefs: [],
+  rowData: [],
+  theme: 'legacy', // Add theme property here
+  defaultColDef: {
+    flex: 1,
+    minWidth: 10,
+    resizable: true
+  }
+};
 
-// Column Definitions
+// Column Definitions (Initially empty, to be populated dynamically)
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
-    valueGetter: (params) => {
-      return params.data.Existing + params.data.Banked + params.data.Remaining;
-    },
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }}
+  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
 ];
 
 // Fetch data from the API
 fetch(
-  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/66/query?where=Reported%20%3D%20%272023%20TVAL%27&outFields=*&outSR=4326&f=json"
-  )
+  "https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/47/query?where=Status%20%3D%20'DISTRIBUTED'&outFields=Jurisdiction,Year,Value&returnGeometry=false&outSR=&f=json"
+)
   .then((response) => response.json())
   .then((data) => {
-    // Map the results to the format needed for the grid
-    const rowData = data.features.map((feature) => ({
-                        Type: feature.attributes.Type,
-                        Existing: feature.attributes.Existing,
-                        Banked: feature.attributes.Banked,
-                        Remaining: feature.attributes.Remaining,
-                        Total: feature.attributes.Total
+    // Extract the relevant fields
+    const rawData = data.features.map((feature) => ({
+      Jurisdiction: feature.attributes.Jurisdiction,
+      Year: feature.attributes.Year,
+      Value: feature.attributes.Value,
     }));
-    console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-    
-  // Grid Options with the fetched data as rowData
-  gridOptions = {
-      columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
-      suppressExcelExport: true,
-      popupParent: document.body,
-      onGridReady: (params) => {
-        // Save the grid API reference for later use
-        window.gridAPI = params.api; // Make API globally available if needed
-      },
-    };
+
+    console.log("Raw data fetched:", rawData); // Log to verify
+
+    // Step 1: Find unique years for dynamic column headers
+    const uniqueYears = [...new Set(rawData.map(item => item.Year))];
+
+    // Step 2: Create column definitions for each unique year
+    const dynamicColumnDefs = uniqueYears.map(year => ({
+      field: year.toString(),
+      headerName: year.toString(),
+      cellDataType: 'numeric',
+      valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0', // Format with commas
+    }));
+
+    // Add "Jurisdiction" as the first column
+    gridOptions.columnDefs = [
+      ...columnDefs,
+      ...dynamicColumnDefs
+    ];
+
+    // Step 3: Pivot the data by 'Jurisdiction' and map Year/Value to columns
+    const rowData = [];
+    const jurisdictionMap = new Map();
+
+    rawData.forEach(item => {
+      if (!jurisdictionMap.has(item.Jurisdiction)) {
+        jurisdictionMap.set(item.Jurisdiction, {});
+      }
+      const row = jurisdictionMap.get(item.Jurisdiction);
+      row[item.Year] = item.Value;
+    });
+
+    // Convert map to an array of row data
+    jurisdictionMap.forEach((value, key) => {
+      rowData.push({
+        Jurisdiction: key,
+        ...value, // Add year columns to the row
+      });
+    });
+
+    console.log("Pivoted data:", rowData); // Log to verify
+
+    // Update grid options with the fetched data as rowData
+    gridOptions.rowData = rowData;
+
     // Initialize the grid
     const gridDiv = document.querySelector("#myGrid");
     agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
@@ -61,14 +80,11 @@ fetch(
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
-  function onBtnExport() {
-    if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
-    } else {
-      console.error("Grid API is not initialized.");
-    }
+
+function onBtnExport() {
+  if (window.gridAPI) {
+    window.gridAPI.exportDataAsCsv();
+  } else {
+    console.error("Grid API is not initialized.");
   }
-
-
-  
-  
+}
