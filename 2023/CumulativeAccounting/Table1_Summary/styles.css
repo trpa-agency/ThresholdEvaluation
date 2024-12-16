@@ -35,3 +35,8 @@
 .button-blue:active {
     background-color: #1a5a8a;
 }
+
+.total-column {
+    font-weight: bold;
+    color: #337ab7;
+  }

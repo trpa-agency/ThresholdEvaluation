@@ -15,7 +15,7 @@ const columnDefs = [
     field: "total", 
     flex: 1, 
     valueFormatter: currencyFormatter,
-    cellClass: 'total-column' // Add the custom CSS class for the 'Total' column
+    cellClass: 'total-column'
   }
 ];
 
@@ -41,12 +41,6 @@ gridOptions = {
     resizable: true
   },
   popupParent: document.body,
-  getRowClass: (params) => {
-    // Apply a custom class to the row containing the "Total" account
-    if (params.data && params.data.projectType === "Total") {
-      return "total-row-highlight"; // Custom CSS class for highlighting
-    }
-  },
   onGridReady: (params) => {
     // Save the grid API reference for later use
     window.gridAPI = params.api; // Make API globally available if needed

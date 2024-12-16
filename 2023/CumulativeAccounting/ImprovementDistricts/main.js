@@ -1,6 +1,6 @@
 // Column Definitions
 const columnDefs = [
-  { headerName: "Jurisdictions", field: "jurisdictions", flex: 1 }
+  { headerName: "Improvement Districts", field: "jurisdictions", flex: 1 }
 ];
 
 // Row Data
