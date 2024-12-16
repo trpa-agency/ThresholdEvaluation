@@ -32,7 +32,11 @@
   * [Table 20](CumulativeAccounting\Table20_2023SewageDisposalCapacity) Sewage Disposal Capacity 
   * [Table 21](CumulativeAccounting\Table21_TRPACapitalImprovementExpenditures) TRPA Capital Improvment Expenditures 
   * [Table 22](CumulativeAccounting\Table22_ProjectTypeByMitigationFundSource) Project Type by Mitigation Fund Source
-  * [Table 23](CumulativeAccounting\Table23_RentalCarMitigationFeeRevenueExpenses) Rental Car Mitigation Fee Revenue Expenses 
+  * [Table 23](CumulativeAccounting\Table23_RentalCarMitigationFeeRevenueExpenses) Rental Car Mitigation 
+  * [List of Water Providers](CumulativeAccounting\WaterSuppliers) 
+  * [Map of Water Provider Areas](CumulativeAccounting\WaterSuppliers\TahoeWaterProviderMap.html) Water Provider Map
+  * [List of Improvement and Utility Districts](CumulativeAccounting\ImprovementDistricts)
+  * [Map of Improvement and Utility Districts](CumulativeAccounting\ImprovementDistricts\UtilityDistricts.html)
 
 > ## Air Quality
 >
