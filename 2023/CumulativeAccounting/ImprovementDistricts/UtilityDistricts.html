@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2023 Threshold Evaluation - Water Provider Service Area</title>
+    <title>2023 Threshold Evaluation - Improvement Utility Districts</title>
     <style>
       html,
       body,
@@ -59,7 +59,7 @@
         Fullscreen
       ) {
           
-        var map = new WebMap({portalItem: {id: ""}});
+        var map = new WebMap({portalItem: {id: "cbdee725a9ef43b79e91b7f8fd25e33f"}});
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
@@ -78,7 +78,7 @@
 
         // Add map item to the legend
         view.when(function() {
-          var featureLayer = map.layers.getItemAt(0);
+          var featureLayer = map.layers.getItemAt(1);
           var legend = new Legend({
             view: view,
             layerInfos: [

@@ -4,7 +4,7 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 2 },
+  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 1 },
   { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
@@ -13,7 +13,7 @@ const columnDefs = [
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 2, 
+  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
@@ -22,6 +22,7 @@ const columnDefs = [
     valueGetter: (params) => {
       return params.data.Existing + params.data.Banked + params.data.Remaining;
     },
+    cellClass: 'total-column',
     valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }}
