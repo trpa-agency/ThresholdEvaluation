@@ -9,7 +9,6 @@
 
 > ## Cumulative Accounting
 >
-  * [Table Template](2023\CumulativeAccounting\Template)
   * [Table 1](CumulativeAccounting\Table1_Summary) Summary Table 
   * [Table 2](CumulativeAccounting\Table2_EstimatedBankedDevelopmentRightsByLocation) Estimated Banked Development Righst by Location 
   * [Table 3](CumulativeAccounting\Table3_DevelopmentRightChangesByLandSensitivity) Development Right Changes by Land Sensitivity 
