@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Timeline - Threshold Evaluation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #3498db;
+    }
+
+    .timeline-container {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    .timeline {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 20px;
+      padding: 20px 0;
+      scroll-behavior: smooth;
+    }
+
+    .timeline-item {
+      background-color: white;
+      border: 2px solid #3498db;
+      padding: 20px;
+      border-radius: 5px;
+      width: 300px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .timeline-item h3 {
+      font-size: 20px;
+      color: #3498db;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .timeline-item .date {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item:hover {
+      background-color: #ecf0f1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Threshold Evaluation Timeline</h1>
+
+  <div class="timeline-container">
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <script>
+    // Timeline data
+    const events = [
+      { 
+        title: "XXX 20XX – Threshold cleanup", 
+        year: "20XX", 
+        cardTitle: "Threshold Cleanup",
+        cardSubtitle: "Details: Cleanup of the threshold standards and procedures."
+      },
+      { 
+        title: "April 2021 – Transportation and Sustainable Communities Threshold established", 
+        year: "April 2021", 
+        cardTitle: "Transportation and Sustainable Communities Threshold",
+        cardSubtitle: "Details: Transportation and Sustainable Communities Threshold established."
+      },
+      { 
+        title: "June 2021 - The 2019 Final Threshold Evaluation accepted by the TRPA Governing Board", 
+        year: "June 2021", 
+        cardTitle: "Final Threshold Evaluation",
+        cardSubtitle: "Details: The 2019 Final Threshold Evaluation was accepted."
+      },
+      { 
+        title: "2020 to 2023 – Monitoring data collected by TRPA and partners for 2023 Threshold Evaluation", 
+        year: "2020 to 2023", 
+        cardTitle: "Monitoring Data Collection",
+        cardSubtitle: "Details: Monitoring data collected by TRPA and partners for 2023 Threshold Evaluation."
+      },
+      { 
+        title: "January 2024 – August 2024 - 2023 Threshold Evaluation draft production and Threshold Dashboard updates", 
+        year: "January 2024 – August 2024", 
+        cardTitle: "2023 Threshold Evaluation Draft Production",
+        cardSubtitle: "Details: Draft production of 2023 Threshold Evaluation and updates to the Threshold Dashboard."
+      },
+      { 
+        title: "April 2024 – Threshold standards for SEZ, TYC, AIS updated", 
+        year: "April 2024", 
+        cardTitle: "Threshold Standards Updated",
+        cardSubtitle: "Details: Threshold standards for SEZ, TYC, AIS were updated."
+      },
+      { 
+        title: "August 2024 – October 2024 – Draft evaluation Peer Review coordinated by TSAC", 
+        year: "August 2024 – October 2024", 
+        cardTitle: "Draft Evaluation Peer Review",
+        cardSubtitle: "Details: Peer review of the draft evaluation coordinated by TSAC."
+      },
+      { 
+        title: "November 2023 – December 2023 – Revisions to draft evaluation and TRPA responses to peer review comments", 
+        year: "November 2023 – December 2023", 
+        cardTitle: "Revisions to Draft Evaluation",
+        cardSubtitle: "Details: Revisions made to draft evaluation and responses to peer review comments."
+      },
+      { 
+        title: "January 2025 – 2023 Threshold Evaluation draft completed", 
+        year: "January 2025", 
+        cardTitle: "2023 Threshold Evaluation Draft",
+        cardSubtitle: "Details: Completion of 2023 Threshold Evaluation draft."
+      },
+      { 
+        title: "January 2025 – Review of Threshold Findings with TIE-SC", 
+        year: "January 2025", 
+        cardTitle: "Review of Findings",
+        cardSubtitle: "Details: Review of Threshold findings with TIE-SC."
+      },
+      { 
+        title: "February 2025 – Draft Release of 2023 Threshold Evaluation", 
+        year: "February 2025", 
+        cardTitle: "Draft Release of Evaluation",
+        cardSubtitle: "Details: Draft release of 2023 Threshold Evaluation."
+      },
+      { 
+        title: "February 2025 – APC presentation and EIP Working Group workshops", 
+        year: "February 2025", 
+        cardTitle: "APC Presentation",
+        cardSubtitle: "Details: Presentation to the APC and EIP Working Group workshops."
+      },
+      { 
+        title: "March 2025 – Public workshops", 
+        year: "March 2025", 
+        cardTitle: "Public Workshops",
+        cardSubtitle: "Details: Public workshops for feedback and discussions."
+      },
+      { 
+        title: "March 2025 – EIP Committee review of feedback", 
+        year: "March 2025", 
+        cardTitle: "EIP Committee Review",
+        cardSubtitle: "Details: Review of feedback by the EIP Committee."
+      },
+      { 
+        title: "March 2025 – April 2025 - Develop recommendations based on stakeholder feedback", 
+        year: "March 2025 – April 2025", 
+        cardTitle: "Develop Recommendations",
+        cardSubtitle: "Details: Recommendations developed based on stakeholder feedback."
+      },
+      { 
+        title: "April 2025 – Governing Board retreat, identify priorities and recommendations", 
+        year: "April 2025", 
+        cardTitle: "Governing Board Retreat",
+        cardSubtitle: "Details: Governing Board retreat to identify priorities and recommendations."
+      },
+      { 
+        title: "May 2025 - EIP Committee draft recommendations", 
+        year: "May 2025", 
+        cardTitle: "EIP Committee Recommendations",
+        cardSubtitle: "Details: EIP Committee drafts recommendations."
+      },
+      { 
+        title: "June 2025 – APC and Governing Board – final 2023 Threshold Evaluation and Recommendations, Final TRPA FY25-26 Work program", 
+        year: "June 2025", 
+        cardTitle: "Final Evaluation and Recommendations",
+        cardSubtitle: "Details: Final 2023 Threshold Evaluation and recommendations presented to APC and Governing Board."
+      }
+    ];
+
+    // Function to render the timeline
+    const timelineContainer = document.getElementById('timeline');
+    
+    events.forEach(event => {
+      const timelineItem = document.createElement('div');
+      timelineItem.classList.add('timeline-item');
+      
+      timelineItem.innerHTML = `
+        <div class="date">${event.year}</div>
+        <h3>${event.cardTitle}</h3>
+        <p>${event.cardSubtitle}</p>
+      `;
+      
+      timelineContainer.appendChild(timelineItem);
+    });
+  </script>
+</body>
+</html>

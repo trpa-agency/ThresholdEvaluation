@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Timeline - Threshold Evaluation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: #fff;
+      border-left: 4px solid #3498db;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-item:hover {
+      transform: scale(1.05);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: -8px;
+      width: 16px;
+      height: 16px;
+      background-color: #3498db;
+      border-radius: 50%;
+    }
+
+    .timeline-content {
+      margin-left: 20px;
+      padding: 10px;
+      background: #f9f9f9;
+      display: none;
+    }
+
+    .timeline-item.expanded .timeline-content {
+      display: block;
+    }
+
+    .timeline-year {
+      font-size: 18px;
+      font-weight: bold;
+      color: #3498db;
+    }
+
+    .timeline-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .timeline-description {
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* For mobile responsiveness */
+    @media (max-width: 600px) {
+      .timeline {
+        padding: 10px;
+      }
+
+      .timeline-item {
+        padding: 15px;
+        border-left: 3px solid #3498db;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="timeline" id="timeline"></div>
+
+  <script>
+    // Data for the timeline events
+    const events = [
+      {
+        title: "XXX 20XX - Threshold cleanup",
+        year: "20XX",
+        description: "Cleanup of the threshold standards and procedures."
+      },
+      {
+        title: "April 2021 - Transportation and Sustainable Communities Threshold established",
+        year: "April 2021",
+        description: "Transportation and Sustainable Communities Threshold established."
+      },
+      {
+        title: "June 2021 - The 2019 Final Threshold Evaluation accepted by the TRPA Governing Board",
+        year: "June 2021",
+        description: "The 2019 Final Threshold Evaluation was accepted."
+      },
+      {
+        title: "2020 to 2023 - Monitoring data collected by TRPA and partners for 2023 Threshold Evaluation",
+        year: "2020 to 2023",
+        description: "TRPA and partners collected monitoring data for the 2023 evaluation."
+      },
+      {
+        title: "January 2024 - August 2024 - 2023 Threshold Evaluation draft production and Threshold Dashboard updates",
+        year: "January 2024 - August 2024",
+        description: "Draft of the 2023 Threshold Evaluation and updates to the Threshold Dashboard."
+      },
+      {
+        title: "April 2024 - Threshold standards for SEZ, TYC, AIS updated",
+        year: "April 2024",
+        description: "Threshold standards for SEZ, TYC, and AIS were updated."
+      },
+      {
+        title: "August 2024 - October 2024 - Draft evaluation Peer Review coordinated by TSAC",
+        year: "August 2024 - October 2024",
+        description: "Peer review of the draft evaluation coordinated by the TSAC."
+      },
+      {
+        title: "November 2023 - December 2023 - Revisions to draft evaluation and TRPA responses to peer review comments",
+        year: "November 2023 - December 2023",
+        description: "Revisions made to the draft evaluation and responses to peer review comments."
+      },
+      {
+        title: "January 2025 - 2023 Threshold Evaluation draft completed",
+        year: "January 2025",
+        description: "Completion of the 2023 Threshold Evaluation draft."
+      },
+      {
+        title: "January 2025 - Review of Threshold Findings with TIE-SC",
+        year: "January 2025",
+        description: "Review of the Threshold findings with the TIE-SC."
+      },
+      {
+        title: "February 2025 - Draft Release of 2023 Threshold Evaluation",
+        year: "February 2025",
+        description: "Draft release of the 2023 Threshold Evaluation."
+      },
+      {
+        title: "February 2025 - APC presentation and EIP Working Group workshops",
+        year: "February 2025",
+        description: "Presentation to the APC and workshops with the EIP Working Group."
+      },
+      {
+        title: "March 2025 - Public workshops",
+        year: "March 2025",
+        description: "Public workshops for feedback and discussions."
+      },
+      {
+        title: "March 2025 - EIP Committee review of feedback",
+        year: "March 2025",
+        description: "Review of feedback received during public workshops by the EIP Committee."
+      },
+      {
+        title: "March 2025 - April 2025 - Develop recommendations based on stakeholder feedback",
+        year: "March 2025 - April 2025",
+        description: "Development of recommendations based on feedback from stakeholders."
+      },
+      {
+        title: "April 2025  Governing Board retreat, identify priorities and recommendations",
+        year: "April 2025",
+        description: "Governing Board retreat to identify priorities and recommendations."
+      },
+      {
+        title: "May 2025 - EIP Committee draft recommendations",
+        year: "May 2025",
+        description: "Draft recommendations by the EIP Committee."
+      },
+      {
+        title: "June 2025 - APC and Governing Board – final 2023 Threshold Evaluation and Recommendations, Final TRPA FY25-26 Work program",
+        year: "June 2025",
+        description: "Final review and recommendations presented to the APC and Governing Board."
+      }
+    ];
+
+    // Function to create timeline items
+    function createTimeline() {
+      const timelineContainer = document.getElementById('timeline');
+
+      events.forEach(event => {
+        const timelineItem = document.createElement('div');
+        timelineItem.classList.add('timeline-item');
+
+        // Set the HTML structure for each item
+        timelineItem.innerHTML = `
+          <div class="timeline-title">${event.title}</div>
+          <div class="timeline-year">${event.year}</div>
+          <div class="timeline-description">${event.description}</div>
+          <div class="timeline-content">
+            <p>Details: ${event.description}</p>
+          </div>
+        `;
+
+        // Append the timeline item to the container
+        timelineContainer.appendChild(timelineItem);
+
+        // Add event listener to toggle the expanded view
+        timelineItem.addEventListener('click', () => {
+          timelineItem.classList.toggle('expanded');
+        });
+      });
+    }
+
+    // Initialize the timeline
+    createTimeline();
+  </script>
+
+</body>
+</html>
