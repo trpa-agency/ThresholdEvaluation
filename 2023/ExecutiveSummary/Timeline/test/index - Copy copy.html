@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Chart Example</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .gantt-chart-container {
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-x: auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .year-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #ccc;
+            padding: 5px 0;
+            font-weight: bold;
+        }
+
+        .year {
+            text-align: center;
+            width: 80px;
+            padding: 10px 0;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ddd;
+        }
+
+        .task-row {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .task-name {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .task-bar {
+            position: relative;
+            flex-grow: 1;
+            height: 30px;
+            background-color: #1f77b4;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-bar span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            padding-top: 5px;
+        }
+
+        /* Task bar color for events */
+        .task-bar[data-start][data-end] {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container gantt-chart-container">
+    <h2 class="text-center mb-4">Project Gantt Chart</h2>
+
+    <!-- Year header -->
+    <div class="year-header">
+        <div class="year">2020</div>
+        <div class="year">2021</div>
+        <div class="year">2022</div>
+        <div class="year">2023</div>
+        <div class="year">2024</div>
+    </div>
+
+    <!-- Task rows -->
+    <div class="task-row">
+        <div class="task-name">Threshold Cleanup</div>
+        <div class="task-bar" data-start="2020" data-end="2021">
+            <span>Threshold Cleanup</span>
+        </div>
+    </div>
+
+    <div class="task-row">
+        <div class="task-name">Transportation Threshold Established</div>
+        <div class="task-bar" data-start="2021" data-end="2021">
+            <span>Threshold Established</span>
+        </div>
+    </div>
+
+    <div class="task-row">
+        <div class="task-name">Monitoring Data Collection</div>
+        <div class="task-bar" data-start="2022" data-end="2023">
+            <span>Data Collection</span>
+        </div>
+    </div>
+
+    <div class="task-row">
+        <div class="task-name">Threshold Evaluation Draft</div>
+        <div class="task-bar" data-start="2023" data-end="2024">
+            <span>Draft Production</span>
+        </div>
+    </div>
+
+    <div class="task-row">
+        <div class="task-name">Final Report</div>
+        <div class="task-bar" data-start="2024" data-end="2025">
+            <span>Final Report</span>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Adjust the width of task bars based on start and end years
+    document.querySelectorAll('.task-bar').forEach(function(taskBar) {
+        const startYear = parseInt(taskBar.getAttribute('data-start'));
+        const endYear = parseInt(taskBar.getAttribute('data-end'));
+        const totalYears = 2025 - 2020;  // Total number of years in the chart (2020 to 2025)
+        const taskWidth = (endYear - startYear) / totalYears * 100;  // Width percentage of the task bar
+
+        // Set the width of the task bar
+        taskBar.style.width = taskWidth + '%';
+    });
+</script>
+
+</body>
+</html>

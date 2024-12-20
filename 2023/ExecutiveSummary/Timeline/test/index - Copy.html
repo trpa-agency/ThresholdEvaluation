@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threshold Evaluation Timeline</title>
+  <!-- Bootstrap 4 CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Custom horizontal timeline styles */
+    .timeline {
+      display: flex;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
+      padding: 50px 0;
+      position: relative;
+      margin-top: 100px;
+    }
+
+    .timeline-item {
+      text-align: center;
+      position: relative;
+      margin: 0 10px;
+      flex-shrink: 0;
+      width: 200px;
+    }
+
+    /* Timeline bubbles */
+    .timeline-bubble {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: #1f77b4; /* Use the specified blue */
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-bubble:hover {
+      transform: scale(1.2);
+    }
+
+    /* Timeline content */
+    .timeline-content {
+      display: none;
+      background-color: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+      color: #555;
+    }
+
+    /* Pagination controls */
+    .pagination-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    .pagination-button {
+      background-color: #1f77b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .pagination-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      right: 0;
+      border-top: 2px solid #1f77b4; /* Use the same blue */
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Container for the timeline -->
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Threshold Evaluation Timeline</h2>
+
+    <div class="timeline-wrapper">
+      <div class="timeline">
+        <!-- Line connecting the bubbles -->
+        <div class="timeline-line"></div>
+
+        <!-- Timeline Items -->
+        <div class="timeline-item" data-index="0">
+          <div class="timeline-bubble">2020</div>
+          <div class="timeline-content">
+            <h4>Threshold Cleanup</h4>
+            <p>Transportation and Sustainable Communities Threshold established.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-index="1">
+          <div class="timeline-bubble">2021</div>
+          <div class="timeline-content">
+            <h4>Threshold Evaluation Accepted</h4>
+            <p>The 2019 Final Threshold Evaluation accepted by the TRPA Governing Board.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-index="2">
+          <div class="timeline-bubble">2022</div>
+          <div class="timeline-content">
+            <h4>Monitoring Data Collection</h4>
+            <p>Monitoring data collected by TRPA and partners for 2023 Threshold Evaluation.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-index="3">
+          <div class="timeline-bubble">2023</div>
+          <div class="timeline-content">
+            <h4>Threshold Evaluation Draft</h4>
+            <p>2023 Threshold Evaluation draft production and Threshold Dashboard updates.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-index="4">
+          <div class="timeline-bubble">2024</div>
+          <div class="timeline-content">
+            <h4>Threshold Standards Updated</h4>
+            <p>Threshold standards for SEZ, TYC, AIS updated.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-index="5">
+          <div class="timeline-bubble">2025</div>
+          <div class="timeline-content">
+            <h4>Final Report</h4>
+            <p>Final 2023 Threshold Evaluation and Recommendations presented to APC and Governing Board.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination controls -->
+      <div class="pagination-controls">
+        <button class="pagination-button" id="prevButton" onclick="moveTimeline(-1)" disabled>
+          <h4>&lt; Prev</h4>
+        </button>
+        <button class="pagination-button" id="nextButton" onclick="moveTimeline(1)">
+          <h4>Next &gt;</h4>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // JavaScript for timeline scrolling and pagination
+    const timeline = document.querySelector('.timeline');
+    const items = document.querySelectorAll('.timeline-item');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    let currentIndex = 0;
+
+    // Show content on bubble click
+    items.forEach((item, index) => {
+      const bubble = item.querySelector('.timeline-bubble');
+      const content = item.querySelector('.timeline-content');
+      
+      bubble.addEventListener('click', () => {
+        // Hide all content
+        document.querySelectorAll('.timeline-content').forEach(c => c.style.display = 'none');
+        // Show clicked item's content
+        content.style.display = 'block';
+      });
+    });
+
+    // Move timeline based on pagination
+    function moveTimeline(direction) {
+      currentIndex += direction;
+      
+      if (currentIndex < 0) currentIndex = 0;
+      if (currentIndex >= items.length) currentIndex = items.length - 1;
+
+      // Move the timeline scroll
+      timeline.scrollTo({
+        left: items[currentIndex].offsetLeft - timeline.offsetLeft,
+        behavior: 'smooth'
+      });
+
+      // Update pagination button states
+      prevButton.disabled = currentIndex === 0;
+      nextButton.disabled = currentIndex === items.length - 1;
+    }
+
+    // Initial setup for pagination
+    moveTimeline(0);  // Set to start at the first item
+  </script>
+
+</body>
+
+</html>
