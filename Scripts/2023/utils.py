@@ -16,6 +16,7 @@ import pytz
 # mapping packages
 import arcpy
 from arcgis.features import FeatureLayer
+from arcgis.features import GeoAccessor, GeoSeriesAccessor
 # graphing packages
 import plotly.express as px
 import plotly.graph_objects as go
