@@ -15,14 +15,32 @@
       href="https://unpkg.com/ag-grid-community/styles/ag-theme-quartz.css"
     />
     <link rel="stylesheet" href="styles.css" />
+    
+    <!-- Link to BellTopo Sans font -->
+    <link href="https://fonts.googleapis.com/css2?family=Bellota+Sans:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Table Description above the grid -->
+    <div class="table-description">
+      <e><strong>Table 1.</strong></e> Summary of units of use, bonus units, and commercial floor area inventory as of December 31, 2023
+    </div>
+
+    <!-- Table grid container -->
     <div id="myGrid" class="ag-theme-quartz"></div>
-    <div style="display: flex; flex-direction: column; height: 100%">
+
+    <!-- Container for button and source description -->
+    <div class="button-description-container">
+      <!-- Download CSV button -->
       <div>
         <button onclick="onBtnExport()" class="button-blue">Download CSV</button>
       </div>
+
+      <!-- Source Description -->
+      <div class="source-description">
+        Notes: Data as of December 31, 2023. Source: LakeTahoeInfo.org/Parcel Tracker, TRPA Accela Permit Records, TRPA project application files, and local jurisdiction accounting records.
+      </div>
     </div>
+
     <script>
       (function () {
         const appLocation = "";

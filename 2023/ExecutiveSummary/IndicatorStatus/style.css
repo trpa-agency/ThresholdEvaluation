@@ -1,0 +1,17 @@
+/* style.css */
+.ag-theme-alpine {
+    display: block;
+    max-width: 100%;
+  }
+  
+  .ag-cell img {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+  }
+  
+  .ag-cell {
+    text-align: center;
+    padding: 5px;
+  }
+  
