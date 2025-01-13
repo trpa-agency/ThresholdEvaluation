@@ -451,7 +451,7 @@ def plot_pm10_24hr(df, draft= False):
                         tickmode = 'linear',
                         tick0 = 0,
                         dtick = 25,
-                        range=[0, 225],
+                        range=[0, 500],
                         title_text='Parts per Million'
                     )
                   
