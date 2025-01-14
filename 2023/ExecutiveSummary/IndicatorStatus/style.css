@@ -1,17 +1,19 @@
-/* style.css */
-.ag-theme-alpine {
-    display: block;
-    max-width: 100%;
-  }
-  
-  .ag-cell img {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-  }
-  
-  .ag-cell {
-    text-align: center;
-    padding: 5px;
-  }
-  
+/* Apply Calibri font globally */
+body {
+  font-family: 'Calibri', sans-serif;
+}
+
+/* the grid div that contains the grid */
+.ag-theme-quartz {
+  height: 180px;
+  width: 100%;
+  margin: 5px auto;
+  --ag-borders: none;
+  --ag-header-height: 36px;
+  --ag-header-foreground-color: white;
+  --ag-header-background-color: #337ab7;
+  --ag-header-cell-hover-background-color: #279bdc;
+  --ag-header-cell-moving-background-color: #279bdc;
+}
+
+
