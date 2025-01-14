@@ -400,7 +400,7 @@ def plot_pm10_24hr(df, draft= False):
                  color_discrete_map = color_discrete_map)
          
 
-    fig.update_traces(hovertemplate='<br> 3-Year Average: <b>%{y:.2f}</b> ppm')
+    fig.update_traces(hovertemplate='<br> Highest 24-hr Concentration: <b>%{y:.2f}</b> ppm')
 
 
     # create threshold line
@@ -450,8 +450,8 @@ def plot_pm10_24hr(df, draft= False):
                     yaxis = dict(
                         tickmode = 'linear',
                         tick0 = 0,
-                        dtick = 25,
-                        range=[0, 225],
+                        dtick = 50,
+                        range=[0, 500],
                         title_text='Parts per Million'
                     )
                   

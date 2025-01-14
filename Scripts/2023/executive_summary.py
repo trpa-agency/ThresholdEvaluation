@@ -224,3 +224,135 @@ def plot_AQ_daily_exceedances_per_year(df, draft=False):
             full_html=False
         )
 
+#-------------------------------------------------------------#
+# GET FIRE DATA 
+#-------------------------------------------------------------#
+# get fire data
+def get_fire_data():
+    # wildfire url CALFIRE
+    fireStartTable = "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/California_Fire_Perimeters/FeatureServer/0"
+    # Purple Air data hosted on TRPA's Enterprise Geodatabase
+    purpleAirURL = "https://maps.trpa.org/server/rest/services/LTinfo_Climate_Resilience_Dashboard/MapServer/143"
+    # get data from the web service
+    dfPurpleAir = get_fs_data(purpleAirURL)
+    dfFire = get_fs_data(fireStartTable)
+    # remove nulls from ALARM_DATE
+    dfFire = dfFire.dropna(subset=["ALARM_DATE"])
+    # remove negative numbers in ALARM_DATE
+    dfFire = dfFire[dfFire["ALARM_DATE"] > 0]
+    # groupby date and get the mean of pm25
+    dfAir = dfPurpleAir.groupby("date")["mean_pm25"].mean().reset_index()
+    # Apply the function to the column
+    dfFire["Date"] = dfFire["ALARM_DATE"].apply(convert_to_utc)
+    # convert Date to month day year
+    dfFire["Date"] = dfFire["Date"].dt.strftime("%m/%d/%Y")
+    # convert date to datetime
+    dfFire["Date"] = pd.to_datetime(dfFire["Date"], format="%m/%d/%Y")
+    # filter date to 2018 or later
+    dfFire = dfFire[dfFire["Date"] >= "01/01/2018"]
+    # filter FIRE_NAME is ['CALDOR', 'TAMARACK', 'FERGUSON', 'MOSQUITO', 'LOYALTON']
+    dfFire = dfFire.loc[
+        dfFire["FIRE_NAME"].isin(["CALDOR", "TAMARACK", "FERGUSON", "MOSQUITO", "LOYALTON"])
+    ]
+    # only keep FIRE_NAME, GIS_ACRES, and Date
+    dfFire = dfFire[["FIRE_NAME", "GIS_ACRES", "Date"]]
+    # rename columns
+    dfFire = dfFire.rename(columns={"FIRE_NAME": "Fire", "GIS_ACRES": "Acres"})
+    # change column name to Date and PM 2.5 (ug/m3)
+    dfAir = dfAir.rename(columns={"date": "Date", "mean_pm25": "PM 2.5 (ug/m3)"})
+    # Apply the function to the column
+    dfAir["Date"] = dfAir["Date"].apply(convert_to_utc)
+    # # convert Date to str
+    dfAir["Date"] = dfAir["Date"].dt.strftime("%m/%d/%Y")
+    # # convert Date to datetime
+    dfAir["Date"] = pd.to_datetime(dfAir["Date"], format="%m/%d/%Y")
+
+    # merge with sdfPUrplAir on Date
+    dfFire = dfFire.merge(dfAir, on="Date", how="left")
+    return dfFire
+
+#Use this code to overlay fire information to Air Quality Exceedances
+def plot_purple_air_fire(dfAir,dfFire):
+    # creat a plotly express line chart
+    fig = px.line(dfAir,
+                    x="Date",
+                    y="PM 2.5 (ug/m3)",
+                    title='Purple Air PM2.5'
+                                )
+
+    fig.update_traces(hovertemplate="<br>".join([
+                        "<b>%{y:,.0f} AQI</b>",
+                        "<i>seven day rolling average</i>"
+                            ])+"<extra></extra>"
+    )
+
+    # add scatter trace to figure of points of dfMerge by date and mean_pm25
+    fig.add_trace(go.Scatter(x=dfFire['Date'],
+                            y=dfFire['PM 2.5 (ug/m3)'],
+                            mode='markers',
+                            name='Fire Start Date',
+                            customdata=dfFire[["Fire", "Acres"]],
+                            hovertemplate="<br>".join([
+                                            "<b>%{customdata[0]} FIRE</b> started",
+                                            "<i>%{x}</i> and burned",
+                                            "<i>%{customdata[1]:,.0f} acres</i>"
+                                                ])+"<extra></extra>"
+                                                ))
+
+    # make the scatter plot markers larger
+    fig.update_traces(marker=dict(size=12))
+
+    # label points by FIRE_NAME
+    for i, txt in enumerate(dfFire['Fire']):
+        fig.add_annotation(x=dfFire['Date'].iloc[i], y=dfFire['PM 2.5 (ug/m3)'].iloc[i],
+                                text=txt+" FIRE",
+                                showarrow=True,
+                                align="center",
+                                arrowhead=1,
+                                # arrowsize=1,
+                                # arrowwidth=2,
+                                arrowcolor="#636363",
+                                ax=10,
+                                ay=-20,
+                                bordercolor="#c7c7c7",
+                                borderwidth=1,
+                                borderpad=2,
+                                bgcolor="#ff7f0e",
+                                opacity=0.8
+                                )
+
+    # plot variables
+    path_html="html/1.2.a_Purple_Air_v2.html"
+    div_id="1.2.a_Purple_Air_v2"
+    x="time_stamp"
+    y="moving_avg"
+    color="#FF5733"
+    color_sequence=["#023f64"]
+    sort="time_stamp"
+    orders=None
+    x_title="Date"
+    y_title="Air Quality Index"
+    format=",.0f"
+    # hovertemplate="%{y:,.0f}"
+    hovermode="x unified"
+    config = {"displayModeBar": False}
+
+    fig.update_layout(
+            margin=dict(t=20),
+            yaxis=dict(title=y_title),
+            xaxis=dict(title=x_title, showgrid=False),
+            hovermode=hovermode,
+            template="plotly_white",
+            dragmode=False,
+            showlegend=False,
+            # title_font_family="Bell Topo Sans",
+            # title_font_color="black",
+            title=dict(text="Air Quality Index and Significant Fire Events",
+                        x=0.05,
+                        y=0.95,
+                        xanchor="left",
+                        yanchor="top",
+                        font=dict(size=16),
+                        automargin=True)
+        )
+
