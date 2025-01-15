@@ -182,7 +182,7 @@ def plot_pm2_5_24hour(df, draft= False):
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', 
                  color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>3-Year Mean of 98th Percentil:<br><b>%{y:.2f}</b> ppm')
+    fig.update_traces(hovertemplate='<br>3-Year Mean of 98th Percentile:<br><b>%{y:.2f}</b> ppm')
 
     # create threshold line
     fig.add_trace(go.Scatter(
