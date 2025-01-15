@@ -394,7 +394,7 @@ def plot_restored_sez(df, draft=False):
                             tickmode = 'linear',
                             tick0 = 1980,
                             dtick = 5,
-                            range=[1979,2024],
+                            range=[1979,2026],
                             title_text= "Year Completed"
                         ),
                         yaxis = dict(
@@ -403,7 +403,7 @@ def plot_restored_sez(df, draft=False):
                             dtick = 100,
                             tickformat= ",.0f",
                             range=[0, 1500],
-                            title_text='Acres Restored'
+                            title_text='Acres'
                         )
                     )
     # Export chart
