@@ -45,11 +45,20 @@ def plot_scenic_corridor_attainment_roadway(df, draft=False):
     # update hover template
     fig.update_traces(hovertemplate='<br> %{y:.0f} units')
     # set layout
-    fig.update_layout(title='Roadway Units in Attainment', 
+    fig.update_layout(
+                        # title='Roadway Units in Attainment', 
+                        legend_title_text="Roadway Units in Attainment",
+                        legend=dict(
+                        orientation="h",
+                        entrywidth=90,
+                        yanchor="bottom",
+                        y=1.05,
+                        xanchor="right",
+                        x=1
+                        ),
                         font_family=font,
                         template=template,
                         showlegend=True,
-                        legend_title='',
                         hovermode="x unified",
                         xaxis = dict(
                             tickmode = 'linear',
