@@ -182,7 +182,7 @@ def plot_pm2_5_24hour(df, draft= False):
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', 
                  color_discrete_map = color_discrete_map)
 
-    fig.update_traces(hovertemplate='<br>3-Year Mean: <b>%{y:.2f}</b> ppm')
+    fig.update_traces(hovertemplate='<br>3-Year Mean of 98th Percentile:<br><b>%{y:.2f}</b> ppm')
 
     # create threshold line
     fig.add_trace(go.Scatter(
@@ -393,7 +393,8 @@ def plot_pm10_24hr(df, draft= False):
 
     # limit rows to indicator
     df = df.loc[df['Indicator'] == indicator]
-    df['Threshold Value'] = 50
+    df['Threshold Value CA'] = 50
+    df['Threshold Value NV'] = 150
 
     # setup plot
     fig = px.scatter(df, x = 'Year', y= 'Value', color='Site', 
@@ -405,12 +406,22 @@ def plot_pm10_24hr(df, draft= False):
 
     # create threshold line
     fig.add_trace(go.Scatter(
-        y=df['Threshold Value'],
+        y=df['Threshold Value CA'],
         x=df['Year'],
         name= "Threshold",
         line=dict(color='#333333', width=2, dash='dash'),
         mode='lines',
-        hovertemplate='Threshold: %{y:.0f} ppm<extra></extra>'
+        hovertemplate='CARB Threshold: %{y:.0f} ppm<extra></extra>'
+    ))
+
+     # create threshold line
+    fig.add_trace(go.Scatter(
+        y=df['Threshold Value NV'],
+        x=df['Year'],
+        name= "Threshold",
+        line=dict(color='#337ab7', width=2, dash='dash'),
+        mode='lines',
+        hovertemplate='EPA NAAQS Threshold: %{y:.0f} ppm<extra></extra>'
     ))
 
     # create trendline
