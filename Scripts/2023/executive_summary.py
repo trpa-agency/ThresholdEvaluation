@@ -405,6 +405,7 @@ def plot_restored_sez(df, draft=False):
                             range=[0, 1500],
                             title_text='Acres'
                         )
+                    
                     )
     # Export chart
     if draft:
