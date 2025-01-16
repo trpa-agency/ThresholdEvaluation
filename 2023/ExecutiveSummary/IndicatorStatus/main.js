@@ -32,7 +32,7 @@ function combineStatusTrend(status, trend) {
 // Fetch data from the Lake Tahoe Info API for threshold evaluations using a different proxy server
 // URL: https://www.laketahoeinfo.org/WebServices/GetThresholdEvaluatio
 fetch('https://www.laketahoeinfo.org/WebServices/GetThresholdEvaluations/JSON/e17aeb86-85e3-4260-83fd-a2b32501c476', { 
-        method: "GET", mode: 'cors', 
+        method: "GET", mode: 'no-cors', 
         headers: { 'Content-Type': 'application/json',}})
         .then(response => response.json())
         .then(data => {
