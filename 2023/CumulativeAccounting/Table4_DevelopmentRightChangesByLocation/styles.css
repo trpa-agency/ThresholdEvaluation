@@ -1,9 +1,13 @@
+/* Apply Calibri font globally */
+body {
+    font-family: 'Calibri', sans-serif;
+}
+
 /* the grid div that contains the grid */
 .ag-theme-quartz {
-    /* font-family: 'Calibri', sans-serif; */
-    height: 210px;
+    height: 180px;
     width: 100%;
-    margin: 10px auto;
+    margin: 5px auto;
     --ag-borders: none;
     --ag-header-height: 36px;
     --ag-header-foreground-color: white;
@@ -12,21 +16,27 @@
     --ag-header-cell-moving-background-color: #279bdc;
 }
 
+/* style for the table header */
+.ag-header-cell-label {
+    font-size: 14px;  /* Smaller than the table description font size */
+    font-weight: bold;  /* Bold weight for the table header */
+    color: white;  /* White text color */
+}
 /* style button blue with white font and rounded corners */
 .button-blue {
     background-color: #337ab7;
     color: white;
-    border-radius: 6px;
+    border-radius: 4px;
     border: none;
-    padding: 8px 8px;
+    padding: 10px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 11px;
+    font-size: 12px; /* Keeping button size as 12px */
     font-weight: bold;
     margin: 4px 2px;
     cursor: pointer;
-} /* end of .button-blue */
+}
 
 .button-blue:hover {
     background-color: #279bdc;
@@ -35,3 +45,36 @@
 .button-blue:active {
     background-color: #1a5a8a;
 }
+
+/* style for the table description above the grid */
+.table-description {
+    font-size: 16px;  /* Larger than the button font size */
+    font-weight: normal;  
+    color: black;  /* White text color */
+    margin-bottom: 20px;  /* Space between the table description and the grid */
+    text-align: left;  /* Center the table description text */
+}
+
+/* style for the container of button and source description */
+.button-description-container {
+    display: flex;
+    align-items: center;  /* Align the button and source description vertically centered */
+    justify-content: flex-start;  /* Align them to the left */
+    height: 100%;
+    margin-top: 20px;
+}
+
+/* style for the source description next to the button */
+.source-description {
+    font-size: 10px;  /* Slightly smaller than the table description */
+    font-weight: normal;  /* Regular weight for source description */
+    color: #ccc;  /* Lighter gray text color */
+    text-align: center;  /* Center the source description text */
+    margin-left: 100px;  /* Space between the button and the description */
+}
+
+.total-column {
+    font-weight: bold;
+    color: #337ab7;
+    text-align: right;
+  }

@@ -5,20 +5,20 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "Type", headerName: "Type", cellDataType: 'text', flex: 1 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', flex: 1, 
+  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', type: 'rightAligned',  headerClass: "ag-right-aligned-header", flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', flex: 1, 
+  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', type: 'rightAligned', headerClass: "ag-right-aligned-header", flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', flex: 1, 
+  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', type: 'rightAligned', headerClass: "ag-right-aligned-header", flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
   // built column fro total
-  { field: "Total", headerName: "Total",cellDataType: 'numeric', flex: 1,
+  { field: "Total", headerName: "Total", cellDataType: 'numeric', headerClass: "ag-right-aligned-header", flex: 1,
     valueGetter: (params) => {
       return params.data.Existing + params.data.Banked + params.data.Remaining;
     },
@@ -65,7 +65,10 @@ fetch(
   });
   function onBtnExport() {
     if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
+      const params = {
+        fileName: 'Table1_Summary.csv' // Replace 'GridTitle' with the actual title of your grid
+      };
+      window.gridAPI.exportDataAsCsv(params);
     } else {
       console.error("Grid API is not initialized.");
     }
