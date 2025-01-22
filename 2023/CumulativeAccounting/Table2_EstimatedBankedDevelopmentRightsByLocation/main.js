@@ -5,15 +5,15 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "Development_Right", headerName: "Development Right", cellDataType: 'text', flex: 2 },
-  { field: "Total_Banked", headerName: "Total Banked",cellDataType: 'numeric', flex: 1, 
+  { field: "Total_Banked", headerName: "Total Banked",cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Stream_Environment_Zones", headerName: "Stream Environment Zones",cellDataType: 'numeric', flex: 1, 
+  { field: "Stream_Environment_Zones", headerName: "Stream Environment Zones",cellDataType: 'numeric',type: 'rightAligned', flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }},
-  { field: "Remote_Areas", headerName: "Remote Area",cellDataType: 'numeric', flex: 1, 
+  { field: "Remote_Areas", headerName: "Remote Area",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); // Format with commas
   }}
@@ -55,11 +55,15 @@ fetch(
   });
   function onBtnExport() {
     if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
+      const params = {
+        fileName: 'Table2_EstimatedBankedDevelopmentRightsByLocation.csv' // Replace 'GridTitle' with the actual title of your grid
+      };
+      window.gridAPI.exportDataAsCsv(params);
     } else {
       console.error("Grid API is not initialized.");
     }
   }
+
 
 
   

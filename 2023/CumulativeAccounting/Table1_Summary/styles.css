@@ -16,6 +16,12 @@ body {
     --ag-header-cell-moving-background-color: #279bdc;
 }
 
+/* style for the table header */
+.ag-header-cell-label {
+    font-size: 14px;  /* Smaller than the table description font size */
+    font-weight: bold;  /* Bold weight for the table header */
+    color: white;  /* White text color */
+}
 /* style button blue with white font and rounded corners */
 .button-blue {
     background-color: #337ab7;
@@ -66,3 +72,9 @@ body {
     text-align: center;  /* Center the source description text */
     margin-left: 100px;  /* Space between the button and the description */
 }
+
+.total-column {
+    font-weight: bold;
+    color: #337ab7;
+    text-align: right;
+  }

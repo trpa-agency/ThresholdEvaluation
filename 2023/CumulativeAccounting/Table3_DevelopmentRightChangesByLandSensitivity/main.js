@@ -5,15 +5,15 @@ let gridAPI;
 
 const columnDefs = [
   { headerName: "Development Right", field: "Development Right", flex: 1},
-  { headerName: "Stream Environment Zones", field: "Stream Environment Zones", cellDataType: 'numeric', flex: 1, 
+  { headerName: "Stream Environment Zones", field: "Stream Environment Zones", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
     valueFormatter: (params) => {
     return params.value.toLocaleString(); // Format with commas
       }},
-  { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas", cellDataType: 'numeric', flex: 1, 
+  { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas", cellDataType: 'numeric',type: 'rightAligned',flex: 1, 
     valueFormatter: (params) => {
     return params.value.toLocaleString(); // Format with commas
       }},
-  { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas", cellDataType: 'numeric', flex: 1, 
+  { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
     valueFormatter: (params) => {
     return params.value.toLocaleString(); // Format with commas
       }}
@@ -61,7 +61,10 @@ const rowData = [
 
     function onBtnExport() {
       if (window.gridAPI) {
-        window.gridAPI.exportDataAsCsv();
+        const params = {
+          fileName: 'Table3_DevelopmentRightChangesByLandSensitivity.csv' 
+        };
+        window.gridAPI.exportDataAsCsv(params);
       } else {
         console.error("Grid API is not initialized.");
       }

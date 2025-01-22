@@ -3,9 +3,9 @@ let gridAppi;
 // Column definitions for the AG Grid
 const columnDefs = [
     { headerName: "Development Right", field: "developmentRight", flex: 1 },
-    { headerName: "Commercial Floor Area (sq. ft.)", field: "commercialFloorArea", flex: 2 },
-    { headerName: "Tourist Accommodation Units", field: "touristAccommodationUnits", flex: 2 },
-    { headerName: "Residential Units", field: "residentialUnits", flex: 2 }
+    { headerName: "Commercial Floor Area (sq. ft.)", field: "commercialFloorArea", type: 'rightAligned',flex: 2 },
+    { headerName: "Tourist Accommodation Units", field: "touristAccommodationUnits",type: 'rightAligned', flex: 2 },
+    { headerName: "Residential Units", field: "residentialUnits",type: 'rightAligned', flex: 2 }
   ];
   
   // Row data for the AG Grid
@@ -29,16 +29,19 @@ const columnDefs = [
       window.gridAPI = params.api; // Make API globally available
     },
   };
-// build button action
-function onBtnExport() {
-  if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
-  } else {
-    console.error("Grid API is not initialized.");
-  }
-}
+
 // setup the grid after the page has finished loading
 document.addEventListener("DOMContentLoaded", function () {
   var gridDiv = document.querySelector("#myGrid");
   gridApi = agGrid.createGrid(gridDiv, gridOptions);
 });
+function onBtnExport() {
+  if (window.gridAPI) {
+    const params = {
+      fileName: 'Table5_SummaryDevelopmentRightsConversions.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
+  } else {
+    console.error("Grid API is not initialized.");
+  }
+}
