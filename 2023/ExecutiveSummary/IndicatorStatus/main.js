@@ -15,27 +15,76 @@ function combineStatusTrend(status, trend) {
     return `${status}-${trend}`;
 }
 
-// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Grid Options configuration
     const gridOptions = {
         columnDefs: columnDefs,
         rowData: [], 
-        theme: 'legacy',
         suppressExcelExport: true,
         popupParent: document.body,
         components: {
             'statusIconRenderer': StatusIconRenderer
+        },
+        defaultColDef: {
+            resizable: true,
+            sortable: true
         }
     };
 
     // Initialize the grid
     const gridDiv = document.querySelector("#myGrid");
+    gridDiv.style.height = '500px';
+    gridDiv.style.width = '100%';
+
+    // Apply custom styles
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        .ag-theme-alpine {
+            --ag-font-family: "Calibri", sans-serif;
+            --ag-font-size: 14px;
+            --ag-header-height: 36px;
+            --ag-header-foreground-color: white;
+            --ag-header-background-color: #337ab7;
+            --ag-header-cell-hover-background-color: #279bdc;
+            --ag-header-cell-moving-background-color: #279bdc;
+            --ag-row-height: 36px;
+            --ag-borders: solid 1px;
+            --ag-border-color: #dde2eb;
+            --ag-cell-horizontal-border: solid 1px #dde2eb;
+            --ag-row-border-color: #dde2eb;
+            --ag-grid-size: 10px;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: auto;
+        }
+
+        .imgSpanLogo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .ag-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .ag-header-cell-label {
+            justify-content: center;
+        }
+    `;
+    document.head.appendChild(styleElement);
+
     try {
-        // Create the grid
+        // Create the grid using the Grid constructor
         new agGrid.Grid(gridDiv, gridOptions);
         
-        // After grid is created, fetch the data
+        // Fetch data
         fetch('https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/116/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=&f=json')
             .then(response => response.json())
             .then(data => {
@@ -46,9 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     Combined2019: combineStatusTrend(item.attributes.Status2019, item.attributes.Trend2019),
                     Combined2023: combineStatusTrend(item.attributes.Status2023, item.attributes.Trend2023)
                 }));
-                console.log("Data fetched:", transformedData);
                 
-                // Update the grid with the new data
+                // Use the gridOptions API
                 gridOptions.api.setRowData(transformedData);
                 gridOptions.api.sizeColumnsToFit();
             })
