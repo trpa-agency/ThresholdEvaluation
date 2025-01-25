@@ -1,78 +1,111 @@
 // Define the columns for the AG Grid
 const columnDefs = [
     { headerName: 'Indicator', field: 'IndicatorName', width: 250 },
-    { headerName: '2011', field: 'Combined2011', width: 150, cellRenderer: StatusIconRenderer },
-    { headerName: '2015', field: 'Combined2015', width: 150, cellRenderer: StatusIconRenderer },
-    { headerName: '2019', field: 'Combined2019', width: 150, cellRenderer: StatusIconRenderer },
-    { headerName: '2023', field: 'Combined2023', width: 150, cellRenderer: StatusIconRenderer }
+    { headerName: '2011', field: 'Combined2011', width: 150, cellRenderer: 'statusIconRenderer' },
+    { headerName: '2015', field: 'Combined2015', width: 150, cellRenderer: 'statusIconRenderer' },
+    { headerName: '2019', field: 'Combined2019', width: 150, cellRenderer: 'statusIconRenderer' },
+    { headerName: '2023', field: 'Combined2023', width: 150, cellRenderer: 'statusIconRenderer' }
 ];
-
-// Map status/trend combinations to image paths
-const statusTrendImageMap = {
-    'Implemented': 'images/Implemented.png',
-    'nan': 'images/nan.png', // Placeholder for NaN, adjust the path if necessary
-    'At or Somewhat Better Than Target-Moderate Decline': 'images/at_or_somewhat_better_than_target-moderate_decline.png',
-    'At or Somewhat Better Than Target-Insufficient Data to Determine Trend': 'images/at_or_somewhat_better_than_target-insufficient_data_to_determine_trend.png',
-    'Considerably Worse Than Target-Little or No Change': 'images/considerably_worse_than_target-little_or_no_change.png',
-    'Insufficient Data to Determine Status or No Target Established-Rapid Improvement': 'images/insufficient_data_to_determine_status_or_no_target_established-rapid_improvement.png',
-    'Considerably Better Than Target-Insufficient Data to Determine Trend': 'images/considerably_better_than_target-insufficient_data_to_determine_trend.png',
-    'Insufficient Data to Determine Status or No Target Established-Little or No Change': 'images/insufficient_data_to_determine_status_or_no_target_established-little_or_no_change.png',
-    'Somewhat Worse Than Target-Rapid Decline': 'images/somewhat_worse_than_target-rapid_decline.png',
-    'Considerably Worse Than Target-Rapid Decline': 'images/considerably_worse_than_target-rapid_decline.png',
-    'At or Somewhat Better Than Target-Little or No Change': 'images/at_or_somewhat_better_than_target-little_or_no_change.png',
-    'Considerably Better Than Target-Moderate Decline': 'images/considerably_better_than_target-moderate_decline.png',
-    'Insufficient Data to Determine Status or No Target Established-Moderate Improvement': 'images/insufficient_data_to_determine_status_or_no_target_established-moderate_improvement.png',
-    'Somewhat Worse Than Target-Little or No Change': 'images/somewhat_worse_than_target-little_or_no_change.png',
-    'Somewhat Worse Than Target-Moderate Improvement': 'images/somewhat_worse_than_target-moderate_improvement.png',
-    'Considerably Worse Than Target-Moderate Decline': 'images/considerably_worse_than_target-moderate_decline.png',
-    'Somewhat Worse Than Target-Moderate Decline': 'images/somewhat_worse_than_target-moderate_decline.png',
-    'At or Somewhat Better Than Target-Moderate Improvement': 'images/at_or_somewhat_better_than_target-moderate_improvement.png',
-    'Considerably Better Than Target-Little or No Change': 'images/considerably_better_than_target-little_or_no_change.png',
-    'Considerably Worse Than Target-Insufficient Data to Determine Trend': 'images/considerably_worse_than_target-insufficient_data_to_determine_trend.png',
-    'Considerably Better Than Target-Moderate Improvement': 'images/considerably_better_than_target-moderate_improvement.png',
-    'Considerably Better Than Target-Rapid Improvement': 'images/considerably_better_than_target-rapid_improvement.png',
-    'Somewhat Worse Than Target-Insufficient Data to Determine Trend': 'images/somewhat_worse_than_target-insufficient_data_to_determine_trend.png',
-    'Considerably Worse Than Target-Moderate Improvement': 'images/considerably_worse_than_target-moderate_improvement.png',
-    'Insufficient Data to Determine Status or No Target Established-Insufficient Data to Determine Trend': 'images/insufficient_data_to_determine_status_or_no_target_established-insufficient_data_to_determine_trend.png',
-};
 
 // Function to combine status and trend values for each year
 function combineStatusTrend(status, trend) {
     if (status === null || trend === null) {
-        return 'No Data'; // Handle missing data gracefully
+        return 'nan';
     }
     return `${status}-${trend}`;
 }
 
-// Fetch data from the new service URL
-fetch('https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/118/query?where=1%3D1&outFields=*&outSR=4326&f=json')
-    .then(response => response.json())
-    .then(data => {
-        // Transform the data to combine status and trend for each year
-        const transformedData = data.features.map(item => ({
-            IndicatorName: item.attributes.IndicatorName,
-            Combined2011: statusTrendImageMap[combineStatusTrend(item.attributes.Status2011, item.attributes.Trend2011)] || combineStatusTrend(item.attributes.Status2011, item.attributes.Trend2011),
-            Combined2015: statusTrendImageMap[combineStatusTrend(item.attributes.Status2015, item.attributes.Trend2015)] || combineStatusTrend(item.attributes.Status2015, item.attributes.Trend2015),
-            Combined2019: statusTrendImageMap[combineStatusTrend(item.attributes.Status2019, item.attributes.Trend2019)] || combineStatusTrend(item.attributes.Status2019, item.attributes.Trend2019),
-            Combined2023: statusTrendImageMap[combineStatusTrend(item.attributes.Status2023, item.attributes.Trend2023)] || combineStatusTrend(item.attributes.Status2023, item.attributes.Trend2023)
-        }));
-        console.log("Data fetched:", transformedData); // Log the data to ensure it is correct
+document.addEventListener('DOMContentLoaded', () => {
+    // Grid Options configuration
+    const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: [], 
+        suppressExcelExport: true,
+        popupParent: document.body,
+        components: {
+            'statusIconRenderer': StatusIconRenderer
+        },
+        defaultColDef: {
+            resizable: true,
+            sortable: true
+        }
+    };
+
+    // Initialize the grid
+    const gridDiv = document.querySelector("#myGrid");
+    gridDiv.style.height = '500px';
+    gridDiv.style.width = '100%';
+
+    // Apply custom styles
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        .ag-theme-alpine {
+            --ag-font-family: "Calibri", sans-serif;
+            --ag-font-size: 14px;
+            --ag-header-height: 36px;
+            --ag-header-foreground-color: white;
+            --ag-header-background-color: #337ab7;
+            --ag-header-cell-hover-background-color: #279bdc;
+            --ag-header-cell-moving-background-color: #279bdc;
+            --ag-row-height: 36px;
+            --ag-borders: solid 1px;
+            --ag-border-color: #dde2eb;
+            --ag-cell-horizontal-border: solid 1px #dde2eb;
+            --ag-row-border-color: #dde2eb;
+            --ag-grid-size: 10px;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: auto;
+        }
+
+        .imgSpanLogo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .ag-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .ag-header-cell-label {
+            justify-content: center;
+        }
+    `;
+    document.head.appendChild(styleElement);
+
+    try {
+        // Create the grid using the Grid constructor
+        new agGrid.Grid(gridDiv, gridOptions);
         
-        // Grid Options with the fetched data as rowData
-        const gridOptions = {
-            columnDefs: columnDefs,
-            rowData: transformedData, 
-            theme: "legacy",
-            suppressExcelExport: true,
-            popupParent: document.body,
-            onGridReady: (params) => {
-                window.gridAPI = params.api; // Make API globally available if needed
-            },
-        };
-        // Initialize the grid
-        const gridDiv = document.querySelector("#myGrid");
-        agGrid.createGrid(gridDiv, gridOptions); // This initializes the grid with the data
-        })
-.catch((error) => {
-    console.error("Error fetching data:", error);
+        // Fetch data
+        fetch('https://maps.trpa.org/server/rest/services/LTInfo_Monitoring/MapServer/116/query?where=1%3D1&outFields=*&returnGeometry=false&outSR=&f=json')
+            .then(response => response.json())
+            .then(data => {
+                const transformedData = data.features.map(item => ({
+                    IndicatorName: item.attributes.IndicatorName,
+                    Combined2011: combineStatusTrend(item.attributes.Status2011, item.attributes.Trend2011),
+                    Combined2015: combineStatusTrend(item.attributes.Status2015, item.attributes.Trend2015),
+                    Combined2019: combineStatusTrend(item.attributes.Status2019, item.attributes.Trend2019),
+                    Combined2023: combineStatusTrend(item.attributes.Status2023, item.attributes.Trend2023)
+                }));
+                
+                // Use the gridOptions API
+                gridOptions.api.setRowData(transformedData);
+                gridOptions.api.sizeColumnsToFit();
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+                gridDiv.innerHTML = 'Error loading data. Please refresh the page.';
+            });
+    } catch (error) {
+        console.error('Failed to initialize AG Grid:', error);
+        gridDiv.innerHTML = 'Failed to load the grid. Please refresh the page.';
+    }
 });
