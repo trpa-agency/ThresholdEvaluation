@@ -9,6 +9,7 @@
 > ## Executive Summary
 >
   * [Banner](ExecutiveSummary\Banner\index.html)
+  * [Indicator Status](ExecutiveSummary\IndicatorStatus)
   * [SEZ Restored](ExecutiveSummary\RestoredSEZ.html)
 > ## Cumulative Accounting
 >
