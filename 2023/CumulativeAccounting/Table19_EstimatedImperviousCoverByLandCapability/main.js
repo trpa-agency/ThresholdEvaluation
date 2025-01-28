@@ -11,15 +11,14 @@ function formatNumber(value, decimals = 0) {
 const columnDefs = [
   { headerName: "Land Capability", field: "landCapability" },
   { 
-    headerName: "Total Acres", 
-    field: "totalAcres",
+    headerName: "Total Acres", field: "totalAcres",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
     valueFormatter: (params) => formatNumber(params.value) 
   },
   { 
-    headerName: "(%) Covered", 
-    field: "percentCovered", 
+    headerName: "(%) Covered", field: "percentCovered", 
+    type: 'rightAligned', flex: 1,
     valueGetter: (params) => {
-      // Check if it's the "Total" row
       if (params.data && params.data.landCapability === "Total") {
         return "-";
       }
@@ -29,20 +28,19 @@ const columnDefs = [
     valueFormatter: (params) => params.value + "%" 
   },
   { 
-    headerName: "Acres Covered", 
-    field: "acresCoverage2023",
+    headerName: "Acres Covered", field: "acresCoverage2023",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
     valueFormatter: (params) => formatNumber(params.value)
   },
   { 
-    headerName: "Acres of New Coverage", 
-    field: "acresNewCoverage", 
+    headerName: "Acres of New Coverage", field: "acresNewCoverage",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => formatNumber(params.value, 1) 
   },
   { 
-    headerName: "Threshold (%) Allowed", 
-    field: "thresholdValue",
+    headerName: "Threshold (%) Allowed", field: "thresholdValue",
+    type: 'rightAligned', flex: 1,
     valueGetter: (params) => {
-      // Check if it's the "Total" row
       if (params.data && params.data.landCapability === "Total") {
         return "-";
       }
@@ -51,8 +49,8 @@ const columnDefs = [
     valueFormatter: (params) => params.value + "%" 
   },
   { 
-    headerName: "Threshold Acres Allowed", 
-    field: "thresholdAcres",
+    headerName: "Threshold Acres Allowed", field: "thresholdAcres",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
     valueFormatter: (params) => formatNumber(params.value)
   }
 ];
@@ -107,7 +105,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table19_EstimatedImperviousCoverByLandCapability.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

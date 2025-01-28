@@ -4,11 +4,21 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { headerName: "Project Type", field: "projectType", flex: 2 },
-  { headerName: "Air Quality Mitigation", field: "airQualityMitigation", flex: 1 },
-  { headerName: "Water Quality Mitigation", field: "waterQualityMitigation", flex: 1 },
-  { headerName: "Stream Environment Zone Restoration", field: "streamEnvironmentZoneRestoration", flex: 1 },
-  { headerName: "Operations Maintenance", field: "operationsMaintenance", flex: 1 },
-  { headerName: "Excess Offsite Land Coverage Mitigation", field: "excessOffsiteLandCoverageMitigation", flex: 1 }
+  { headerName: "Air Quality Mitigation", field: "airQualityMitigation", 
+    type: 'rightAligned', flex: 1
+   },
+  { headerName: "Water Quality Mitigation", field: "waterQualityMitigation", 
+    type: 'rightAligned', flex: 1
+  },
+  { headerName: "Stream Environment Zone Restoration", field: "streamEnvironmentZoneRestoration", 
+    type: 'rightAligned', flex: 1
+   },
+  { headerName: "Operations Maintenance", field: "operationsMaintenance", 
+    type: 'rightAligned', flex: 1
+  },
+  { headerName: "Excess Offsite Land Coverage Mitigation", field: "excessOffsiteLandCoverageMitigation", 
+    type: 'rightAligned', flex: 1
+  }
 ];
 
 // Row Data
@@ -52,12 +62,14 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table22_ProjectTypeByMitigationFundSource.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }
 }
-
 // setup the grid after the page has finished loading
 document.addEventListener("DOMContentLoaded", function () {
   var gridDiv = document.querySelector("#myGrid");

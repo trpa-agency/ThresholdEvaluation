@@ -3,11 +3,20 @@ let gridOptions;
 let gridAPI;
 // Column Definitions
 const columnDefs = [
-  { headerName: "Sewer District", field: "sewerDistrict", flex: 1 },
-  { headerName: "Peak Sewer Flow (MGD)", field: "peakSewerFlow", flex: 1 },
-  { headerName: "Average 2023 Peak Sewer Flow (MGD)", field: "average2023PeakFlow", flex: 1 },
-  { headerName: "Capacity (MGD)", field: "capacity", flex: 1 },
-  { headerName: "Reserve from Peak Flow (MGD)", field: "reserveFromPeakFlow", flex: 1 },
+  { headerName: "Sewer District", field: "sewerDistrict", flex: 1 
+  },
+  { headerName: "Peak Sewer Flow (MGD)", field: "peakSewerFlow", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1
+  },
+  { headerName: "Average 2023 Peak Sewer Flow (MGD)", field: "average2023PeakFlow", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+   },
+  { headerName: "Capacity (MGD)", field: "capacity", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+   },
+  { headerName: "Reserve from Peak Flow (MGD)", field: "reserveFromPeakFlow", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  }
 ];
 
 // Row Data
@@ -38,7 +47,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table20_2023SewageDisposalCapacity.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

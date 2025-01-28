@@ -24,7 +24,7 @@ const columnDefs = [
     },
     cellClass: 'total-column',
     valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+      return params.value.toLocaleString();
   }}
 ];
 

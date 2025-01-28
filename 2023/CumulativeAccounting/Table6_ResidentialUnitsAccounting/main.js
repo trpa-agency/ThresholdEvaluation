@@ -5,29 +5,30 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 1 },
-  { field: "EstimatedExisting", headerName: "Estimated Total Existing Residential Units ",cellDataType: 'numeric', flex: 1, 
+  { field: "EstimatedExisting", headerName: "Estimated Total Existing Residential Units ",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
       valueFormatter: (params) => {
       return params.value.toLocaleString(); 
   }},
-  { field: "BankedExisting", headerName: "Banked Existing Residential Units",cellDataType: 'numeric', flex: 1, 
+  { field: "BankedExisting", headerName: "Banked Existing Residential Units",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
       valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+      return params.value.toLocaleString(); 
   }},
-  { field: "RemainingAllocations_ReleasedLo", headerName: "Remaining Unused Allocations Released to Local Jurisdictions",cellDataType: 'numeric', flex: 2, 
+  { field: "RemainingAllocations_ReleasedLo", headerName: "Remaining Unused Allocations Released to Local Jurisdictions",cellDataType: 'numeric', type: 'rightAligned',flex: 2, 
       valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+      return params.value.toLocaleString(); 
   }},
-  { field: "RemainingAllocations_Unreleased", headerName: "Remaining Unreleased Residential Allocations",cellDataType: 'numeric', flex: 1,
+  { field: "RemainingAllocations_Unreleased", headerName: "Remaining Unreleased Residential Allocations",cellDataType: 'numeric',type: 'rightAligned', flex: 1,
     valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+      return params.value.toLocaleString(); 
   }},
-  { field: "ResidentialBonusUnits", headerName: "Remaining Bonus Units",cellDataType: 'numeric', flex: 1,
+  { field: "ResidentialBonusUnits", headerName: "Remaining Bonus Units",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
     valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+      return params.value.toLocaleString(); 
   }},
-  { field: "TotalDevelopmentPotential", headerName: "Total",cellDataType: 'numeric', flex: 1,
+  { field: "TotalDevelopmentPotential", headerName: "Total",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
+    cellClass: 'total-column',
     valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+      return params.value.toLocaleString(); 
   }},
 
 ];
@@ -71,12 +72,14 @@ fetch(
   });
   function onBtnExport() {
     if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
+      const params = {
+        fileName: 'Table6_ResidentialUnitsAccounting.csv' 
+      };
+      window.gridAPI.exportDataAsCsv(params);
     } else {
       console.error("Grid API is not initialized.");
     }
   }
-
 
   
   

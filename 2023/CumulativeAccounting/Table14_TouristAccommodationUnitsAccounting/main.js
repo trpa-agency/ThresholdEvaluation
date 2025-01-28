@@ -4,13 +4,17 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text'},
-  { field: "TotalExistingTAUs", headerName: "Total Existing TAUs", cellDataType: 'numeric', 
+  { field: "TotalExistingTAUs", headerName: "Total Existing TAUs", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, minWidth: 10, resizable: true,
     valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "BankedReceivedTAUs", headerName: "Banked/Received TAUs", cellDataType: 'numeric', 
+  { field: "BankedReceivedTAUs", headerName: "Banked/Received TAUs", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, minWidth: 10, resizable: true,
     valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
   { field: "RemainingFrom1987PlanAnd2012Allocation", headerName: "Remaining from 1987 Plan and 2012 Allocation", 
-    cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "TotalDevelopmentPotential", headerName: "Total Development Potential", cellDataType: 'numeric', 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, minWidth: 10, resizable: true,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "TotalDevelopmentPotential", headerName: "Total Development Potential", 
+    cellDataType: 'numeric', type: 'rightAligned', cellClass: 'total-column', flex: 1, minWidth: 10, resizable: true,
     valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 ];
 
@@ -37,6 +41,12 @@ gridOptions = {
     resizable: true
   },
   popupParent: document.body,
+  getRowClass: (params) => {
+    // Apply a custom class to the row containing the "Total" account
+    if (params.data && params.data.Jurisdiction === "Total") {
+      return "total-row-highlight"; // Custom CSS class for highlighting
+    }
+  },
   onGridReady: (params) => {
     // Save the grid API reference for later use
     window.gridAPI = params.api; // Make API globally available if needed
@@ -45,7 +55,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table14_TouristAccommodationUnitsAccounting.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

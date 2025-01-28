@@ -31,14 +31,15 @@ fetch(
 
     console.log("Raw data fetched:", rawData); // Log to verify
 
-    // Step 1: Find unique years for dynamic column headers
+    // Find unique years for dynamic column headers
     const uniqueYears = [...new Set(rawData.map(item => item.Year))];
 
-    // Step 2: Create column definitions for each unique year
+    // Create column definitions for each unique year
     const dynamicColumnDefs = uniqueYears.map(year => ({
       field: year.toString(),
       headerName: year.toString(),
       cellDataType: 'numeric',
+      type: 'rightAligned',
       valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0', // Format with commas
     }));
 
@@ -48,7 +49,7 @@ fetch(
       ...dynamicColumnDefs
     ];
 
-    // Step 3: Pivot the data by 'Jurisdiction' and map Year/Value to columns
+    // Pivot the data by 'Jurisdiction' and map Year/Value to columns
     const rowData = [];
     const jurisdictionMap = new Map();
 
@@ -80,11 +81,13 @@ fetch(
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
-
-function onBtnExport() {
-  if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
-  } else {
-    console.error("Grid API is not initialized.");
+  function onBtnExport() {
+    if (window.gridAPI) {
+      const params = {
+        fileName: 'Table8_ResidentialAllocationsToJurisdictions.csv' 
+      };
+      window.gridAPI.exportDataAsCsv(params);
+    } else {
+      console.error("Grid API is not initialized.");
+    }
   }
-}

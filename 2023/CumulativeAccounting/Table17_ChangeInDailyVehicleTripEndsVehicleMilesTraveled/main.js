@@ -4,23 +4,47 @@ let gridAPIDVTE, gridAPIVMT;
 // Column Definitions for DVTE
 const columnDefsDVTE = [
   { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
-  { field: "DVTE_2018", headerName: "2018 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2019", headerName: "2019 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2020", headerName: "2020 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2021", headerName: "2021 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2022", headerName: "2022 (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_Total", headerName: "Total (DVTE)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
+  { field: "DVTE_2018", headerName: "2018 (DVTE)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2019", headerName: "2019 (DVTE)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2020", headerName: "2020 (DVTE)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2021", headerName: "2021 (DVTE)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_2022", headerName: "2022 (DVTE)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "DVTE_Total", headerName: "Total (DVTE)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, cellClass: 'total-column',
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
 ];
 
 // Column Definitions for VMT
 const columnDefsVMT = [
   { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
-  { field: "VMT_2018", headerName: "2018 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2019", headerName: "2019 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2020", headerName: "2020 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2021", headerName: "2021 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2022", headerName: "2022 (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_Total", headerName: "Total (VMT)", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
+  { field: "VMT_2018", headerName: "2018 (VMT)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2019", headerName: "2019 (VMT)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2020", headerName: "2020 (VMT)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2021", headerName: "2021 (VMT)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_2022", headerName: "2022 (VMT)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "VMT_Total", headerName: "Total (VMT)", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, cellClass: 'total-column',
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
 ];
 
 // Row Data

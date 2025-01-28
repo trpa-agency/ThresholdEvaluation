@@ -5,16 +5,19 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { headerName: "Rental Car Mitigation", field: "rentalCarMitigation", flex: 1 },
-  { headerName: "FY 2020", field: "fy2020", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "FY 2021", field: "fy2021", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "FY 2022", field: "fy2022", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "FY 2023", field: "fy2023", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "FY 2024", field: "fy2024", flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "FY 2020", field: "fy2020", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "FY 2021", field: "fy2021", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "FY 2022", field: "fy2022", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "FY 2023", field: "fy2023",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "FY 2024", field: "fy2024",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter },
   {
-    headerName: "Total", 
-    field: "total", 
-    flex: 1, 
-    valueFormatter: currencyFormatter,
+    headerName: "Total", field: "total", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter,
     cellClass: 'total-column'
   }
 ];
@@ -49,12 +52,14 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table23_RentalCarMitigationFeeRevenueExpenses.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }
 }
-
 // setup the grid after the page has finished loading
 document.addEventListener("DOMContentLoaded", function () {
   var gridDiv = document.querySelector("#myGrid");

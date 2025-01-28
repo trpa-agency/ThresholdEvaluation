@@ -5,10 +5,10 @@ let gridOptions;
 // Column Definitions
 const columnDefs = [
 { field: "category", headerName: "Category", cellDataType: 'text', flex: 1},
-{ field: "ResidentialBonusUnitAccounting", headerName: "Residential Bonus Unit Accounting", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-{ field: "TRPAPools", headerName: "TRPA Pools", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-{ field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-{ field: "Total", headerName: "Total", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+{ field: "ResidentialBonusUnitAccounting", headerName: "Residential Bonus Unit Accounting", cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+{ field: "TRPAPools", headerName: "TRPA Pools", cellDataType: 'numeric',type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+{ field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools", cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+{ field: "Total", headerName: "Total", cellDataType: 'numeric', type: 'rightAligned', cellClass: 'total-column', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 ];
 
 // Row Data
@@ -35,7 +35,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table10_ResidentialBonusUnitAccounting.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

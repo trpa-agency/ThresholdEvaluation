@@ -5,7 +5,7 @@ body {
 
 /* the grid div that contains the grid */
 .ag-theme-quartz {
-    height: 80px;
+    height: 180px;
     width: 100%;
     margin: 5px auto;
     --ag-borders: none;
@@ -22,7 +22,6 @@ body {
     font-weight: bold;  /* Bold weight for the table header */
     color: white;  /* White text color */
 }
-
 /* style button blue with white font and rounded corners */
 .button-blue {
     background-color: #337ab7;

@@ -3,11 +3,17 @@ let gridOptions;
 let gridAPI;
 // Column Definitions
 const columnDefs = [
-  { headerName: "TRPA Trust Fund Account", field: "trustFundAccount", flex: 1 },
-  { headerName: "Beginning Balance July 1, 2019", field: "beginningBalance", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "Contributions and Interest (July 1, 2019 through June 30, 2023)", field: "contributionsInterest", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "Expenditures (July 1, 2019 through June 30, 2023)", field: "expenditures", flex: 1, valueFormatter: currencyFormatter },
-  { headerName: "Ending Balance June 30, 2023", field: "endingBalance", flex: 1, valueFormatter: currencyFormatter }
+  { headerName: "TRPA Trust Fund Account", field: "trustFundAccount", 
+    flex: 1 
+  },
+  { headerName: "Beginning Balance July 1, 2019", field: "beginningBalance", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "Contributions and Interest (July 1, 2019 through June 30, 2023)", field: "contributionsInterest", 
+    cellDataType: 'numeric', type: 'rightAligned',flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "Expenditures (July 1, 2019 through June 30, 2023)", field: "expenditures", 
+    cellDataType: 'numeric', type: 'rightAligned',flex: 1, valueFormatter: currencyFormatter },
+  { headerName: "Ending Balance June 30, 2023", field: "endingBalance", 
+    cellDataType: 'numeric', type: 'rightAligned',flex: 1, valueFormatter: currencyFormatter }
 ];
 
 // Row Data
@@ -52,7 +58,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table21_TRPACapitalImprovementExpenditures.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }
