@@ -6,15 +6,15 @@ const columnDefsDevLan = [
   { headerName: "Development Right", field: "Development Right", flex: 1},
   { headerName: "Stream Environment Zones", field: "Stream Environment Zones", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
     valueFormatter: (params) => {
-    return params.value.toLocaleString(); // Format with commas
+    return params.value.toLocaleString(); 
       }},
   { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas", cellDataType: 'numeric',type: 'rightAligned',flex: 1, 
     valueFormatter: (params) => {
-    return params.value.toLocaleString(); // Format with commas
+    return params.value.toLocaleString(); 
       }},
   { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
     valueFormatter: (params) => {
-    return params.value.toLocaleString(); // Format with commas
+    return params.value.toLocaleString(); 
       }}
 ];
 
@@ -117,11 +117,11 @@ const gridOptionsDevLoc = {
 
 // Initialize the DVTE Grid
 const gridDivDevLan = document.querySelector("#myGridDevLan");
-agGrid.createGrid(gridDivDevLan, gridOptionsDevLan); // This initializes the grid with DVTE data
+agGrid.createGrid(gridDivDevLan, gridOptionsDevLan); 
 
 // Initialize the VMT Grid
 const gridDivDevLoc = document.querySelector("#myGridDevLoc");
-agGrid.createGrid(gridDivDevLoc, gridOptionsDevLoc); // This initializes the grid with VMT data
+agGrid.createGrid(gridDivDevLoc, gridOptionsDevLoc); 
 
 // Export Data as CSV
 function onBtnExport() {
