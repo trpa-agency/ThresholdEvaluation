@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Development Rights by Land Sensitivity and Land Capability</title>
+  <!-- Link AG Grid stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-quartz.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    #myGridDevLan, #myGridDevLoc {
+      height: 220px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="table-description">
+    <e><strong>Table 3.</strong></e> Development right changes by land sensitivity from TRPA approved transfers, 2013-2023</div>
+  <div id="myGridDevLan" class="ag-theme-quartz"></div>
+  <div class="table-description">
+    <e><strong>Table 4.</strong></e> Development right changes by location from TRPA approved transfers, 2013-2023</div>
+  <div id="myGridDevLoc" class="ag-theme-quartz"></div>
+  <div style="display: flex; flex-direction: column; height: 100%">
+    <div>
+      <button onclick="onBtnExport()" class="button-blue">Download Tables</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
