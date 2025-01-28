@@ -9,16 +9,31 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
 { headerName: "Jurisdiction", field: "jurisdiction" },
-{ headerName: "1991-1995 Acres", field: "acres1991_1995", valueFormatter: (params) => formatNumber(params.value) },
-{ headerName: "1996-2000 Acres", field: "acres1996_2000", valueFormatter: (params) => formatNumber(params.value) },
-{ headerName: "2001-2005 Acres", field: "acres2001_2005", valueFormatter: (params) => formatNumber(params.value) },
-{ headerName: "2006-2010 Acres", field: "acres2006_2010", valueFormatter: (params) => formatNumber(params.value) },
-{ headerName: "2011-2015 Acres", field: "acres2011_2015", valueFormatter: (params) => formatNumber(params.value) },
-{ headerName: "2016-2019 Acres", field: "acres2016_2019", valueFormatter: (params) => formatNumber(params.value) },
-{ headerName: "2020-2023 Acres", field: "acres2020_2023", valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "1991-1995 Acres", field: "acres1991_1995",
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "1996-2000 Acres", field: "acres1996_2000", 
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "2001-2005 Acres", field: "acres2001_2005", 
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "2006-2010 Acres", field: "acres2006_2010", 
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "2011-2015 Acres", field: "acres2011_2015", 
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "2016-2019 Acres", field: "acres2016_2019", 
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
+{ headerName: "2020-2023 Acres", field: "acres2020_2023", 
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+  valueFormatter: (params) => formatNumber(params.value) },
   {
     headerName: "Total", 
     field: "total", 
+    type: 'rightAligned',
     flex: 1, 
     valueFormatter: (params) => formatNumber(params.value),
     cellClass: 'total-column'
@@ -60,7 +75,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table18_NewImperviousLandCoverageAcres.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

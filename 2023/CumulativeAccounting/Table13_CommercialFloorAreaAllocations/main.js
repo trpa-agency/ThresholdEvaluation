@@ -5,18 +5,42 @@ let gridOptions;
 // Column Definitions
 const columnDefs = [
   { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
-  { field: "2012", headerName: "2012", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2013", headerName: "2013", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2014", headerName: "2014", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2015", headerName: "2015", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2016", headerName: "2016", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2017", headerName: "2017", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2018", headerName: "2018", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2019", headerName: "2019", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2020", headerName: "2020", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2021", headerName: "2021", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2022", headerName: "2022", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2023", headerName: "2023", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2012", headerName: "2012", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2013", headerName: "2013", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2014", headerName: "2014", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2015", headerName: "2015",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2016", headerName: "2016", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2017", headerName: "2017", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2018", headerName: "2018", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2019", headerName: "2019",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2020", headerName: "2020",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2021", headerName: "2021",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2022", headerName: "2022",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+  { field: "2023", headerName: "2023",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 ];
 
 // Row Data
@@ -43,6 +67,12 @@ gridOptions = {
     resizable: true
   },
   popupParent: document.body,
+  getRowClass: (params) => {
+    // Apply a custom class to the row containing the "Total" account
+    if (params.data && params.data.Jurisdiction === "Total") {
+      return "total-row-highlight"; // Custom CSS class for highlighting
+    }
+  },
   onGridReady: (params) => {
     // Save the grid API reference for later use
     window.gridAPI = params.api; // Make API globally available if needed
@@ -51,7 +81,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table13_CommercialFloorAreaAllocations.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

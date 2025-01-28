@@ -4,11 +4,25 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "PAOTCategory", headerName: "PAOT Categories", cellDataType: 'text'},
-  { field: "RegionalPlanAllocations", headerName: "Regional Plan Allocations", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "AssignedAsOf2019Evaluation", headerName: "Assigned as of 2019 Evaluation", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "Assigned2020To2023", headerName: "Assigned 2020 to 2023", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "PAOTsRemaining", headerName: "PAOTs Remaining", cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "PercentOfAllPAOTsAssigned", headerName: "Percent of All PAOTs Assigned", cellDataType: 'text', valueFormatter: (params) => params.value ? params.value : '0%' },
+  { field: "RegionalPlanAllocations", headerName: "Regional Plan Allocations", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+  { field: "AssignedAsOf2019Evaluation", headerName: "Assigned as of 2019 Evaluation", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+  { field: "Assigned2020To2023", headerName: "Assigned 2020 to 2023", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+  { field: "PAOTsRemaining", headerName: "PAOTs Remaining", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+  { field: "PercentOfAllPAOTsAssigned", headerName: "Percent of All PAOTs Assigned", 
+    cellDataType: 'text', type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value : '0%' },
 ];
 
 // Row Data
@@ -31,6 +45,12 @@ gridOptions = {
     resizable: true
   },
   popupParent: document.body,
+  getRowClass: (params) => {
+    // Apply a custom class to the row containing the "Total" account
+    if (params.data && params.data.PAOTCategory === "Total") {
+      return "total-row-highlight"; // Custom CSS class for highlighting
+    }
+  },
   onGridReady: (params) => {
     // Save the grid API reference for later use
     window.gridAPI = params.api; // Make API globally available if needed
@@ -39,12 +59,14 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table16_CumulativeAccountingOfPAOT.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }
 }
-
 // setup the grid after the page has finished loading
 document.addEventListener("DOMContentLoaded", function () {
   var gridDiv = document.querySelector("#myGrid");

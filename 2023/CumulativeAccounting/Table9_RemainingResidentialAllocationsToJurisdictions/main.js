@@ -39,6 +39,7 @@ fetch(
       field: year.toString(),
       headerName: year.toString(),
       cellDataType: 'numeric',
+      type: 'rightAligned',
       valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0', // Format with commas
     }));
 
@@ -80,11 +81,13 @@ fetch(
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
-
-function onBtnExport() {
-  if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
-  } else {
-    console.error("Grid API is not initialized.");
+  function onBtnExport() {
+    if (window.gridAPI) {
+      const params = {
+        fileName: 'Table9_RemainingResidentialAllocationsToJurisdictions.csv' 
+      };
+      window.gridAPI.exportDataAsCsv(params);
+    } else {
+      console.error("Grid API is not initialized.");
+    }
   }
-}

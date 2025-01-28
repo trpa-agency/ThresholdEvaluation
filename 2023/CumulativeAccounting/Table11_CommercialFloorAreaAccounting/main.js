@@ -4,15 +4,20 @@ let gridOptions;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text'},
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    cellDataType: 'text', flex: 1, minWidth: 200 },
   { field: "TotalExistingCFA", headerName: "Total Existing CFA", cellDataType: 'numeric', 
+    type: 'rightAligned', flex: 1,
     valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "BankedCFA", headerName: "Banked CFA", cellDataType: 'numeric', 
+  { field: "BankedCFA", headerName: "Banked CFA", 
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
     valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
   { field: "RemainingFrom1987PlanAnd2012Allocation", headerName: "Remaining from 1987 Plan and 2012 Allocation", 
-    cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    cellDataType: 'numeric',  type: 'rightAligned', flex: 1,
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
   { field: "TotalExistingAndPotentialDevelopment", headerName: "Total Existing and Potential Development", 
-    cellDataType: 'numeric', valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, cellClass: 'total-column',
+    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 ];
 
 // Row Data
@@ -33,6 +38,12 @@ gridOptions = {
   theme:"legacy",
   suppressExcelExport: true,
   popupParent: document.body,
+  getRowClass: (params) => {
+    // Apply a custom class to the row containing the "Total" account
+    if (params.data && params.data.Jurisdiction === "Total") {
+      return "total-row-highlight"; // Custom CSS class for highlighting
+    }
+  },
   onGridReady: (params) => {
     // Save the grid API reference for later use
     window.gridAPI = params.api; // Make API globally available if needed
@@ -41,7 +52,10 @@ gridOptions = {
 
 function onBtnExport() {
   if (window.gridAPI) {
-    window.gridAPI.exportDataAsCsv();
+    const params = {
+      fileName: 'Table11_CommercialFloorAreaAccounting.csv' 
+    };
+    window.gridAPI.exportDataAsCsv(params);
   } else {
     console.error("Grid API is not initialized.");
   }

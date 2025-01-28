@@ -5,33 +5,33 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
-  { field: "Total_Existing", headerName: "Existing Tourist Units",cellDataType: 'numeric', flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "Total_Existing", headerName: "Existing Tourist Units",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-  { field: "Non_Sensitive", headerName: "Non-Sensitive",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "Non_Sensitive", headerName: "Non-Sensitive",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-  { field: "Sensitive", headerName: "Sensitive",cellDataType: 'numeric', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "Sensitive", headerName: "Sensitive",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-  { field: "SEZ", headerName: "Stream Environment Zone",cellDataType: 'numeric', flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "SEZ", headerName: "Stream Environment Zone",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-  { field: "Remote_Areas", headerName: "Remote Areas",cellDataType: 'numeric', flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "Remote_Areas", headerName: "Remote Areas",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-  { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",cellDataType: 'numeric', flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-  { field: "Town_Centers", headerName: "Town Centers",cellDataType: 'numeric', flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
+  { field: "Town_Centers", headerName: "Town Centers",
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
   }}
 ];
 
@@ -74,11 +74,14 @@ fetch(
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
+  
   function onBtnExport() {
     if (window.gridAPI) {
-      window.gridAPI.exportDataAsCsv();
+      const params = {
+        fileName: 'Table15_TouristAccommodationUnitsByLandCapabilityLandUseDistrict.csv' 
+      };
+      window.gridAPI.exportDataAsCsv(params);
     } else {
       console.error("Grid API is not initialized.");
     }
   }
-  
