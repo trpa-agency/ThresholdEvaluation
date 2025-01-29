@@ -41,7 +41,7 @@ def plot_scenic_corridor_attainment_roadway(df, draft=False):
     df = pd.DataFrame(pivotScenic.to_records())
     # setup plot
     fig = px.bar(df, x="Year", y=["Attainment","Non-Attainment"], 
-                color_discrete_sequence=['#B85042', '#A7BEAE'])
+                color_discrete_sequence=['#A7BEAE','#B85042'])
     # update hover template
     fig.update_traces(hovertemplate='<br> %{y:.0f} units')
     # set layout
@@ -102,7 +102,7 @@ def plot_scenic_corridor_attainment_shoreline(df, draft=False):
     df = pd.DataFrame(pivotScenic.to_records())
     # setup plot
     fig = px.bar(df, x="Year", y=["Attainment","Non-Attainment"], 
-                color_discrete_sequence=['#B85042', '#A7BEAE'])
+                color_discrete_sequence=['#A7BEAE', '#B85042'])
     # udpate hover template
     fig.update_traces(hovertemplate='<br> %{y:.0f} units')
     # set layout
