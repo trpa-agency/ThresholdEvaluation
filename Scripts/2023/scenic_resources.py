@@ -41,7 +41,7 @@ def plot_scenic_corridor_attainment_roadway(df, draft=False):
     df = pd.DataFrame(pivotScenic.to_records())
     # setup plot
     fig = px.bar(df, x="Year", y=["Attainment","Non-Attainment"], 
-                color_discrete_sequence=['#66FF79', '#FF4A4A'])
+                color_discrete_sequence=['#B85042', '#A7BEAE'])
     # update hover template
     fig.update_traces(hovertemplate='<br> %{y:.0f} units')
     # set layout
@@ -102,15 +102,24 @@ def plot_scenic_corridor_attainment_shoreline(df, draft=False):
     df = pd.DataFrame(pivotScenic.to_records())
     # setup plot
     fig = px.bar(df, x="Year", y=["Attainment","Non-Attainment"], 
-                color_discrete_sequence=['#66FF79', '#FF4A4A'])
+                color_discrete_sequence=['#B85042', '#A7BEAE'])
     # udpate hover template
     fig.update_traces(hovertemplate='<br> %{y:.0f} units')
     # set layout
-    fig.update_layout(title='Shoreline Units in Attainment', 
+    fig.update_layout(
+                        # title='Shoreline Units in Attainment', 
+                        legend_title_text="Shoreline Units in Attainment",
+                        legend=dict(
+                        orientation="h",
+                        entrywidth=90,
+                        yanchor="bottom",
+                        y=1.05,
+                        xanchor="right",
+                        x=1
+                        ),
                         font_family=font,
                         template=template,
                         showlegend=True,
-                        legend_title='',
                         hovermode="x unified",
                         xaxis = dict(
                             tickmode = 'linear',
