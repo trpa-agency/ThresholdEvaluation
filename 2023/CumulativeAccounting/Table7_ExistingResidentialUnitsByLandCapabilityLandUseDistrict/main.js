@@ -53,11 +53,20 @@ fetch(
                         Town_Centers: feature.attributes.Town_Centers
     }));
     console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-   
+    // Calculate totals
+  const totalRow = rowData.reduce((acc, row) => {
+    Object.keys(row).forEach((key) => {
+      if (key !== "Jurisdiction") {
+        acc[key] = (acc[key] || 0) + (row[key] || 0);
+      }
+    });
+    return acc;
+  }, { Jurisdiction: "Total" });  
   // Grid Options with the fetched data as rowData
   gridOptions = {
       columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
+      rowData: rowData,
+      pinnedBottomRowData: [totalRow], // Use the fetched data
       theme: "legacy",
       // grandTotalRow: "bottom",
       suppressExcelExport: true,

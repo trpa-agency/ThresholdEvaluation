@@ -5,9 +5,8 @@ let gridOptions;
 // Column Definitions
 const columnDefs = [
 { field: "category", headerName: "Category", cellDataType: 'text', flex: 1},
-{ field: "ResidentialBonusUnitAccounting", headerName: "Residential Bonus Unit Accounting", cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 { field: "TRPAPools", headerName: "TRPA Pools", cellDataType: 'numeric',type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-{ field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools", cellDataType: 'numeric', type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+{ field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools", cellDataType: 'numeric', wrapHeaderText:true, type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 { field: "Total", headerName: "Total", cellDataType: 'numeric', type: 'rightAligned', cellClass: 'total-column', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
 ];
 

@@ -762,7 +762,10 @@ def plot_ais_infestation(df, draft=True):
     # # reorder categories
     # df['Infestation_Status'] = pd.Categorical(df['Infestation_Status'], categories=['Planning','Control', 'Surveillance'], ordered=True)
     # setup plot
-    color_map = {'Control':"#a37774", 'Surveillance':"#5c6d70", 'Planning':"#015B3D"}
+    color_map = {'Control':"#5c6d70", #gray
+                  'Surveillance':"#015B3D", #green
+                    'Planning':"#a37774" #pink
+                    }
     fig = px.bar(df, x='Year', y='percentage', 
                  color='Infestation_Status', 
                  barmode='stack', 
