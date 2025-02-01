@@ -50,11 +50,20 @@ fetch(
                         TotalDevelopmentPotential: feature.attributes.TotalDevelopmentPotential
     }));
     console.log("Data fetched:", rowData); // Log the data to ensure it is correct
-    
+  // Calculate totals
+  const totalRow = rowData.reduce((acc, row) => {
+    Object.keys(row).forEach((key) => {
+      if (key !== "Jurisdiction") {
+        acc[key] = (acc[key] || 0) + (row[key] || 0);
+      }
+    });
+    return acc;
+  }, { Jurisdiction: "Total" });  
   // Grid Options with the fetched data as rowData
   gridOptions = {
       columnDefs: columnDefs,
       rowData: rowData, // Use the fetched data
+      pinnedBottomRowData: [totalRow],
       theme:"legacy",
       suppressExcelExport: true,
       popupParent: document.body,
