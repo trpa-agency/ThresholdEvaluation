@@ -13,11 +13,11 @@ const columnDefs = [
 
 // Row Data
 const rowData = [
-{ category: "Remaining Residential Bonus Units", ResidentialBonusUnitAccounting: 1108, TRPAPools: 337, LocalJurisdictionPools: 1445, Total: 1445 },
-{ category: "Permitted Projects Under Construction", ResidentialBonusUnitAccounting: -126, TRPAPools: -20, LocalJurisdictionPools: -146, Total: -146 },
-{ category: "Permitted Projects Not Yet Started", ResidentialBonusUnitAccounting: -141, TRPAPools: -4, LocalJurisdictionPools: -145, Total: -145 },
-{ category: "Reserved Units", ResidentialBonusUnitAccounting: -262, TRPAPools: 0, LocalJurisdictionPools: -262, Total: -262 },
-{ category: "Remaining, Unreserved Units", ResidentialBonusUnitAccounting: 579, TRPAPools: 313, LocalJurisdictionPools: 892, Total: 892 },
+{ category: "Remaining Residential Bonus Units", TRPAPools: 1108, LocalJurisdictionPools: 337, Total: 1445 },
+{ category: "Permitted Projects Under Construction", TRPAPools: -126, LocalJurisdictionPools: -20, Total: -146 },
+{ category: "Permitted Projects Not Yet Started", TRPAPools: -141, LocalJurisdictionPools: -4, Total: -145 },
+{ category: "Reserved Units", TRPAPools: -262, LocalJurisdictionPools: 0, Total: -262 },
+{ category: "Remaining, Unreserved Units", TRPAPools: 579, LocalJurisdictionPools: 313, Total: 892 },
 ];
 
 // Grid Options with the fetched data as rowData
