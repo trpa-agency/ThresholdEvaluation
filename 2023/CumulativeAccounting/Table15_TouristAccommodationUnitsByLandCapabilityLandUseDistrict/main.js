@@ -4,33 +4,35 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', minWidth: 150, flex: 2 },
   { field: "Total_Existing", headerName: "Existing Tourist Units",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Non_Sensitive", headerName: "Non-Sensitive",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Sensitive", headerName: "Sensitive",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "SEZ", headerName: "Stream Environment Zone",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Remote_Areas", headerName: "Remote Areas",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Town_Centers", headerName: "Town Centers",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }}
 ];
