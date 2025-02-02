@@ -48,7 +48,7 @@ gridOptions = {
 function onBtnExport() {
   if (window.gridAPI) {
     const params = {
-      fileName: 'Table20_2023SewageDisposalCapacity.csv' 
+      fileName: 'Table21_2023SewageDisposalCapacity.csv' 
     };
     window.gridAPI.exportDataAsCsv(params);
   } else {

@@ -106,7 +106,7 @@ gridOptions = {
 function onBtnExport() {
   if (window.gridAPI) {
     const params = {
-      fileName: 'Table19_EstimatedImperviousCoverByLandCapability.csv' 
+      fileName: 'Table20_EstimatedImperviousCoverByLandCapability.csv' 
     };
     window.gridAPI.exportDataAsCsv(params);
   } else {

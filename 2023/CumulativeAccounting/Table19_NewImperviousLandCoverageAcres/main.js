@@ -76,7 +76,7 @@ gridOptions = {
 function onBtnExport() {
   if (window.gridAPI) {
     const params = {
-      fileName: 'Table18_NewImperviousLandCoverageAcres.csv' 
+      fileName: 'Table19_NewImperviousLandCoverageAcres.csv' 
     };
     window.gridAPI.exportDataAsCsv(params);
   } else {

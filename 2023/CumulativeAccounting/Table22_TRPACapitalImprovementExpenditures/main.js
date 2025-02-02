@@ -59,7 +59,7 @@ gridOptions = {
 function onBtnExport() {
   if (window.gridAPI) {
     const params = {
-      fileName: 'Table21_TRPACapitalImprovementExpenditures.csv' 
+      fileName: 'Table22_TRPACapitalImprovementExpenditures.csv' 
     };
     window.gridAPI.exportDataAsCsv(params);
   } else {
