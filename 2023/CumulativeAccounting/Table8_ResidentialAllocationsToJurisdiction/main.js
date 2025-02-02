@@ -40,7 +40,7 @@ fetch(
       headerName: year.toString(),
       cellDataType: 'numeric',
       type: 'rightAligned',
-      valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0', // Format with commas
+      valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0', 
     }));
 
     // Add "Jurisdiction" as the first column

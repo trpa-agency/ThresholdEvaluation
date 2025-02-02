@@ -5,7 +5,7 @@ body {
 
 /* the grid div that contains the grid */
 .ag-theme-quartz {
-    height: 80px;
+    height: 100%;
     width: 100%;
     margin: 5px auto;
     --ag-borders: none;
@@ -52,7 +52,7 @@ body {
     font-size: 16px;  /* Larger than the button font size */
     font-weight: normal;  
     color: black;  /* White text color */
-    margin-bottom: 20px;  /* Space between the table description and the grid */
+    margin-bottom: 10px;  /* Space between the table description and the grid */
     text-align: left;  /* Center the table description text */
 }
 
@@ -62,7 +62,7 @@ body {
     align-items: center;  /* Align the button and source description vertically centered */
     justify-content: flex-start;  /* Align them to the left */
     height: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 /* style for the source description next to the button */

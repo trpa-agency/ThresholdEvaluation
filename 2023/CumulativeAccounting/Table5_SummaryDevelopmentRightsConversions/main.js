@@ -2,10 +2,22 @@ let gridAppi;
 
 // Column definitions for the AG Grid
 const columnDefs = [
-    { headerName: "Development Right", field: "developmentRight", flex: 1 },
-    { headerName: "Commercial Floor Area (sq. ft.)", field: "commercialFloorArea", type: 'rightAligned',flex: 2 },
-    { headerName: "Tourist Accommodation Units", field: "touristAccommodationUnits",type: 'rightAligned', flex: 2 },
-    { headerName: "Residential Units", field: "residentialUnits",type: 'rightAligned', flex: 2 }
+    { headerName: "Development Right", field: "developmentRight", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+      // cellDataType: 'numeric', type: 'centerAligned', flex: 1 
+    },
+    { headerName: "Commercial Floor Area (sq. ft.)", field: "commercialFloorArea", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    },
+    { headerName: "Tourist Accommodation Units", field: "touristAccommodationUnits",
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    },
+    { headerName: "Residential Units", field: "residentialUnits",
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1,  
+    }
   ];
   
   // Row data for the AG Grid
@@ -22,6 +34,7 @@ const columnDefs = [
     columnDefs: columnDefs,
     rowData: rowData,
     theme:"legacy",
+    domLayout: "autoHeight",
     suppressExcelExport: true,
     popupParent: document.body,
     onGridReady: (params) => {

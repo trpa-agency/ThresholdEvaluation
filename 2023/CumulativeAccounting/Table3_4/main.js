@@ -3,19 +3,26 @@ let gridAPIDevLan, gridAPIDevLoc;
 
 // Column Definitions for Dev Lan
 const columnDefsDevLan = [
-  { headerName: "Development Right", field: "Development Right", flex: 1},
-  { headerName: "Stream Environment Zones", field: "Stream Environment Zones", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); // Format with commas
-      }},
-  { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas", cellDataType: 'numeric',type: 'rightAligned',flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); // Format with commas
-      }},
-  { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); // Format with commas
-      }}
+  { headerName: "Development Right", field: "Development Right", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'text', flex: 2, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { headerName: "Stream Environment Zones", field: "Stream Environment Zones", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { headerName: "Other Sensitive Areas", field: "Other Sensitive Areas", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { headerName: "Non-Sensitive Areas", field: "Non-Sensitive Areas",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  }
 ];
 
 const rowDataDevLan = [
@@ -47,20 +54,27 @@ const rowDataDevLan = [
 
 // Column Definitions for Dev Loc
 const columnDefsDevLoc = [
-  { headerName: "Development Right", field: "developmentRight", flex: 1 },
-  { headerName: "Remote Areas", field: "remoteAreas", cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-      }},
-  { headerName: "Areas within 1/4 mile of a Town Center", 
-    field: "areasWithinQuarterMile", cellDataType: 'numeric',type: 'rightAligned', flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-      }},
-  { headerName: "Town Centers", field: "townCenters", cellDataType: 'numeric',type: 'rightAligned', flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString();
-      }},
+  { headerName: "Development Right", field: "developmentRight", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'text',  flex: 2, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { headerName: "Remote Areas", field: "remoteAreas", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { headerName: "Within 1/4 mile of Town Center", 
+    field: "areasWithinQuarterMile", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { headerName: "Town Centers", field: "townCenters", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
 ];
 
 // Row Data
@@ -98,6 +112,7 @@ const gridOptionsDevLan = {
   suppressExcelExport: true,
   popupParent: document.body,
   theme: "legacy",
+  domLayout: 'autoHeight',
   onGridReady: (params) => {
     gridAPIDevLan = params.api; 
   },
@@ -109,6 +124,7 @@ const gridOptionsDevLoc = {
   rowData: rowDataDevLoc,
   suppressExcelExport: true,
   theme: "legacy",
+  domLayout: 'autoHeight',
   popupParent: document.body,
   onGridReady: (params) => {
     gridAPIDevLoc = params.api; 

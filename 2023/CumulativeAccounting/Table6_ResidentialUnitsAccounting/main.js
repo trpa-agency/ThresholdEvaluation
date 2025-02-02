@@ -4,31 +4,40 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 1 },
-  { field: "EstimatedExisting", headerName: "Estimated Total Existing Residential Units ",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "BankedExisting", headerName: "Banked Existing Residential Units",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "RemainingAllocations_ReleasedLo", headerName: "Remaining Unused Allocations Released to Local Jurisdictions",cellDataType: 'numeric', type: 'rightAligned',flex: 2, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "RemainingAllocations_Unreleased", headerName: "Remaining Unreleased Residential Allocations",cellDataType: 'numeric',type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "ResidentialBonusUnits", headerName: "Remaining Bonus Units",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "TotalDevelopmentPotential", headerName: "Total",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2 
+  },
+  { field: "EstimatedExisting", headerName: "Existing Residential Units ",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "BankedExisting", headerName: "Banked Existing Residential Units",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "RemainingAllocations_ReleasedLo", headerName: "Remaining Unused Allocations Released to Local Jurisdictions",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "RemainingAllocations_Unreleased", headerName: "Remaining Unreleased Residential Allocations",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "ResidentialBonusUnits", headerName: "Remaining Bonus Units",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "TotalDevelopmentPotential", headerName: "Total",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
     cellClass: 'total-column',
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
+    valueFormatter: (params) => { return params.value.toLocaleString(); 
   }},
 
 ];
@@ -65,8 +74,15 @@ fetch(
       rowData: rowData, // Use the fetched data
       pinnedBottomRowData: [totalRow],
       theme:"legacy",
+      domLayout: "autoHeight",
       suppressExcelExport: true,
       popupParent: document.body,
+      getRowClass: (params) => {
+        // Apply a custom class to the row containing the "Total" account
+        if (params.data && params.data.Jurisdiction === "Total") {
+          return "total-row-highlight"; // Custom CSS class for highlighting
+        }
+      },
       onGridReady: (params) => {
         // Save the grid API reference for later use
         window.gridAPI = params.api; // Make API globally available if needed

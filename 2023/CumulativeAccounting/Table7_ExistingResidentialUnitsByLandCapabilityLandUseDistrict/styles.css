@@ -5,7 +5,7 @@ body {
 
 /* the grid div that contains the grid */
 .ag-theme-quartz {
-    height: 300px;
+    /* height: 100%; */
     width: 100%;
     margin: 5px auto;
     --ag-borders: none;
@@ -79,3 +79,11 @@ body {
     color: #337ab7;
     text-align: right;
   }
+
+  /* Custom CSS for highlighting the 'Total' row */
+.total-row-highlight {
+    /* background-color: #337ab7; */
+    font-weight: bold;
+    color: #337ab7;
+
+    }
