@@ -32,13 +32,13 @@
   * [Table 14](CumulativeAccounting\Table14_TouristAccommodationUnitsAccounting) Tourist Accommodation Unit Accounting 
   * [Table 15](CumulativeAccounting\Table15_TouristAccommodationUnitsByLandCapabilityLandUseDistrict) Tourist Accomodation Units by Land Capability and Land Use District 
   * [Table 16](CumulativeAccounting\Table16_CumulativeAccountingOfPAOT) Cumulative Accounting of Persons At One Time (PAOT) 
-  * [Table 17](CumulativeAccounting\Table17_ChangeInDailyVehicleTripEndsVehicleMilesTraveled) Change in Daily Vehicle Trip Ends and Vehicle Miles Traveled 
-  * [Table 18](CumulativeAccounting\Table18_NewImperviousLandCoverageAcres) New Impervious Land Coverage 
-  * [Table 19](CumulativeAccounting\Table19_EstimatedImperviousCoverByLandCapability) Estimated Impervious Coverage by Land Capability 
-  * [Table 20](CumulativeAccounting\Table20_2023SewageDisposalCapacity) Sewage Disposal Capacity 
-  * [Table 21](CumulativeAccounting\Table21_TRPACapitalImprovementExpenditures) TRPA Capital Improvment Expenditures 
-  * [Table 22](CumulativeAccounting\Table22_ProjectTypeByMitigationFundSource) Project Type by Mitigation Fund Source
-  * [Table 23](CumulativeAccounting\Table23_RentalCarMitigationFeeRevenueExpenses) Rental Car Mitigation 
+  * [Table 17 & 18](CumulativeAccounting\Table17_Table18_ChangeInDailyVehicleTripEndsVehicleMilesTraveled) Change in Daily Vehicle Trip Ends and Vehicle Miles Traveled 
+  * [Table 19](CumulativeAccounting\Table19_NewImperviousLandCoverageAcres) New Impervious Land Coverage 
+  * [Table 20](CumulativeAccounting\Table20_EstimatedImperviousCoverByLandCapabilityy) Estimated Impervious Coverage by Land Capability 
+  * [Table 21](CumulativeAccounting\Table21_2023SewageDisposalCapacity) Sewage Disposal Capacity 
+  * [Table 22](CumulativeAccounting\Table22_TRPACapitalImprovementExpenditures) TRPA Capital Improvment Expenditures 
+  * [Table 23](CumulativeAccounting\Table23_ProjectTypeByMitigationFundSource) Project Type by Mitigation Fund Source
+  * [Table 24](CumulativeAccounting\Table24_RentalCarMitigationFeeRevenueExpenses) Rental Car Mitigation 
   * [List of Water Providers](CumulativeAccounting\WaterSuppliers) 
   * [Map of Water Provider Areas](CumulativeAccounting\WaterSuppliers\TahoeWaterProviderMap.html) Water Provider Map
   * [List of Improvement and Utility Districts](CumulativeAccounting\ImprovementDistricts)

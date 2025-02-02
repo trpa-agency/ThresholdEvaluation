@@ -16,23 +16,28 @@ const columnDefs = [
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Sensitive", headerName: "Sensitive",
-    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "SEZ", headerName: "Stream Environment Zone",
-    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Remote_Areas", headerName: "Remote Areas",
-    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",
-    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Town_Centers", headerName: "Town Centers",
-    minWidth: 100,cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }}
 ];

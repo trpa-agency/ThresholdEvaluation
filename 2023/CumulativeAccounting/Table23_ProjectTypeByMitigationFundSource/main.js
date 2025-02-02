@@ -63,7 +63,7 @@ gridOptions = {
 function onBtnExport() {
   if (window.gridAPI) {
     const params = {
-      fileName: 'Table22_ProjectTypeByMitigationFundSource.csv' 
+      fileName: 'Table23_ProjectTypeByMitigationFundSource.csv' 
     };
     window.gridAPI.exportDataAsCsv(params);
   } else {

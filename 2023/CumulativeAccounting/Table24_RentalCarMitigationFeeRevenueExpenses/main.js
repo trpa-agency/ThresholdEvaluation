@@ -53,7 +53,7 @@ gridOptions = {
 function onBtnExport() {
   if (window.gridAPI) {
     const params = {
-      fileName: 'Table23_RentalCarMitigationFeeRevenueExpenses.csv' 
+      fileName: 'Table24_RentalCarMitigationFeeRevenueExpenses.csv' 
     };
     window.gridAPI.exportDataAsCsv(params);
   } else {
