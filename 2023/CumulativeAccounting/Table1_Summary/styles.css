@@ -5,7 +5,8 @@ body {
 
 /* the grid div that contains the grid */
 .ag-theme-quartz {
-    height: 165px;
+    /* height: 165px; */
+    height: 100%;  /* Full height of the container */
     width: 100%;
     margin: 5px auto;
     --ag-borders: none;
@@ -62,15 +63,6 @@ body {
     justify-content: flex-start;  /* Align them to the left */
     height: 100%;
     margin-top: 20px;
-}
-
-/* style for the source description next to the button */
-.source-description {
-    font-size: 10px;  /* Slightly smaller than the table description */
-    font-weight: normal;  /* Regular weight for source description */
-    color: #ccc;  /* Lighter gray text color */
-    text-align: center;  /* Center the source description text */
-    margin-left: 100px;  /* Space between the button and the description */
 }
 
 .total-column {

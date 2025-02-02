@@ -68,9 +68,15 @@ fetch(
       rowData: rowData,
       pinnedBottomRowData: [totalRow], // Use the fetched data
       theme: "legacy",
-      // grandTotalRow: "bottom",
+      domLayout: "autoHeight",
       suppressExcelExport: true,
       popupParent: document.body,
+      getRowClass: (params) => {
+        // Apply a custom class to the row containing the "Total" account
+        if (params.data && params.data.Jurisdiction === "Total") {
+          return "total-row-highlight"; // Custom CSS class for highlighting
+        }
+      },
       onGridReady: (params) => {
         // Save the grid API reference for later use
         window.gridAPI = params.api; // Make API globally available if needed

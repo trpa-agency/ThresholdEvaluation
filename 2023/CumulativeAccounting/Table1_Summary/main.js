@@ -4,21 +4,28 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Type", headerName: "Type", cellDataType: 'text', flex: 1 },
-  { field: "Existing", headerName: "Existing",cellDataType: 'numeric', type: 'rightAligned',  headerClass: "ag-right-aligned-header", flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Banked", headerName: "Banked",cellDataType: 'numeric', type: 'rightAligned', headerClass: "ag-right-aligned-header", flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remaining", headerName: "Remaining Allocations",cellDataType: 'numeric', type: 'rightAligned', headerClass: "ag-right-aligned-header", flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  // built column fro total
-  { field: "Total", headerName: "Total", cellDataType: 'numeric', headerClass: "ag-right-aligned-header", flex: 1,
+  { field: "Type", headerName: "Type", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'text', flex: 1, minWidth: 120,
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Existing", headerName: "Existing",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Banked", headerName: "Banked",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Remaining", headerName: "Remaining Allocations",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Total", headerName: "Total", 
+    cellDataType: 'numeric', headerClass: "ag-right-aligned-header", flex: 1,
     valueGetter: (params) => {
       return params.data.Existing + params.data.Banked + params.data.Remaining;
     },
@@ -49,6 +56,7 @@ fetch(
       columnDefs: columnDefs,
       rowData: rowData, // Use the fetched data
       theme: 'legacy',
+      domLayout: 'autoHeight',
       suppressExcelExport: true,
       popupParent: document.body,
       onGridReady: (params) => {

@@ -5,18 +5,21 @@ let gridAPI;
 // Column Definitions
 const columnDefs = [
   { field: "Development_Right", headerName: "Development Right", cellDataType: 'text', flex: 2 },
-  { field: "Total_Banked", headerName: "Total Banked",cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Stream_Environment_Zones", headerName: "Stream Environment Zones",cellDataType: 'numeric',type: 'rightAligned', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }},
-  { field: "Remote_Areas", headerName: "Remote Area",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); // Format with commas
-  }}
+  { field: "Total_Banked", headerName: "Total Banked",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Stream_Environment_Zones", headerName: "Stream Environment Zones",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Remote_Areas", headerName: "Remote Area",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  }
 ];
 
 // Fetch data from the API
@@ -39,6 +42,7 @@ fetch(
       columnDefs: columnDefs,
       rowData: rowData, // Use the fetched data
       theme:"legacy",
+      domLayout: 'autoHeight',
       suppressExcelExport: true,
       popupParent: document.body,
       onGridReady: (params) => {
