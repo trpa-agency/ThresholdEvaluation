@@ -3,49 +3,79 @@ let gridAPIDVTE, gridAPIVMT;
 
 // Column Definitions for DVTE
 const columnDefsDVTE = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2
+},
   { field: "DVTE_2018", headerName: "2018", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2019", headerName: "2019", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2020", headerName: "2020", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2021", headerName: "2021", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_2022", headerName: "2022", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "DVTE_Total", headerName: "Total", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, cellClass: 'total-column',
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
-];
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+    { field: "DVTE_2019", headerName: "2019", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+    { field: "DVTE_2020", headerName: "2020", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+    { field: "DVTE_2021", headerName: "2021", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+    { field: "DVTE_2022", headerName: "2022", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+    { field: "DVTE_Total", headerName: "Total", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+  ];
 
 // Column Definitions for VMT
 const columnDefsVMT = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2
+},
   { field: "VMT_2018", headerName: "2018", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2019", headerName: "2019", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2020", headerName: "2020", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2021", headerName: "2021", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_2022", headerName: "2022", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "VMT_Total", headerName: "Total", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, cellClass: 'total-column',
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' }
-];
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
+    { field: "VMT_2019", headerName: "2019", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();
+    }},
+    { field: "VMT_2020", headerName: "2020", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();
+    }},
+    { field: "VMT_2021", headerName: "2021", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();
+    }},
+    { field: "VMT_2022", headerName: "2022", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();
+    }},
+    { field: "VMT_Total", headerName: "Total", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();
+    }},
+  ];
 
 // Row Data
 const rowData = [
@@ -81,6 +111,7 @@ const gridOptionsDVTE = {
   columnDefs: columnDefsDVTE,
   rowData: rowData,
   suppressExcelExport: true,
+  domLayout: "autoHeight",
   popupParent: document.body,
   theme: "legacy",
   onGridReady: (params) => {
@@ -94,6 +125,7 @@ const gridOptionsVMT = {
   rowData: rowData,
   suppressExcelExport: true,
   theme: "legacy",
+  domLayout: "autoHeight",
   popupParent: document.body,
   onGridReady: (params) => {
     gridAPIVMT = params.api; // Make API globally available if needed

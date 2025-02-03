@@ -4,42 +4,47 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-{ field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+{ field: "Jurisdiction", headerName: "Jurisdiction", 
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+  cellDataType: 'text', flex: 2, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "Total_Existing", headerName: "Existing Commercial Floor Area",
-  cellDataType: 'numeric', type: 'rightAligned', flex: 2, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-}},
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "Non_Sensitive", headerName: "Non-Sensitive",
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
   cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-}},
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "Sensitive", headerName: "Sensitive",
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
   cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
-    valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-}},
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "SEZ", headerName: "Stream Environment Zone",
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-}},
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "Remote_Areas", headerName: "Remote Areas",
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => {
-    return params.value.toLocaleString();
-}},
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-}},
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
 { field: "Town_Centers", headerName: "Town Centers",
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => {
-    return params.value.toLocaleString(); 
-}}
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+}
+
 ];
 
 // Fetch data from the API
@@ -61,14 +66,29 @@ fetch(
   }));
   console.log("Data fetched:", rowData); // Log the data to ensure it is correct
   
-// Grid Options with the fetched data as rowData
-gridOptions = {
-    columnDefs: columnDefs,
-    rowData: rowData, // Use the fetched data
-    theme: "legacy",
-    // grandTotalRow: "bottom",
-    suppressExcelExport: true,
-    popupParent: document.body,
+  const totalRow = rowData.reduce((acc, row) => {
+    Object.keys(row).forEach((key) => {
+      if (key !== "Jurisdiction") {
+        acc[key] = (acc[key] || 0) + (row[key] || 0);
+      }
+    });
+    return acc;
+  }, { Jurisdiction: "Total" });  
+  // Grid Options with the fetched data as rowData
+  gridOptions = {
+      columnDefs: columnDefs,
+      rowData: rowData, // Use the fetched data
+      pinnedBottomRowData: [totalRow],
+      theme:"legacy",
+      domLayout: "autoHeight",
+      suppressExcelExport: true,
+      popupParent: document.body,
+      getRowClass: (params) => {
+        // Apply a custom class to the row containing the "Total" account
+        if (params.data && params.data.Jurisdiction === "Total") {
+          return "total-row-highlight"; // Custom CSS class for highlighting
+        }
+      },
     onGridReady: (params) => {
       // Save the grid API reference for later use
       window.gridAPI = params.api; // Make API globally available if needed

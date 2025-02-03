@@ -4,10 +4,26 @@ let gridOptions;
 
 // Column Definitions
 const columnDefs = [
-{ field: "category", headerName: "Category", cellDataType: 'text', flex: 1},
-{ field: "TRPAPools", headerName: "TRPA Pools", cellDataType: 'numeric',type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-{ field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools", cellDataType: 'numeric', wrapHeaderText:true, type: 'rightAligned', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-{ field: "Total", headerName: "Total", cellDataType: 'numeric', type: 'rightAligned', cellClass: 'total-column', flex: 1, valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+{ field: "category", headerName: "Category", 
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+  cellDataType: 'text', flex: 2, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
+{ field: "TRPAPools", headerName: "TRPA Pools", 
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
+{ field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools",
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+},
+{ field: "Total", headerName: "Total", cellClass: 'total-column',
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();}
+}
 ];
 
 // Row Data
@@ -24,6 +40,7 @@ gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData, // Use the fetched data
   theme:"legacy",
+  domLayout: 'autoHeight',
   suppressExcelExport: true,
   popupParent: document.body,
   onGridReady: (params) => {

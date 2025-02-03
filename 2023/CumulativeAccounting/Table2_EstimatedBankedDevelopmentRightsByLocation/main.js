@@ -4,7 +4,9 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Development_Right", headerName: "Development Right", cellDataType: 'text', flex: 2 },
+  { field: "Development_Right", headerName: "Development Right", 
+    cellDataType: 'text', flex: 2 
+  },
   { field: "Total_Banked", headerName: "Total Banked",
     wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 

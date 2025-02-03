@@ -7,17 +7,25 @@ const columnDefs = [
   { field: "Jurisdiction", headerName: "Jurisdiction", 
     cellDataType: 'text', flex: 1, minWidth: 200 },
   { field: "TotalExistingCFA", headerName: "Total Existing CFA", cellDataType: 'numeric', 
-    type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "BankedCFA", headerName: "Banked CFA", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "RemainingFrom1987PlanAnd2012Allocation", headerName: "Remaining from 1987 Plan and 2012 Allocation", 
-    cellDataType: 'numeric',  type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "TotalExistingAndPotentialDevelopment", headerName: "Total Existing and Potential Development", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, cellClass: 'total-column',
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100, cellClass: 'total-column',
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  }
 ];
 
 // Row Data
@@ -36,6 +44,7 @@ gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData, // Use the fetched data
   theme:"legacy",
+  domLayout: 'autoHeight',
   suppressExcelExport: true,
   popupParent: document.body,
   getRowClass: (params) => {
