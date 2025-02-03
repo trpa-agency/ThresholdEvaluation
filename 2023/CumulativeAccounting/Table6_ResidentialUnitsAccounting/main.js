@@ -9,32 +9,32 @@ const columnDefs = [
     cellDataType: 'text', flex: 2 
   },
   { field: "EstimatedExisting", headerName: "Existing Residential Units ",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "BankedExisting", headerName: "Banked Existing Residential Units",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "RemainingAllocations_ReleasedLo", headerName: "Remaining Unused Allocations Released to Local Jurisdictions",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "RemainingAllocations_Unreleased", headerName: "Remaining Unreleased Residential Allocations",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "ResidentialBonusUnits", headerName: "Remaining Bonus Units",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "TotalDevelopmentPotential", headerName: "Total",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1,
     cellClass: 'total-column',
     valueFormatter: (params) => { return params.value.toLocaleString(); 
@@ -59,6 +59,7 @@ fetch(
                         TotalDevelopmentPotential: feature.attributes.TotalDevelopmentPotential
     }));
     console.log("Data fetched:", rowData); // Log the data to ensure it is correct
+  
   // Calculate totals
   const totalRow = rowData.reduce((acc, row) => {
     Object.keys(row).forEach((key) => {
@@ -67,6 +68,7 @@ fetch(
       }
     });
     return acc;
+
   }, { Jurisdiction: "Total" });  
   // Grid Options with the fetched data as rowData
   gridOptions = {

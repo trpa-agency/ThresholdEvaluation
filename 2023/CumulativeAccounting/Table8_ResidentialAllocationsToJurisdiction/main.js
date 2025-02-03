@@ -13,7 +13,8 @@ let gridOptions = {
 
 // Column Definitions (Initially empty, to be populated dynamically)
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    cellDataType: 'text', flex: 2 },
 ];
 
 // Fetch data from the API
@@ -38,6 +39,7 @@ fetch(
     const dynamicColumnDefs = uniqueYears.map(year => ({
       field: year.toString(),
       headerName: year.toString(),
+      wrapText: true, minWidth: 100,
       cellDataType: 'numeric',
       type: 'rightAligned',
       valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0', 
