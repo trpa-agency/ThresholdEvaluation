@@ -61,14 +61,29 @@ fetch(
     }));
     console.log("Data fetched:", rowData); // Log the data to ensure it is correct
    
-  // Grid Options with the fetched data as rowData
-  gridOptions = {
-      columnDefs: columnDefs,
-      rowData: rowData, // Use the fetched data
-      theme: "legacy",
-      // grandTotalRow: "bottom",
-      suppressExcelExport: true,
-      popupParent: document.body,
+    const totalRow = rowData.reduce((acc, row) => {
+      Object.keys(row).forEach((key) => {
+        if (key !== "Jurisdiction") {
+          acc[key] = (acc[key] || 0) + (row[key] || 0);
+        }
+      });
+      return acc;
+    }, { Jurisdiction: "Total" });  
+    // Grid Options with the fetched data as rowData
+    gridOptions = {
+        columnDefs: columnDefs,
+        rowData: rowData, // Use the fetched data
+        pinnedBottomRowData: [totalRow],
+        theme:"legacy",
+        domLayout: "autoHeight",
+        suppressExcelExport: true,
+        popupParent: document.body,
+        getRowClass: (params) => {
+          // Apply a custom class to the row containing the "Total" account
+          if (params.data && params.data.Jurisdiction === "Total") {
+            return "total-row-highlight"; // Custom CSS class for highlighting
+          }
+        },
       onGridReady: (params) => {
         // Save the grid API reference for later use
         window.gridAPI = params.api; // Make API globally available if needed

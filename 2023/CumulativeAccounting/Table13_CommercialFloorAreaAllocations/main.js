@@ -4,43 +4,70 @@ let gridOptions;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2
+  },
   { field: "2012", headerName: "2012", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2013", headerName: "2013", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2014", headerName: "2014", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "2015", headerName: "2015",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "2013", headerName: "2013", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "2014", headerName: "2014", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "2015", headerName: "2015",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2016", headerName: "2016", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2017", headerName: "2017", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2018", headerName: "2018", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2019", headerName: "2019",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2020", headerName: "2020",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2021", headerName: "2021",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2022", headerName: "2022",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "2023", headerName: "2023",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  }
 ];
 
 // Row Data
@@ -60,6 +87,7 @@ gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData, // Use the fetched data
   theme:"legacy",
+  domLayout: 'autoHeight',
   suppressExcelExport: true,
   defaultColDef: {
     flex: 1,

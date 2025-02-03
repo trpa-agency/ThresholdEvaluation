@@ -3,20 +3,32 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text'},
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
   { field: "TotalExistingTAUs", headerName: "Total Existing TAUs", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, minWidth: 10, resizable: true,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "BankedReceivedTAUs", headerName: "Banked/Received TAUs", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, minWidth: 10, resizable: true,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "RemainingFrom1987PlanAnd2012Allocation", headerName: "Remaining from 1987 Plan and 2012 Allocation", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, minWidth: 10, resizable: true,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-  { field: "TotalDevelopmentPotential", headerName: "Total Development Potential", 
-    cellDataType: 'numeric', type: 'rightAligned', cellClass: 'total-column', flex: 1, minWidth: 10, resizable: true,
-    valueFormatter: (params) => params.value ? params.value.toLocaleString() : '0' },
-];
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+    { field: "BankedReceivedTAUs", headerName: "Banked/Received TAUs", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();}
+    },
+    { field: "RemainingFrom1987PlanAnd2012Allocation", headerName: "Remaining from 1987 Plan and 2012 Allocation", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();}
+    },
+    { field: "TotalDevelopmentPotential", headerName: "Total Development Potential", 
+      wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+      cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+      valueFormatter: (params) => {return params.value.toLocaleString();}
+    },
+  ];
 
 // Row Data
 const rowData = [
@@ -34,6 +46,7 @@ gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData, // Use the fetched data
   theme:"legacy",
+  domLayout: 'autoHeight',
   suppressExcelExport: true,
   defaultColDef: {
     flex: 1,

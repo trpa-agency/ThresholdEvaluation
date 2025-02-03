@@ -3,27 +3,37 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "PAOTCategory", headerName: "PAOT Categories", cellDataType: 'text'},
+  { field: "PAOTCategory", headerName: "PAOT Categories",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { field: "RegionalPlanAllocations", headerName: "Regional Plan Allocations", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "AssignedAsOf2019Evaluation", headerName: "Assigned as of 2019 Evaluation", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "Assigned2020To2023", headerName: "Assigned 2020 to 2023", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "PAOTsRemaining", headerName: "PAOTs Remaining", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
   { field: "PercentOfAllPAOTsAssigned", headerName: "Percent of All PAOTs Assigned", 
-    cellDataType: 'text', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => params.value ? params.value : '0%' },
-];
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }}
+  ];
 
 // Row Data
 const rowData = [
@@ -39,6 +49,7 @@ gridOptions = {
   rowData: rowData, // Use the fetched data
   theme:"legacy",
   suppressExcelExport: true,
+  domLayout: 'autoHeight',
   defaultColDef: {
     flex: 1,
     minWidth: 10,
