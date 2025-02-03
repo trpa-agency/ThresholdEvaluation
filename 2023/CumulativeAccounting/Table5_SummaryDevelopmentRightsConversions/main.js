@@ -29,6 +29,7 @@ const columnDefs = [
       residentialUnits: "+157"
     }
   ];
+  
    // Grid Options with the fetched data as rowData
    gridOptions = {
     columnDefs: columnDefs,

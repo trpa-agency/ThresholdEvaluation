@@ -8,33 +8,50 @@ let gridOptions;
 let gridAPI;
 // Column Definitions
 const columnDefs = [
-{ headerName: "Jurisdiction", field: "jurisdiction" },
+{ headerName: "Jurisdiction", field: "jurisdiction",
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+  cellDataType: 'rext', flex: 2, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "1991-1995 Acres", field: "acres1991_1995",
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "1996-2000 Acres", field: "acres1996_2000", 
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "2001-2005 Acres", field: "acres2001_2005", 
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "2006-2010 Acres", field: "acres2006_2010", 
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "2011-2015 Acres", field: "acres2011_2015", 
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "2016-2019 Acres", field: "acres2016_2019", 
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
 { headerName: "2020-2023 Acres", field: "acres2020_2023", 
-  cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  valueFormatter: (params) => formatNumber(params.value) },
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+  valueFormatter: (params) => {return params.value.toLocaleString();
+}},
   {
-    headerName: "Total", 
-    field: "total", 
-    type: 'rightAligned',
-    flex: 1, 
+    headerName: "Total", field: "total", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'text', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => formatNumber(params.value),
     cellClass: 'total-column'
   }
@@ -54,6 +71,7 @@ gridOptions = {
   columnDefs: columnDefs,
   rowData: rowData, // Use the fetched data
   theme:"legacy",
+  domLayout: 'autoHeight',
   suppressExcelExport: true,
   defaultColDef: {
     flex: 1,
