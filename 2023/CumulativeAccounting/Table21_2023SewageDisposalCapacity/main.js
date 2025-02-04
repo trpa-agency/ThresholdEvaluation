@@ -3,20 +3,30 @@ let gridOptions;
 let gridAPI;
 // Column Definitions
 const columnDefs = [
-  { headerName: "Sewer District", field: "sewerDistrict", flex: 1 
+  { headerName: "Sewer District", field: "sewerDistrict", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150, 
+    cellDataType: 'text', flex: 2
   },
   { headerName: "Peak Sewer Flow (MGD)", field: "peakSewerFlow", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1
-  },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { headerName: "Average 2023 Peak Sewer Flow (MGD)", field: "average2023PeakFlow", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-   },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { headerName: "Capacity (MGD)", field: "capacity", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-   },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { headerName: "Reserve from Peak Flow (MGD)", field: "reserveFromPeakFlow", 
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-  }
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
 ];
 
 // Row Data
@@ -33,11 +43,7 @@ gridOptions = {
   rowData: rowData, // Use the fetched data
   theme:"legacy",
   suppressExcelExport: true,
-  defaultColDef: {
-    flex: 1,
-    minWidth: 10,
-    resizable: true
-  },
+  domLayout: 'autoHeight',
   popupParent: document.body,
   onGridReady: (params) => {
     // Save the grid API reference for later use
