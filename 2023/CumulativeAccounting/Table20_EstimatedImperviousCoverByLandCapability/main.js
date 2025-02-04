@@ -66,15 +66,15 @@ const columnDefs = [
 
 // Row Data
 const rowData = [
-  { landCapability: "1A", totalAcres: 23966.92736043, acresCoverage2023: 210.61516123291554, acresNewCoverage: -0.06299357208448117, thresholdValue: "1", thresholdAcres: 239.6692736043 },
-  { landCapability: "1B", totalAcres: 11404.76030555, acresCoverage2023: 797.3222534666254, acresNewCoverage: -1.6011019283746557, thresholdValue: "1", thresholdAcres: 114.0476030555 },
-  { landCapability: "1C", totalAcres: 53725.60651663, acresCoverage2023: 494.53718135500003, acresNewCoverage: 0.0, thresholdValue: "1", thresholdAcres: 537.2560651663 },
-  { landCapability: "2", totalAcres: 23249.509538539998, acresCoverage2023: 304.873298355, acresNewCoverage: 0.0, thresholdValue: "1", thresholdAcres: 232.4950953854 },
-  { landCapability: "3", totalAcres: 17694.8280334, acresCoverage2023: 381.71607078, acresNewCoverage: 0.0, thresholdValue: "5", thresholdAcres: 884.7414016700001 },
-  { landCapability: "4", totalAcres: 31447.46201914, acresCoverage2023: 1322.9379841256098, acresNewCoverage: 1.2461158506095042, thresholdValue: "20", thresholdAcres: 6289.4924038280005 },
-  { landCapability: "5", totalAcres: 12187.42759342, acresCoverage2023: 1134.149290796911, acresNewCoverage: -0.5694198830890725, thresholdValue: "25", thresholdAcres: 3046.856898355 },
-  { landCapability: "6", totalAcres: 23199.99067221, acresCoverage2023: 2286.823749769103, acresNewCoverage: 7.071220514103077, thresholdValue: "30", thresholdAcres: 6959.997201662999 },
-  { landCapability: "7", totalAcres: 5015.10433546, acresCoverage2023: 1351.020834621235, acresNewCoverage: 21.026344456235076, thresholdValue: "30", thresholdAcres: 1504.531300638 },
+  { landCapability: "1A", totalAcres: Math.round(23966.92736043), acresCoverage2023: Math.round(210.61516123291554), acresNewCoverage: Math.round(-0.06299357208448117), thresholdValue: "1", thresholdAcres: Math.round(239.6692736043) },
+  { landCapability: "1B", totalAcres: Math.round(11404.76030555), acresCoverage2023: Math.round(797.3222534666254), acresNewCoverage: Math.round(-1.6011019283746557), thresholdValue: "1", thresholdAcres: Math.round(114.0476030555) },
+  { landCapability: "1C", totalAcres: Math.round(53725.60651663), acresCoverage2023: Math.round(494.53718135500003), acresNewCoverage: Math.round(0.0), thresholdValue: "1", thresholdAcres: Math.round(537.2560651663) },
+  { landCapability: "2", totalAcres: Math.round(23249.509538539998), acresCoverage2023: Math.round(304.873298355), acresNewCoverage: Math.round(0.0), thresholdValue: "1", thresholdAcres: Math.round(232.4950953854) },
+  { landCapability: "3", totalAcres: Math.round(17694.8280334), acresCoverage2023: Math.round(381.71607078), acresNewCoverage: Math.round(0.0), thresholdValue: "5", thresholdAcres: Math.round(884.7414016700001) },
+  { landCapability: "4", totalAcres: Math.round(31447.46201914), acresCoverage2023: Math.round(1322.9379841256098), acresNewCoverage: Math.round(1.2461158506095042), thresholdValue: "20", thresholdAcres: Math.round(6289.4924038280005) },
+  { landCapability: "5", totalAcres: Math.round(12187.42759342), acresCoverage2023: Math.round(1134.149290796911), acresNewCoverage: Math.round(-0.5694198830890725), thresholdValue: "25", thresholdAcres: Math.round(3046.856898355) },
+  { landCapability: "6", totalAcres: Math.round(23199.99067221), acresCoverage2023: Math.round(2286.823749769103), acresNewCoverage: Math.round(7.071220514103077), thresholdValue: "30", thresholdAcres: Math.round(6959.997201662999) },
+  { landCapability: "7", totalAcres: Math.round(5015.10433546), acresCoverage2023: Math.round(1351.020834621235), acresNewCoverage: Math.round(21.026344456235076), thresholdValue: "30", thresholdAcres: Math.round(1504.531300638) },
 ];
 
 // Calculate totals for the Total row
