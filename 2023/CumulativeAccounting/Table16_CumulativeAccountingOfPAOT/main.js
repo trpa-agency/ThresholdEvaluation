@@ -30,7 +30,7 @@ const columnDefs = [
   }},
   { field: "PercentOfAllPAOTsAssigned", headerName: "Percent of All PAOTs Assigned", 
     wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    cellDataType: 'text', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }}
   ];
@@ -40,23 +40,28 @@ const rowData = [
   { PAOTCategory: "Summer Day Use", RegionalPlanAllocations: 6761, AssignedAsOf2019Evaluation: 1814, Assigned2020To2023: 521, PAOTsRemaining: 4426, PercentOfAllPAOTsAssigned: "34.5%" },
   { PAOTCategory: "Winter Day Use", RegionalPlanAllocations: 12400, AssignedAsOf2019Evaluation: 5435, Assigned2020To2023: 0, PAOTsRemaining: 6965, PercentOfAllPAOTsAssigned: "43.8%" },
   { PAOTCategory: "Summer Overnight", RegionalPlanAllocations: 6114, AssignedAsOf2019Evaluation: 394, Assigned2020To2023: 0, PAOTsRemaining: 5720, PercentOfAllPAOTsAssigned: "6.4%" },
-  { PAOTCategory: "Total", RegionalPlanAllocations: 25275, AssignedAsOf2019Evaluation: 7643, Assigned2020To2023: 521, PAOTsRemaining: 17111, PercentOfAllPAOTsAssigned: "32.3%" },
 ];
+
+// Calculate totals for the Total row
+const totalRow = {
+  PAOTCategory: "Total",
+  RegionalPlanAllocations: rowData.reduce((sum, row) => sum + (row.totalAcres || 0), 0),
+  AssignedAsOf2019Evaluation: rowData.reduce((sum, row) => sum + (row.acresCoverage2023 || 0), 0),
+  Assigned2020To2023: rowData.reduce((sum, row) => sum + (row.acresNewCoverage || 0), 0),
+  PAOTsRemaining: rowData.reduce((sum, row) => sum + (row.thresholdAcres || 0), 0),
+  PercentOfAllPAOTsAssigned: "-" 
+};
 
 // Grid Options with the fetched data as rowData
 gridOptions = {
-  columnDefs: columnDefs,
-  rowData: rowData, // Use the fetched data
-  theme:"legacy",
-  suppressExcelExport: true,
-  domLayout: 'autoHeight',
-  defaultColDef: {
-    flex: 1,
-    minWidth: 10,
-    resizable: true
-  },
-  popupParent: document.body,
-  getRowClass: (params) => {
+    columnDefs: columnDefs,
+    rowData: rowData, // Use the fetched data
+    pinnedBottomRowData: [totalRow],
+    theme:"legacy",
+    domLayout: "autoHeight",
+    suppressExcelExport: true,
+    popupParent: document.body,
+    getRowClass: (params) => {
     // Apply a custom class to the row containing the "Total" account
     if (params.data && params.data.PAOTCategory === "Total") {
       return "total-row-highlight"; // Custom CSS class for highlighting
