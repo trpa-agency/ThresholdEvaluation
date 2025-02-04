@@ -5,22 +5,22 @@ let gridOptions;
 // Column Definitions
 const columnDefs = [
 { field: "category", headerName: "Category", 
-  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 180,
   cellDataType: 'text', flex: 2, 
   valueFormatter: (params) => {return params.value.toLocaleString();}
 },
 { field: "TRPAPools", headerName: "TRPA Pools", 
-  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
   cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
   valueFormatter: (params) => {return params.value.toLocaleString();}
 },
 { field: "LocalJurisdictionPools", headerName: "Local Jurisdiction Pools",
-  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
   cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
   valueFormatter: (params) => {return params.value.toLocaleString();}
 },
 { field: "Total", headerName: "Total", cellClass: 'total-column',
-  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+  wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
   cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
   valueFormatter: (params) => {return params.value.toLocaleString();}
 }
