@@ -9,15 +9,20 @@ function formatNumber(value, decimals = 0) {
 
 // Column Definitions
 const columnDefs = [
-  { headerName: "Land Capability", field: "landCapability" },
+  { headerName: "Land Capability", field: "landCapability",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    cellDataType: 'text', flex: 1
+   },
   { 
     headerName: "Total Acres", field: "totalAcres",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => formatNumber(params.value) 
-  },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { 
     headerName: "(%) Covered", field: "percentCovered", 
-    type: 'rightAligned', flex: 1,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueGetter: (params) => {
       if (params.data && params.data.landCapability === "Total") {
         return "-";
@@ -29,17 +34,20 @@ const columnDefs = [
   },
   { 
     headerName: "Acres Covered", field: "acresCoverage2023",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => formatNumber(params.value)
-  },
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { 
     headerName: "Acres of New Coverage", field: "acresNewCoverage",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
-    valueFormatter: (params) => formatNumber(params.value, 1) 
-  },
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
   { 
     headerName: "Threshold (%) Allowed", field: "thresholdValue",
-    type: 'rightAligned', flex: 1,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueGetter: (params) => {
       if (params.data && params.data.landCapability === "Total") {
         return "-";
@@ -50,9 +58,10 @@ const columnDefs = [
   },
   { 
     headerName: "Threshold Acres Allowed", field: "thresholdAcres",
-    cellDataType: 'numeric', type: 'rightAligned', flex: 1,
-    valueFormatter: (params) => formatNumber(params.value)
-  }
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();
+  }},
 ];
 
 // Row Data
@@ -85,11 +94,7 @@ gridOptions = {
   theme:"legacy",
   suppressExcelExport: true,
   pinnedBottomRowData: [totalRow],
-  defaultColDef: {
-    flex: 1,
-    minWidth: 5,
-    resizable: true
-  },
+  domLayout: "autoHeight",
   popupParent: document.body,
   getRowClass: (params) => {
     // Apply a custom class to the row containing the "Total" account

@@ -73,11 +73,6 @@ gridOptions = {
   theme:"legacy",
   domLayout: 'autoHeight',
   suppressExcelExport: true,
-  defaultColDef: {
-    flex: 1,
-    minWidth: 10,
-    resizable: true
-  },
   popupParent: document.body,
   getRowClass: (params) => {
     // Apply a custom class to the row containing the "Total" account

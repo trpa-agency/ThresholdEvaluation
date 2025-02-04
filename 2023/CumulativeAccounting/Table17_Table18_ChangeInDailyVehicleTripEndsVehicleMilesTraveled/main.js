@@ -32,7 +32,7 @@ const columnDefsDVTE = [
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
   }},
-    { field: "DVTE_Total", headerName: "Total", 
+    { field: "DVTE_Total", headerName: "Total", cellClass: 'total-column',
     wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();
@@ -70,7 +70,7 @@ const columnDefsVMT = [
       cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
       valueFormatter: (params) => {return params.value.toLocaleString();
     }},
-    { field: "VMT_Total", headerName: "Total", 
+    { field: "VMT_Total", headerName: "Total", cellClass: 'total-column', 
       wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
       cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
       valueFormatter: (params) => {return params.value.toLocaleString();
@@ -114,6 +114,11 @@ const gridOptionsDVTE = {
   domLayout: "autoHeight",
   popupParent: document.body,
   theme: "legacy",
+  getRowClass: (params) => {
+    if (params.data && params.data.Jurisdiction === "Regional Total") {
+      return "total-row-highlight"; 
+    }
+  },
   onGridReady: (params) => {
     gridAPIDVTE = params.api; // Make API globally available if needed
   },
@@ -127,6 +132,11 @@ const gridOptionsVMT = {
   theme: "legacy",
   domLayout: "autoHeight",
   popupParent: document.body,
+  getRowClass: (params) => {
+    if (params.data && params.data.Jurisdiction === "Regional Total") {
+      return "total-row-highlight"; 
+    }
+  },
   onGridReady: (params) => {
     gridAPIVMT = params.api; // Make API globally available if needed
   },

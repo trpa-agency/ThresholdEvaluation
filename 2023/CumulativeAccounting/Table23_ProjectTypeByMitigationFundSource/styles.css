@@ -5,7 +5,8 @@ body {
 
 /* the grid div that contains the grid */
 .ag-theme-quartz {
-    height: 480px;
+    /* height: 480px; */
+    height: 100%;  /* Full height of the container */
     width: 100%;
     margin: 5px auto;
     --ag-borders: none;

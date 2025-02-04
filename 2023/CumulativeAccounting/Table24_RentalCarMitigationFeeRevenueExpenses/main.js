@@ -38,11 +38,7 @@ gridOptions = {
   rowData: rowData, // Use the fetched data
   theme:"legacy",
   suppressExcelExport: true,
-  defaultColDef: {
-    flex: 1,
-    minWidth: 5,
-    resizable: true
-  },
+  domLayout: 'autoHeight',
   popupParent: document.body,
   onGridReady: (params) => {
     // Save the grid API reference for later use
