@@ -63,18 +63,28 @@ const rowData = [
   { jurisdiction: "El Dorado County", acres1991_1995: 32.1, acres1996_2000: 40.4, acres2001_2005: 46.1, acres2006_2010: 28.1, acres2011_2015: 4.2, acres2016_2019: 13.7, acres2020_2023: 22.8, total: 187.4 },
   { jurisdiction: "Placer County", acres1991_1995: 25.5, acres1996_2000: 28.7, acres2001_2005: 35.1, acres2006_2010: 15.3, acres2011_2015: 3.3, acres2016_2019: 6.0, acres2020_2023: 4.8, total: 118.7 },
   { jurisdiction: "Washoe County", acres1991_1995: 29.7, acres1996_2000: 17.0, acres2001_2005: 15.7, acres2006_2010: 5.6, acres2011_2015: 10.9, acres2016_2019: 3.2, acres2020_2023: 2.6, total: 84.7 },
-  { jurisdiction: "Total", acres1991_1995: 94.4, acres1996_2000: 92.1, acres2001_2005: 103.4, acres2006_2010: 52.4, acres2011_2015: 18.9, acres2016_2019: 24.3, acres2020_2023: 33.8, total: 419.3 }
 ];
 
+// Calculate totals
+const totalRow = rowData.reduce((acc, row) => {
+  Object.keys(row).forEach((key) => {
+    if (key !== "jurisdiction") {
+      acc[key] = (acc[key] || 0) + (row[key] || 0);
+    }
+  });
+  return acc;
+
+}, { jurisdiction: "Total" });  
 // Grid Options with the fetched data as rowData
 gridOptions = {
-  columnDefs: columnDefs,
-  rowData: rowData, // Use the fetched data
-  theme:"legacy",
-  domLayout: 'autoHeight',
-  suppressExcelExport: true,
-  popupParent: document.body,
-  getRowClass: (params) => {
+    columnDefs: columnDefs,
+    rowData: rowData, // Use the fetched data
+    pinnedBottomRowData: [totalRow],
+    theme:"legacy",
+    domLayout: "autoHeight",
+    suppressExcelExport: true,
+    popupParent: document.body,
+    getRowClass: (params) => {
     // Apply a custom class to the row containing the "Total" account
     if (params.data && params.data.jurisdiction === "Total") {
       return "total-row-highlight"; // Custom CSS class for highlighting
