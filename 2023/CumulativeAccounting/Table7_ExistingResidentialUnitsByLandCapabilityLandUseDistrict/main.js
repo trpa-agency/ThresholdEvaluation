@@ -4,35 +4,46 @@ let gridAPI;
 
 // Column Definitions
 const columnDefs = [
-  { field: "Jurisdiction", headerName: "Jurisdiction", cellDataType: 'text', flex: 2 },
-  { field: "Total_Existing", headerName: "Existing Residential Units",cellDataType: 'numeric',type: 'rightAligned', flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "Non_Sensitive", headerName: "Non-Sensitive",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "Sensitive", headerName: "Sensitive",cellDataType: 'numeric', type: 'rightAligned',flex: 1, 
-      valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "SEZ", headerName: "Stream Environment Zone",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString();
-  }},
-  { field: "Remote_Areas", headerName: "Remote Areas",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }},
-  { field: "Town_Centers", headerName: "Town Centers",cellDataType: 'numeric', type: 'rightAligned',flex: 1,
-    valueFormatter: (params) => {
-      return params.value.toLocaleString(); 
-  }}
+  { field: "Jurisdiction", headerName: "Jurisdiction", 
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 150,
+    cellDataType: 'text', flex: 2, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Total_Existing", headerName: "Existing Residential Units",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Non_Sensitive", headerName: "Non-Sensitive",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Sensitive", headerName: "Sensitive",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "SEZ", headerName: "Stream Environment Zone",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Remote_Areas", headerName: "Remote Areas",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Within_Quarter_Mile_of_Town_Cen", headerName: "Within 1/4 mile of a Town Center",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
+  { field: "Town_Centers", headerName: "Town Centers",
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 120,
+    cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
+    valueFormatter: (params) => {return params.value.toLocaleString();}
+  },
 ];
 
 // Fetch data from the API
@@ -66,7 +77,7 @@ fetch(
   gridOptions = {
       columnDefs: columnDefs,
       rowData: rowData,
-      pinnedBottomRowData: [totalRow], // Use the fetched data
+      pinnedBottomRowData: [totalRow], 
       theme: "legacy",
       domLayout: "autoHeight",
       suppressExcelExport: true,
