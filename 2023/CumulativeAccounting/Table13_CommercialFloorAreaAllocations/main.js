@@ -9,62 +9,62 @@ const columnDefs = [
     cellDataType: 'text', flex: 2
   },
   { field: "2012", headerName: "2012", 
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2013", headerName: "2013", 
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2014", headerName: "2014", 
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2015", headerName: "2015",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2016", headerName: "2016", 
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2017", headerName: "2017", 
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2018", headerName: "2018", 
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2019", headerName: "2019",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2020", headerName: "2020",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2021", headerName: "2021",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2022", headerName: "2022",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   },
   { field: "2023", headerName: "2023",
-    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 100,
+    wrapHeaderText: true, autoHeaderHeight: true, minWidth: 80,
     cellDataType: 'numeric', type: 'rightAligned', flex: 1, 
     valueFormatter: (params) => {return params.value.toLocaleString();}
   }
@@ -80,20 +80,25 @@ const rowData = [
   { Jurisdiction: "Carson County", 2012: 0, 2013: 0, 2014: 0, 2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0 },
   { Jurisdiction: "TRPA Incentive Pool", 2012: 0, 2013: 0, 2014: 0, 2015: 0, 2016: 0, 2017: 0, 2018: 0, 2019: 0, 2020: 0, 2021: 0, 2022: 0, 2023: 0 }
 ];
+// Calculate totals
+const totalRow = rowData.reduce((acc, row) => {
+  Object.keys(row).forEach((key) => {
+    if (key !== "Jurisdiction") {
+      acc[key] = (acc[key] || 0) + (row[key] || 0);
+    }
+  });
+  return acc;
 
+}, { Jurisdiction: "Total" });  
 // Grid Options with the fetched data as rowData
 gridOptions = {
-  columnDefs: columnDefs,
-  rowData: rowData, // Use the fetched data
-  theme:"legacy",
-  domLayout: 'autoHeight',
-  suppressExcelExport: true,
-  defaultColDef: {
-    flex: 1,
-    minWidth: 10,
-    resizable: true
-  },
-  popupParent: document.body,
+    columnDefs: columnDefs,
+    rowData: rowData, // Use the fetched data
+    pinnedBottomRowData: [totalRow],
+    theme:"legacy",
+    domLayout: "autoHeight",
+    suppressExcelExport: true,
+    popupParent: document.body,
   getRowClass: (params) => {
     // Apply a custom class to the row containing the "Total" account
     if (params.data && params.data.Jurisdiction === "Total") {
