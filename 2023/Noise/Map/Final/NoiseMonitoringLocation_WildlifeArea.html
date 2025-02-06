@@ -74,7 +74,7 @@
         Legend,
         Fullscreen
       ) {
-        var map = new WebMap({portalItem: {id: "a751f2aa41ab4ea987285c26a6c41af8"}});
+        var map = new WebMap({portalItem: {id: "fc1eab5bb4a74bc2a8571295ece4bd1f"}});
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
@@ -82,46 +82,52 @@
               center: [-120.01,39.01],
               zoom: 9
             });
+
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
-        
+
         fullscreen = new Fullscreen({
           view: view
         });
         view.ui.add(fullscreen, "top-left");
-        
-        // Access the second layer and filter its CNEL field
-        map.when(function() {
-          var noiseLayer = map.layers.getItemAt(1); // Get the second layer
-          noiseLayer.definitionExpression = "CNEL_LAND_USE = 'COMMERCIAL'"; // Apply the filter
-        });
-          
-        // create legend card
-        var legend = new Legend({
-        view: view,
-        layerInfos: [
-          {
-            layer: noiseLayer,
-            title: "Plan Area Noise Monitoring Location"
-          }
-        ]
-        });
 
-        // Add widget to the top right corner of the view
-        view.ui.add(legend, "top-right");
-        
-        // Create collapasable button for legend
-        var legendExpand = new Expand({
+        // Access map layers and filter noise layer after the map is loaded
+        map.when(function() {
+          // Get the layers in the map
+          var layers = map.layers;
+          var noiseLayer = layers.getItemAt(1); // Get the second layer
+
+          // Apply the filter on the second layer (noise layer)
+          noiseLayer.definitionExpression = "CNEL_LAND_USE = 'COMMERCIAL'";
+
+          // create legend card
+          var legend = new Legend({
+            view: view,
+            layerInfos: [
+              {
+                layer: noiseLayer,
+                title: "Plan Area Noise Monitoring Location"
+              }
+            ]
+          });
+
+          // Add widget to the top right corner of the view
+          view.ui.add(legend, "top-right");
+
+          // Create collapsible button for legend
+          var legendExpand = new Expand({
             expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
             expandTooltip: "Legend",
             view: view,
             autoCollapse: true,
             content: legend.domNode,
             group: "top-right"
-            });
+          });
 
-        // add layer list button to the top right corner of the view
-        view.ui.add(legendExpand, "top-right");
+          // Add layer list button to the top right corner of the view
+          view.ui.add(legendExpand, "top-right");
+
+        });
 
         // Createa Home Button
         var homeWidget = new Home({
@@ -136,8 +142,11 @@
             view: view,
             nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
         });     
-    });   
-  </script>
+
+        // Add Basemap Toggle to UI (optional, based on use case)
+        view.ui.add(basemapToggle, "bottom-left");
+      });
+    </script>
   </head>
   <body>
     <div id="viewDiv"></div>
