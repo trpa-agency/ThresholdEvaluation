@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2023 Threshold Evaluation - Noise Commercial Areas</title>
+    <title>2023 Threshold Evaluation - Noise Monitoring Wildlife Areas</title>
     <style>
       html,
       body,
@@ -44,37 +44,22 @@
 
     <script>
       require([
-        "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
-        "esri/layers/FeatureLayer",
-        "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
-        "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
-        esriConfig,
-        Map,
         MapView,
         WebMap,
-        FeatureLayer,
-        TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
-        LayerList,
         Legend,
         Fullscreen
       ) {
-        var map = new WebMap({portalItem: {id: "fc1eab5bb4a74bc2a8571295ece4bd1f"}});
+          
+        var map = new WebMap({portalItem: {id: "d6c5b29b809040eeafc4d6402b47e8c3"}});
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
@@ -82,71 +67,56 @@
               center: [-120.01,39.01],
               zoom: 9
             });
-
+        
+          
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
-
-        fullscreen = new Fullscreen({
-          view: view
-        });
+        
+        // add fullscreen button to top left
+        var fullscreen = new Fullscreen({view: view});
         view.ui.add(fullscreen, "top-left");
 
-        // Access map layers and filter noise layer after the map is loaded
-        map.when(function() {
-          // Get the layers in the map
-          var layers = map.layers;
-          var noiseLayer = layers.getItemAt(1); // Get the second layer
-
-          // Apply the filter on the second layer (noise layer)
-          noiseLayer.definitionExpression = "CNEL_LAND_USE = 'COMMERCIAL'";
-
-          // create legend card
+        // Add map item to the legend
+        view.when(function() {
+          var featureLayer = map.layers.getItemAt(0);
           var legend = new Legend({
             view: view,
             layerInfos: [
               {
-                layer: noiseLayer,
-                title: "Plan Area Noise Monitoring Location"
+                layer: featureLayer
               }
             ]
-          });
+        });
 
-          // Add widget to the top right corner of the view
-          view.ui.add(legend, "top-right");
-
-          // Create collapsible button for legend
-          var legendExpand = new Expand({
-            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+        // create legend card
+        view.ui.add(legend, "top-right");
+        
+        // Create collapasable button for legend
+        var legendExpand = new Expand({
+            expandIconClass: "esri-icon-layers", 
             expandTooltip: "Legend",
             view: view,
+            expanded: true,
             autoCollapse: true,
             content: legend.domNode,
             group: "top-right"
-          });
+            });
 
-          // Add layer list button to the top right corner of the view
-          view.ui.add(legendExpand, "top-right");
+        // add layer list button to the top right corner of the view
+        view.ui.add(legendExpand, "top-right");
 
-        });
+        // Create a Home Button
+        var homeWidget = new Home({view: view});
+        view.ui.add(homeWidget, "top-left");
 
-        // Createa Home Button
-        var homeWidget = new Home({
-            view: view
-        });
+        // Disable scroll on zoom
+        view.on("mouse-wheel", function(evt) {evt.stopPropagation(); });
 
-        // adds the home widget to the top left corner of the MapView
-        view.ui.add(homeWidget, "top-left");            
-
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });     
-
-        // Add Basemap Toggle to UI (optional, based on use case)
-        view.ui.add(basemapToggle, "bottom-left");
+        
       });
-    </script>
+    });
+
+	</script>
   </head>
   <body>
     <div id="viewDiv"></div>
