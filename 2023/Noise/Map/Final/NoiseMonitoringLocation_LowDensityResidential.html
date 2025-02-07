@@ -6,7 +6,7 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>2023 Threshold Evaluation - Noise Commercial Areas</title>
+    <title>2023 Threshold Evaluation - Noise Monitoring Low Density Residential</title>
     <style>
       html,
       body,
@@ -44,37 +44,22 @@
 
     <script>
       require([
-        "esri/config",
-        "esri/Map",
         "esri/views/MapView",
         "esri/WebMap",
-        "esri/layers/FeatureLayer",
-        "esri/layers/TileLayer",
         "esri/widgets/Expand",
         "esri/widgets/Home",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/BasemapToggle",
-        "esri/widgets/Search",
-        "esri/widgets/LayerList",
         "esri/widgets/Legend",
         "esri/widgets/Fullscreen"
       ], function(
-        esriConfig,
-        Map,
         MapView,
         WebMap,
-        FeatureLayer,
-        TileLayer,
         Expand,
         Home,
-        BasemapGallery,
-        BasemapToggle,
-        Search,
-        LayerList,
         Legend,
         Fullscreen
       ) {
-        var map = new WebMap({portalItem: {id: "a751f2aa41ab4ea987285c26a6c41af8"}});
+          
+        var map = new WebMap({portalItem: {id: "ec62ee4d8501450cb811428b53c39254"}});
 
         var view = new MapView({
               map: map,  // The WebMap instance created above
@@ -82,39 +67,36 @@
               center: [-120.01,39.01],
               zoom: 9
             });
+        
+          
         // move zoom buttons to top left
         view.ui.move("zoom", "top-left");
         
-        fullscreen = new Fullscreen({
-          view: view
-        });
+        // add fullscreen button to top left
+        var fullscreen = new Fullscreen({view: view});
         view.ui.add(fullscreen, "top-left");
-        
-        // Access the second layer and filter its CNEL field
-        map.when(function() {
-          var noiseLayer = map.layers.getItemAt(1); // Get the second layer
-          noiseLayer.definitionExpression = "CNEL_LAND_USE = 'COMMERCIAL'"; // Apply the filter
-        });
-          
-        // create legend card
-        var legend = new Legend({
-        view: view,
-        layerInfos: [
-          {
-            layer: noiseLayer,
-            title: "Plan Area Noise Monitoring Location"
-          }
-        ]
+
+        // Add map item to the legend
+        view.when(function() {
+          var featureLayer = map.layers.getItemAt(0);
+          var legend = new Legend({
+            view: view,
+            layerInfos: [
+              {
+                layer: featureLayer
+              }
+            ]
         });
 
-        // Add widget to the top right corner of the view
+        // create legend card
         view.ui.add(legend, "top-right");
         
         // Create collapasable button for legend
         var legendExpand = new Expand({
-            expandIconClass: "esri-icon-layers",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+            expandIconClass: "esri-icon-layers", 
             expandTooltip: "Legend",
             view: view,
+            expanded: true,
             autoCollapse: true,
             content: legend.domNode,
             group: "top-right"
@@ -123,21 +105,18 @@
         // add layer list button to the top right corner of the view
         view.ui.add(legendExpand, "top-right");
 
-        // Createa Home Button
-        var homeWidget = new Home({
-            view: view
-        });
+        // Create a Home Button
+        var homeWidget = new Home({view: view});
+        view.ui.add(homeWidget, "top-left");
 
-        // adds the home widget to the top left corner of the MapView
-        view.ui.add(homeWidget, "top-left");            
+        // Disable scroll on zoom
+        view.on("mouse-wheel", function(evt) {evt.stopPropagation(); });
 
-        var basemapToggle = new BasemapToggle({
-            container: document.createElement("div"),
-            view: view,
-            nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-        });     
-    });   
-  </script>
+        
+      });
+    });
+
+	</script>
   </head>
   <body>
     <div id="viewDiv"></div>
