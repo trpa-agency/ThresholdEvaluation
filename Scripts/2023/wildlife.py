@@ -410,7 +410,7 @@ def plot_bald_eagle_winter(df, draft=False):
                         dragmode=False,
                         xaxis = dict(
                             tickmode = 'linear',
-                            dtick = 1
+                            dtick = 3
                         ),
                         yaxis = dict(
                             tickmode = 'linear',
@@ -426,7 +426,7 @@ def plot_bald_eagle_winter(df, draft=False):
             config=config,
             file= out_chart / "Draft/Wildlife_BaldEagle_Winter.html",
             include_plotlyjs="directory",
-            div_id="Bald Eagle",
+            div_id="Winter Bald Eagle",
             full_html=False,
             # default_height=500,
             # default_width=800,
@@ -436,7 +436,7 @@ def plot_bald_eagle_winter(df, draft=False):
             config=config,
             file= out_chart / "Final/Wildlife_BaldEagle_Winter.html",
             # include_plotlyjs="directory",
-            div_id="Bald_Eagle",
+            div_id="Winter Bald_Eagle",
             full_html=False,
             # default_height=500,
             # default_width=800,
@@ -582,7 +582,7 @@ def plot_goshawk_data(df, draft=False):
             config=config,
             file= out_chart / "Draft/Wildlife_Goshawk_NestSites.html",
             include_plotlyjs="directory",
-            div_id="Bald Eagle",
+            div_id="Goshawk",
             full_html=False
         )   
     elif draft == False: 
@@ -590,7 +590,7 @@ def plot_goshawk_data(df, draft=False):
             config=config,
             file= out_chart / "Final/Wildlife_Goshawk_NestSites.html",
             # include_plotlyjs="directory",
-            div_id="Bald_Eagle",
+            div_id="Goshawk",
             full_html=False
         )
 
