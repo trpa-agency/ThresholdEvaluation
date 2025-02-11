@@ -11,6 +11,7 @@
   * [Banner](ExecutiveSummary\Banner\index.html)
   * [Indicator Status](ExecutiveSummary\IndicatorStatus)
   * [SEZ Restored](ExecutiveSummary\RestoredSEZ.html)
+  * [Winter vs Summer Secchi Depth](ExecutiveSummary\SecchiDepth_SummerVsWinter.html)
   
 > ## Cumulative Accounting
 >

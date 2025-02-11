@@ -148,6 +148,77 @@ def plot_secchi_depth(df):
         div_id="1.3.c_Secchi_Depth",
     )
 
+# get GAM secchi values
+def get_secchi_modeled_data():
+    # read in excel file
+    df = pd.read_excel(local_path / "data/raw_data/Secchi_Averages_2023.xlsx", sheet_name="GAM_Prediction")
+    return df
+
+# Function to plot the modeled secchi depth data
+def plot_secchi_modeled(df):
+    config = {"displayModeBar": False}
+    
+    # Convert everything to feet
+    df["LTP_Annual_GAM"] = df["LTP_Annual_GAM"] * 3.28084
+    # df["LTP_Annual_SD_GAM"] = df["LTP_Annual_SD_GAM"] * 3.28084
+    df["LTP_Winter_GAM"] = df["LTP_Winter_GAM"] * 3.28084
+
+    # Plot the annual GAM values with trendline
+    fig = px.scatter(
+        df, x="Year", y=["LTP_Annual_GAM","LTP_Winter_GAM"],
+        # color_discrete_sequence=["#EF553B", "#023f64"]
+        color_discrete_sequence=["#8a7121", "#023f64"]
+    )
+
+    fig.update_traces(marker=dict(size=8))
+    
+    # Update layout to reflect the graph style
+    fig.update_layout(
+        yaxis=dict(title="Depth in Feet"),
+        xaxis=dict(title="Year", showgrid=False, 
+                   # tick values every 5 years
+                    tickmode='linear',
+                    dtick=5
+                    ),
+        template="plotly_white",
+        hovermode="x unified",
+        dragmode=False,
+        margin=dict(t=20),
+        legend=dict(
+            title="Modeled Secchi Depth",
+            orientation="h",
+            entrywidth=100,
+            yanchor="bottom",
+            y=1.05,
+            xanchor="right",
+            x=1,
+        ),
+    )
+    
+    fig.update_yaxes(autorange="reversed", autorangeoptions=dict(include=0))
+    
+    # Set legend names
+    fig.data[0].name = "Summer Depth"
+    fig.data[0].showlegend = True
+    fig.data[1].name = "Winter Depth"
+    fig.data[1].showlegend = True
+    
+    # Update hover information
+    fig.update_traces(hovertemplate="%{y:.1f}ft")
+
+    fig.write_html(
+            config=config,
+            file= out_chart / "SecchiDepth_SummerVsWinter.html",
+            div_id="Secchi_Depth_SummerVsWinter",
+            full_html=False,
+        )
+    # fig.write_image(
+    #         file= out_chart / "SecchiDepth_SummerVsWinter.png", 
+    #         width=800, 
+    #         height=600, 
+    #         scale=2
+    #     )
+    
 #------------------------------------------#
 #Create Air Quality-Fire summary chart correlating Days Exceeding Thresholds for each pollutant type
 #------------------------------------------#
