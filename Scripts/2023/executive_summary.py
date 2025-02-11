@@ -159,13 +159,13 @@ def plot_secchi_modeled(df):
     config = {"displayModeBar": False}
     
     # Convert everything to feet
-    df["LTP_Annual_GAM"] = df["LTP_Annual_GAM"] * 3.28084
+    df["LTP_Annual_SD_GAM"] = df["LTP_Annual_SD_GAM"] * 3.28084
     # df["LTP_Annual_SD_GAM"] = df["LTP_Annual_SD_GAM"] * 3.28084
     df["LTP_Winter_GAM"] = df["LTP_Winter_GAM"] * 3.28084
 
     # Plot the annual GAM values with trendline
     fig = px.scatter(
-        df, x="Year", y=["LTP_Annual_GAM","LTP_Winter_GAM"],
+        df, x="Year", y=["LTP_Annual_SD_GAM","LTP_Winter_GAM"],
         # color_discrete_sequence=["#EF553B", "#023f64"]
         color_discrete_sequence=["#8a7121", "#023f64"]
     )
@@ -174,7 +174,13 @@ def plot_secchi_modeled(df):
     
     # Update layout to reflect the graph style
     fig.update_layout(
-        yaxis=dict(title="Depth in Feet"),
+        yaxis=dict(title="Depth in Feet",
+                   rangemode = 'tozero',
+                    range=[40, 160],  # Set y-axis range to start at 40 (top) and go down to 160 (bottom)
+                    tickvals=[40, 60, 80, 100, 120, 140, 160],  # Custom tick values starting at 40
+                    ticktext=['40', '60', '80', '100', '120', '140', '160'],  # Custom tick labels
+                    dtick=20  # Set the interval for ticks to 20
+                ),
         xaxis=dict(title="Year", showgrid=False, 
                    # tick values every 5 years
                     tickmode='linear',
@@ -186,7 +192,7 @@ def plot_secchi_modeled(df):
         dragmode=False,
         margin=dict(t=20),
         legend=dict(
-            title="Modeled Secchi Depth",
+            title="Clarity Trends",
             orientation="h",
             entrywidth=100,
             yanchor="bottom",
@@ -199,9 +205,9 @@ def plot_secchi_modeled(df):
     fig.update_yaxes(autorange="reversed", autorangeoptions=dict(include=0))
     
     # Set legend names
-    fig.data[0].name = "Summer Depth"
+    fig.data[0].name = "Winter Depth"
     fig.data[0].showlegend = True
-    fig.data[1].name = "Winter Depth"
+    fig.data[1].name = "Summer Depth"
     fig.data[1].showlegend = True
     
     # Update hover information
