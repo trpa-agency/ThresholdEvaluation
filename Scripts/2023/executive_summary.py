@@ -178,7 +178,8 @@ def plot_secchi_modeled(df):
         xaxis=dict(title="Year", showgrid=False, 
                    # tick values every 5 years
                     tickmode='linear',
-                    dtick=5
+                    dtick=5,
+                    range=[1967, 2024]
                     ),
         template="plotly_white",
         hovermode="x unified",
