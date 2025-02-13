@@ -824,19 +824,26 @@ def plot_ais_infestation(df, draft=True):
         )
 
 def plot_tahoe_keys(draft=True):
-    # setup plot
+
+    # data for 2020 and 2021
     data = {
-    'Year': ["2020", "2020", "2020"],
-    'Species': ['Eurasian Watermilfoil', 'Coontail', 'Curlyleaf Pondweed'],
-    'Square_Feet': [131729, 181720, 188664]
+        'Year': ["2020", "2020", "2020", "2021", "2021", "2021"],
+        'Species': ['Eurasian Watermilfoil', 'Coontail', 'Curlyleaf Pondweed', 'Eurasian Watermilfoil', 'Coontail', 'Curlyleaf Pondweed'],
+        'Cubic_Yards': [131729, 181720, 188664, 130000, 169600, 82500]
     }
+
+    # species, volume, year, and target data table needed in sde_tabular.SDE.TahoeKeys_Infestation
+
+    # threshold target is 75% of the total cubic yards of the 2020 base year
+    threshold = 0.25*(131729+181720+188664)
+    
     df = pd.DataFrame(data)
-    threshold = df['Square_Feet'].sum()*0.25
+
     color_map = {'Eurasian Watermilfoil':"#a37774", 'Coontail':"#5c6d70", 'Curlyleaf Pondweed':"#015B3D"}
-    fig = px.bar(df, x='Year', y='Square_Feet', color='Species', title='Volume of Aquatic Invasive Species',
+    fig = px.bar(df, x='Year', y='Cubic_Yards', color='Species',
                  barmode='stack',
-                labels={ 'Species': 'Species', 'Square_Feet':'Square Feet'}, color_discrete_map=color_map,
-            template="plotly_white",opacity=0.9)
+                labels={ 'Species': 'Species', 'Cubic_Yards':'Volume (cubic yards)'}, color_discrete_map=color_map,
+                custom_data=['Species'],opacity=0.9)
 
     # add threshold line
     fig.add_hline(y=threshold, line_dash="dot", line_color="black", 
@@ -852,10 +859,28 @@ def plot_tahoe_keys(draft=True):
                         yaxis = dict(
                             title_text='Cubic Yards',
                             range=[0, 500000]
-                        )
-
-                    
+                        ),
+                        hovermode="x unified",
+                        dragmode=False,
+                        margin=dict(t=20),
+                        legend=dict(
+                            title='Aquatic Invasive Species Removed',
+                            orientation="h",
+                            entrywidth=100,
+                            yanchor="bottom",
+                            y=1.05,
+                            xanchor="right",
+                            x=1,
+                        ),
                     )
+    # update hovertemplate
+    fig.update_traces(
+        hovertemplate="<br>".join([
+            "<b>%{y:,.0f} cubic yards</b> of",
+            "<b>%{customdata[0]}</b> were removed in", 
+            "<b>%{x}</b><br>"
+        ])+ "<extra></extra>",
+    )
     if draft == True:
         fig.write_html(
             config=config,
