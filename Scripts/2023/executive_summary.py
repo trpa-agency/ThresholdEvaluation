@@ -204,9 +204,9 @@ def plot_secchi_modeled(df):
     fig.update_yaxes(autorange="reversed", autorangeoptions=dict(include=0))
     
     # Set legend names
-    fig.data[0].name = "Summer Depth"
+    fig.data[0].name = "Summer"
     fig.data[0].showlegend = True
-    fig.data[1].name = "Winter Depth"
+    fig.data[1].name = "Winter"
     fig.data[1].showlegend = True
     
     # Update hover information
