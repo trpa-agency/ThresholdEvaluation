@@ -87,9 +87,18 @@ fetch(
     });
 
     console.log("Pivoted data:", rowData_allocated); // Log to verify
-
+    const totalRow_allocated = rowData_allocated.reduce((acc, row) => {
+      Object.keys(row).forEach((key) => { 
+        if (key !== "Jurisdiction") {
+          acc[key] = (acc[key] || 0) + (row[key] || 0);
+        }
+      }
+      );
+      return acc;
+    }, { Jurisdiction: "Total" });
     // Update grid options with the fetched data as rowData
     gridOptions_allocated.rowData = rowData_allocated;
+    gridOptions_allocated.pinnedBottomRowData = [totalRow_allocated];
 
     // Initialize the grid
     const gridDivAllocated = document.querySelector("#myGridResAllocationsProvided");
@@ -152,7 +161,15 @@ fetch(
     });
 
     console.log("Pivoted data:", rowData); // Log to verify
-
+    const totalRow_remaining = rowData.reduce((acc, row) => {
+      Object.keys(row).forEach((key) => {
+        if (key !== "Jurisdiction") {
+          acc[key] = (acc[key] || 0) + (row[key] || 0);
+        }
+      });
+      return acc;
+    }, { Jurisdiction: "Total" });
+    gridOptions_remaining.pinnedBottomRowData = [totalRow_remaining];
     // Update grid options with the fetched data as rowData
     gridOptions_remaining.rowData = rowData;
 

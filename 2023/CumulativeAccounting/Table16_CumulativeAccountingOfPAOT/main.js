@@ -45,10 +45,10 @@ const rowData = [
 // Calculate totals for the Total row
 const totalRow = {
   PAOTCategory: "Total",
-  RegionalPlanAllocations: rowData.reduce((sum, row) => sum + (row.totalAcres || 0), 0),
-  AssignedAsOf2019Evaluation: rowData.reduce((sum, row) => sum + (row.acresCoverage2023 || 0), 0),
-  Assigned2020To2023: rowData.reduce((sum, row) => sum + (row.acresNewCoverage || 0), 0),
-  PAOTsRemaining: rowData.reduce((sum, row) => sum + (row.thresholdAcres || 0), 0),
+  RegionalPlanAllocations: rowData.reduce((sum, row) => sum + (row.RegionalPlanAllocations || 0), 0),
+  AssignedAsOf2019Evaluation: rowData.reduce((sum, row) => sum + (row.AssignedAsOf2019Evaluation || 0), 0),
+  Assigned2020To2023: rowData.reduce((sum, row) => sum + (row.Assigned2020To2023 || 0), 0),
+  PAOTsRemaining: rowData.reduce((sum, row) => sum + (row.PAOTsRemaining || 0), 0),
   PercentOfAllPAOTsAssigned: "-" 
 };
 
