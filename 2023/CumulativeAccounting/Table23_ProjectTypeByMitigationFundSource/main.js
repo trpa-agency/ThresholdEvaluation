@@ -45,7 +45,7 @@ const rowData = [
   { projectType: "Land Bank and Operational Support", airQualityMitigation: "0%", waterQualityMitigation: "0%", streamEnvironmentZoneRestoration: "0%", operationsMaintenance: "0%", excessOffsiteLandCoverageMitigation: "100%" },
 ];
 // // Calculate totals
-// const totalRow = rowData.reduce((acc, row) => {
+const totalRow = { projectType: "Total", airQualityMitigation: "100%", waterQualityMitigation: "100%", streamEnvironmentZoneRestoration: "100%", operationsMaintenance: "100%", excessOffsiteLandCoverageMitigation: "100%" };
 //   Object.keys(row).forEach((key) => {
 //     if (key !== "projectType") {
 //       acc[key] = (acc[key] || 0) + (row[key] || 0);
@@ -58,7 +58,7 @@ const rowData = [
 gridOptions = {
     columnDefs: columnDefs,
     rowData: rowData, // Use the fetched data
-    // pinnedBottomRowData: [totalRow],
+    pinnedBottomRowData: [totalRow],
     theme:"legacy",
     domLayout: "autoHeight",
     suppressExcelExport: true,
