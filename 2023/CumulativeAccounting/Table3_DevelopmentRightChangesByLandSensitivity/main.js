@@ -22,9 +22,9 @@ const columnDefs = [
 const rowData = [
   {
     "Development Right": "Coverage (sq. ft.)",
-    "Stream Environment Zones": -137193,
-    "Other Sensitive Areas": 25472,
-    "Non-Sensitive Areas": 111721
+    "Stream Environment Zones": -165394,
+    "Other Sensitive Areas": 24502,
+    "Non-Sensitive Areas": 140892
   },
   {
     "Development Right": "Commercial Floor Area (CFA) (sq. ft.)",
@@ -34,15 +34,15 @@ const rowData = [
   },
   {
     "Development Right": "Residential Units (SFRRU/MFRUU/RDR)",
-    "Stream Environment Zones": -89,
-    "Other Sensitive Areas": -13,
-    "Non-Sensitive Areas": 102
+    "Stream Environment Zones": -30,
+    "Other Sensitive Areas": -28,
+    "Non-Sensitive Areas": 58
   },
   {
     "Development Right": "Tourist Accommodation Units (TAU)",
-    "Stream Environment Zones": -109,
-    "Other Sensitive Areas": 0,
-    "Non-Sensitive Areas": 109
+    "Stream Environment Zones": -145,
+    "Other Sensitive Areas": 1,
+    "Non-Sensitive Areas": 144
   }
 ];
 

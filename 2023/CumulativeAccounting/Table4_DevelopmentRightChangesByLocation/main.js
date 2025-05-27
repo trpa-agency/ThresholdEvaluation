@@ -20,27 +20,27 @@ const columnDefs = [
   const rowData = [
     {
       developmentRight: "Coverage (sq. ft.)",
-      remoteAreas: "-169,079",
-      areasWithinQuarterMile: "+19,697",
-      townCenters: "+149,382"
+      remoteAreas: "-141,364",
+      areasWithinQuarterMile: "+15,123",
+      townCenters: "+136,241"
     },
     {
       developmentRight: "Commercial Floor Area (CFA) (sq. ft.)",
-      remoteAreas: "+0",
-      areasWithinQuarterMile: "-16,791",
-      townCenters: "+16,791"
+      remoteAreas: "+21,565",
+      areasWithinQuarterMile: "-14,811",
+      townCenters: "+16,754"
     },
     {
       developmentRight: "Residential Units (SFRRU/MFRUU/RDR)",
-      remoteAreas: "-47",
-      areasWithinQuarterMile: "+23",
-      townCenters: "+24"
+      remoteAreas: "+30",
+      areasWithinQuarterMile: "-2",
+      townCenters: "-28"
     },
     {
       developmentRight: "Tourist Accommodation Units (TAU)",
-      remoteAreas: "-12",
-      areasWithinQuarterMile: "-21",
-      townCenters: "+33"
+      remoteAreas: "+209",
+      areasWithinQuarterMile: "-60",
+      townCenters: "-149"
     }
   ];
   
