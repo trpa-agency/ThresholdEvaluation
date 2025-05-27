@@ -26,30 +26,30 @@ const columnDefsDevLan = [
 ];
 
 const rowDataDevLan = [
-{
-  "Development Right": "Coverage (sq. ft.)",
-  "Stream Environment Zones": -137193,
-  "Other Sensitive Areas": 25472,
-  "Non-Sensitive Areas": 111721
-},
-{
-  "Development Right": "Commercial Floor Area (CFA) (sq. ft.)",
-  "Stream Environment Zones": 0,
-  "Other Sensitive Areas": -10492,
-  "Non-Sensitive Areas": 10492
-},
-{
-  "Development Right": "Residential Units (SFRRU/MFRUU/RDR)",
-  "Stream Environment Zones": -89,
-  "Other Sensitive Areas": -13,
-  "Non-Sensitive Areas": 102
-},
-{
-  "Development Right": "Tourist Accommodation Units (TAU)",
-  "Stream Environment Zones": -109,
-  "Other Sensitive Areas": 0,
-  "Non-Sensitive Areas": 109
-}
+  {
+    "Development Right": "Coverage (sq. ft.)",
+    "Stream Environment Zones": -165394,
+    "Other Sensitive Areas": 24502,
+    "Non-Sensitive Areas": 140892
+  },
+  {
+    "Development Right": "Commercial Floor Area (CFA) (sq. ft.)",
+    "Stream Environment Zones": 0,
+    "Other Sensitive Areas": -10492,
+    "Non-Sensitive Areas": 10492
+  },
+  {
+    "Development Right": "Residential Units (SFRRU/MFRUU/RDR)",
+    "Stream Environment Zones": -30,
+    "Other Sensitive Areas": -28,
+    "Non-Sensitive Areas": 58
+  },
+  {
+    "Development Right": "Tourist Accommodation Units (TAU)",
+    "Stream Environment Zones": -145,
+    "Other Sensitive Areas": 1,
+    "Non-Sensitive Areas": 144
+  }
 ];
 
 // Column Definitions for Dev Loc
@@ -81,27 +81,27 @@ const columnDefsDevLoc = [
 const rowDataDevLoc = [
   {
     developmentRight: "Coverage (sq. ft.)",
-    remoteAreas: "-169,079",
-    areasWithinQuarterMile: "+19,697",
-    townCenters: "+149,382"
+    remoteAreas: "-141,364",
+    areasWithinQuarterMile: "+15,123",
+    townCenters: "+136,241"
   },
   {
     developmentRight: "Commercial Floor Area (CFA) (sq. ft.)",
-    remoteAreas: "+0",
-    areasWithinQuarterMile: "-16,791",
-    townCenters: "+16,791"
+    remoteAreas: "+21,565",
+    areasWithinQuarterMile: "-14,811",
+    townCenters: "+16,754"
   },
   {
     developmentRight: "Residential Units (SFRRU/MFRUU/RDR)",
-    remoteAreas: "-47",
-    areasWithinQuarterMile: "+23",
-    townCenters: "+24"
+    remoteAreas: "+30",
+    areasWithinQuarterMile: "-2",
+    townCenters: "-28"
   },
   {
     developmentRight: "Tourist Accommodation Units (TAU)",
-    remoteAreas: "-12",
-    areasWithinQuarterMile: "-21",
-    townCenters: "+33"
+    remoteAreas: "+209",
+    areasWithinQuarterMile: "-60",
+    townCenters: "-149"
   }
 ];
 
