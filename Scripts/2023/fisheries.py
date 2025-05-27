@@ -131,9 +131,22 @@ def plot_avgCSCI(df,  draft=False):
 #fig.update_traces(hovertemplate='%{y:.2f} Average CSCI Score<extra></extra>')
     #setup plot
     fig = go.Figure()
+    # -- Calculate slope for each panel --
+    def calc_slope(y):
+        y = y.dropna()
+        if len(y) < 2:
+            return np.nan  # Not enough data
+        x = np.arange(len(y))
+        slope, intercept = np.polyfit(x, y, 1)
+        return slope
+
     # Filter data for Test A and Test B
     df_trend_a = df[df['Trend_Panel'] == 'A']
     df_trend_b = df[df['Trend_Panel'] == 'B']
+
+    
+    slope_a = calc_slope(df_trend_a['Value'])
+    slope_b = calc_slope(df_trend_b['Value'])
     # Add traces for Test A and Test B
     fig.add_trace(go.Scatter(x=df_trend_a['Year'], y=df_trend_a['Value'], mode='markers',
                           marker=dict(color='#87CEEB'), name='Trend Panel A',
@@ -176,3 +189,4 @@ def plot_avgCSCI(df,  draft=False):
             div_id="Fisheries_StreamStatus",
             full_html=False,
         )
+    return slope_a, slope_b
