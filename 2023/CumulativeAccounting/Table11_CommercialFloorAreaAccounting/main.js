@@ -33,10 +33,10 @@ const rowData = [
   { Jurisdiction: "City of South Lake Tahoe", TotalExistingCFA: 2992830, BankedCFA: 110308, RemainingFrom1987PlanAnd2012Allocation: 28889, TotalExistingAndPotentialDevelopment: 3132027 },
   { Jurisdiction: "Douglas County", TotalExistingCFA: 670802, BankedCFA: 85756, RemainingFrom1987PlanAnd2012Allocation: 33520, TotalExistingAndPotentialDevelopment: 790078 },
   { Jurisdiction: "El Dorado County", TotalExistingCFA: 335706, BankedCFA: 8245, RemainingFrom1987PlanAnd2012Allocation: 33395, TotalExistingAndPotentialDevelopment: 377346 },
-  { Jurisdiction: "Placer County", TotalExistingCFA: 1294248, BankedCFA: 56776, RemainingFrom1987PlanAnd2012Allocation: 63648, TotalExistingAndPotentialDevelopment: 1414672 },
+  { Jurisdiction: "Placer County", TotalExistingCFA: 1276412, BankedCFA: 56776, RemainingFrom1987PlanAnd2012Allocation: 63648, TotalExistingAndPotentialDevelopment: 1396836 },
   { Jurisdiction: "Washoe County", TotalExistingCFA: 1184357, BankedCFA: 83337, RemainingFrom1987PlanAnd2012Allocation: 10000, TotalExistingAndPotentialDevelopment: 1277694 },
   { Jurisdiction: "TRPA Incentive Pool", TotalExistingCFA: 0, BankedCFA: 0, RemainingFrom1987PlanAnd2012Allocation: 360428, TotalExistingAndPotentialDevelopment: 360428 },
-  { Jurisdiction: "Total", TotalExistingCFA: 6477943, BankedCFA: 344422, RemainingFrom1987PlanAnd2012Allocation: 529880, TotalExistingAndPotentialDevelopment: 7352245 },
+  { Jurisdiction: "Total", TotalExistingCFA: 6460226, BankedCFA: 344422, RemainingFrom1987PlanAnd2012Allocation: 553036, TotalExistingAndPotentialDevelopment: 7357684 },
 ];
 
 // Grid Options with the fetched data as rowData
