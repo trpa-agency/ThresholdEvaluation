@@ -28,11 +28,11 @@ const columnDefs = [
 
 // Row Data
 const rowData = [
-{ category: "Remaining Residential Bonus Units", TRPAPools: 1108, LocalJurisdictionPools: 337, Total: 1445 },
-{ category: "Permitted Projects Under Construction", TRPAPools: -126, LocalJurisdictionPools: -20, Total: -146 },
-{ category: "Permitted Projects Not Yet Started", TRPAPools: -141, LocalJurisdictionPools: -4, Total: -145 },
-{ category: "Reserved Units", TRPAPools: -262, LocalJurisdictionPools: 0, Total: -262 },
-{ category: "Remaining, Unreserved Units", TRPAPools: 579, LocalJurisdictionPools: 313, Total: 892 },
+{ category: "Remaining Residential Bonus Units", TRPAPools: 1109, LocalJurisdictionPools: 341, Total: 1450 },
+{ category: "Permitted Projects Under Construction", TRPAPools: -126, LocalJurisdictionPools: -24, Total: -150 },
+{ category: "Permitted Projects Not Yet Started", TRPAPools: -146, LocalJurisdictionPools: -10, Total: -156 },
+{ category: "Reserved Units", TRPAPools: -256, LocalJurisdictionPools: 0, Total: -256 },
+{ category: "Remaining, Unreserved Units", TRPAPools: 581, LocalJurisdictionPools: 307, Total: 888 },
 ];
 
 // Grid Options with the fetched data as rowData
