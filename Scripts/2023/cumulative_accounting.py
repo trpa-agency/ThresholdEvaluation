@@ -2,7 +2,7 @@ from utils import *
 # get modules
 import arcpy
 from pathlib import Path
-from great_tables import *
+#from great_tables import *
 # current working directory
 out_chart = local_path.parents[1] / '2023/Cumulative_Accounting'
 local_path = pathlib.Path().absolute()
