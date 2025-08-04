@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>2023 Threshold Evaluation - Air Quality</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+    <!-- Calcite Design System -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/2.7.1/calcite.esm.js"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/2.7.1/calcite.css" />
+
+    <!-- ArcGIS JS API -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.29/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.29/"></script>
+
+    <style>
+      html,
+      body,
+      calcite-shell,
+      #viewDiv {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #viewDiv {
+        position: relative;
+        z-index: 0;
+      }
+
+      .custom-controls {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      calcite-button {
+        width: 150px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <calcite-shell content-behind>
+      
+      </calcite-shell-panel>
+
+      <!-- Map View -->
+      <div id="viewDiv"></div>
+
+      <!-- Optional custom buttons -->
+      
+    </calcite-shell>
+
+    <script>
+      require([
+        "esri/views/MapView",
+        "esri/WebMap",
+        "esri/widgets/Expand",
+        "esri/widgets/Home",
+        "esri/widgets/Legend",
+        "esri/widgets/Fullscreen"
+      ], function (
+        MapView,
+        WebMap,
+        Expand,
+        Home,
+        Legend,
+        Fullscreen
+      ) {
+        const map = new WebMap({
+          portalItem: {
+            id: "198be6a51f4a49d3a89f6836aacbd2a5" // <-- your map item
+          }
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-120.01, 39.01],
+          zoom: 9
+        });
+
+        // Move zoom buttons to top-left
+        view.ui.move("zoom", "top-left");
+
+        // Fullscreen button
+        const fullscreen = new Fullscreen({ view });
+        view.ui.add(fullscreen, "top-left");
+
+        // Home button
+        const homeWidget = new Home({ view });
+        view.ui.add(homeWidget, "top-left");
+
+        // Legend with Expand
+        view.when(function () {
+          const featureLayer = map.layers.getItemAt(0);
+
+          // ✅ Apply filter
+          featureLayer.definitionExpression = "Name IN ('DL Bliss State Park', 'Lake Tahoe Community College', 'South Lake Tahoe')";
+
+          const legend = new Legend({
+            view: view,
+            layerInfos: [{ layer: featureLayer }]
+          });
+
+          const legendExpand = new Expand({
+            expandIconClass: "esri-icon-layers",
+            expandTooltip: "Legend",
+            view: view,
+            expanded: true,
+            autoCollapse: true,
+            content: legend
+          });
+
+          view.ui.add(legendExpand, "top-right");
+        });
+
+        // Disable scroll zoom
+        view.on("mouse-wheel", function (evt) {
+          evt.stopPropagation();
+        });
+
+        // 🔄 Hook up custom button to reset the view
+        document.getElementById("homeBtn").addEventListener("click", function () {
+          view.goTo({
+            center: [-120.01, 39.01],
+            zoom: 9
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
